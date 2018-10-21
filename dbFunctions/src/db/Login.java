@@ -3,6 +3,7 @@ package db;
 import java.sql.*;
 
 public class Login {
+	// main function
 	public static void main(String[] args) {
 		System.out.println(checkUserName("sean"));
 		System.out.println(newUserID());
