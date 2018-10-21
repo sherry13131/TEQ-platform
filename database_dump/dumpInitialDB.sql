@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: c01proj
+-- Host: localhost    Database: assignmentdb
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -14,6 +14,17 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- -----------------------------------------------------
+-- Schema assignmentdb
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `assignmentdb` ;
+
+-- -----------------------------------------------------
+-- Schema assignmentdb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `assignmentdb` DEFAULT CHARACTER SET utf8 ;
+USE `assignmentdb` ;
 
 --
 -- Table structure for table `roles`
