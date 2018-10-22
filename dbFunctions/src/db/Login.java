@@ -145,19 +145,15 @@ public class Login {
 				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
 				Statement stmt=con.createStatement();
 				//get the associated userID and activity
-				String sql="SELECT * FROM user_login WHERE username='"+username+"'";
-				ResultSet rs=stmt.executeQuery(sql);
-				while (rs.next()) {
-					userActive = rs.getInt("active");
-					userID = rs.getInt("userID");
-				}
+				userActive = getUserStatus(username);
+				userID = getUserID(username);
 				// login fail if user is not active
 				if (userActive == 1) {
-					sql="SELECT * FROM user_password WHERE userID='"+userID+"'";
-					rs=stmt.executeQuery(sql);
+					String sql="select COUNT(*) found from user_password where password = sha2(sha('"+ password + "'),384) and userID=" + userID ;
+					ResultSet rs=stmt.executeQuery(sql);
 					while (rs.next()) {
 						// check password in database with the input password
-						if (password.equals(rs.getString("password"))) {
+						if (Integer.parseInt(rs.getString("found")) == 1) {
 							validLoginInfo = true;
 						}
 					}
@@ -168,5 +164,63 @@ public class Login {
 			}
 		}
 		return validLoginInfo;
+	}
+
+	/**
+	 * Given the username of the user
+	 * @param username
+	 * @return return userID of the given username
+	 */
+	public static int getUserID(String username) {
+		// check if username is in db
+		boolean usernameInDB = !checkUserName(username);
+		int userID = -1;
+		// if user is not in db login fail
+		if (usernameInDB) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+				Statement stmt=con.createStatement();
+				//get the associated userID and activity
+				String sql="SELECT userID FROM user_login WHERE username='"+username+"'";
+				ResultSet rs=stmt.executeQuery(sql);
+				while (rs.next()) {
+					userID = rs.getInt("userID");
+				}
+			} catch(Exception e){
+				//TODO
+				System.out.print(e);
+			}
+		}
+		return userID;
+	}
+
+	/**
+	 * Given the username of the user
+	 * @param username
+	 * @return return user active status of the given username
+	 */
+	public static int getUserStatus(String username) {
+		// check if username is in db
+		boolean usernameInDB = !checkUserName(username);
+		int userActive = 0;
+		// if user is not in db login fail
+		if (usernameInDB) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+				Statement stmt=con.createStatement();
+				//get the associated userID and activity
+				String sql="SELECT active FROM user_login WHERE username='"+username+"'";
+				ResultSet rs=stmt.executeQuery(sql);
+				while (rs.next()) {
+					userActive = rs.getInt("active");
+				}
+			} catch(Exception e){
+				//TODO
+				System.out.print(e);
+			}
+		}
+		return userActive;
 	}
 }
