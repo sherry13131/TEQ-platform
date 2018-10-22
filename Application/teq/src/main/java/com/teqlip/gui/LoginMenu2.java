@@ -15,13 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginMenu2 extends JFrame implements ActionListener{
+public class LoginMenu2 extends JFrame implements ActionListener {
 	
 	private final static String LOGIN = "login";
 	private final static String HELP = "help";
 	
 	private BoxLayout layout;
 	private Container container;
+	
+	private JTextField usernameField;
 	private JPasswordField passwordField;
 	
 	public LoginMenu2() {
@@ -38,7 +40,6 @@ public class LoginMenu2 extends JFrame implements ActionListener{
 		add(usernamePane);
 		add(passwordPane);
 		add(buttonPane);
-		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -49,7 +50,8 @@ public class LoginMenu2 extends JFrame implements ActionListener{
 			char[] input = passwordField.getPassword();
 			if (isPasswordCorrect(input)) {
 				// Do something
-				new TEQMainMenu(new JFrame("Main Menu"), new JPanel(), "test");
+				this.setVisible(false);
+				TEQMainMenu mainMenu = new TEQMainMenu(MainFrame.initJFrame(), null, this.usernameField.getText());
 			} else {
 				// Do something else
 			}
@@ -66,7 +68,10 @@ public class LoginMenu2 extends JFrame implements ActionListener{
 		JButton loginBtn = new JButton("Login");
 		JButton helpBtn = new JButton("Help");
 		
+		loginBtn.addActionListener(this);
 		loginBtn.setActionCommand(LOGIN);
+		
+		helpBtn.addActionListener(this);
 		helpBtn.setActionCommand(HELP);
 		
 		p.add(loginBtn);
@@ -76,7 +81,8 @@ public class LoginMenu2 extends JFrame implements ActionListener{
 	}
 	
 	protected JComponent createUsernameInput() {
-		return createLabelWithField("Username:", new JTextField(20));
+		usernameField = new JTextField(20);
+		return createLabelWithField("Username:", usernameField);
 	}
 	
 	protected JComponent createPasswordPane() {
@@ -96,7 +102,7 @@ public class LoginMenu2 extends JFrame implements ActionListener{
 	
 	private static boolean isPasswordCorrect(char[] input) {
 		boolean isCorrect = true;
-		char[] correctPassword = "String".toCharArray();
+		char[] correctPassword = "MACROHARD".toCharArray();
 		
 		if (input.length != correctPassword.length) {
 			isCorrect = false;
