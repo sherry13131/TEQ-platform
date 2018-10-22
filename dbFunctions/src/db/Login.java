@@ -5,11 +5,11 @@ import java.sql.*;
 public class Login {
 	// main function
 	public static void main(String[] args) {
-		System.out.println(checkUserName("sean"));
+		System.out.println(checkUserName("herry"));
 		System.out.println(newUserID());
 		System.out.println(getRoleID("utsc"));
-		System.out.println(createAccount("sean", "password","Son","Nguyen","Hung","utsc","seannguyen@gmial","1289432",1));
-		System.out.println(checkLoginInfo("sean","password"));
+		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
+		System.out.println(checkLoginInfo("herry","mypwd"));
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class Login {
 				sql="INSERT INTO user_login(userID, username, active) VALUES ('"+userID+"', '"+username+"', '"+active+"')";
 				stmt.execute(sql);
 				//add to the user_password
-				sql="INSERT INTO user_password(userID, password) VALUES ('"+userID+"', '"+password+"')";
+				sql="INSERT INTO user_password(userID, password) VALUES ('"+userID+"', sha2(sha('"+ password + "'),384))";
 				stmt.execute(sql);
 				accountCreated = true;
 			} catch(Exception e){
