@@ -24,7 +24,7 @@ public class TEQMainMenu extends BasePanel {
         createAccount.addActionListener(new TEQCreateAccountPanel(this.frame, this.panel, this.username));
         this.panel.add(createAccount);
         JButton logout = new JButton("Logout");
-        logout.addActionListener(new LoginMenu(this.frame, this.panel));
+        logout.addActionListener(new LoginMenu());
         this.panel.add(logout);
         this.frame.getContentPane().add(this.panel);
         this.restart();
