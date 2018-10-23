@@ -22,10 +22,7 @@ public class TEQMainMenu extends BasePanel {
         this.panel.add(titleRole);
         JButton createAccount = new JButton("Create Account");
         createAccount.addActionListener(new TEQCreateAccountPanel(this.frame, this.panel, this.username));
-        JButton uploadTemplate = new JButton("Upload Template");
-        uploadTemplate.addActionListener(new TEQUploadTemplatePanel(this.frame, this.panel, this.username));
         this.panel.add(createAccount);
-        this.panel.add(uploadTemplate);
         JButton logout = new JButton("Logout");
         logout.addActionListener(new LoginMenu(this.frame, this.panel));
         this.panel.add(logout);
