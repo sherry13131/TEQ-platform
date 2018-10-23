@@ -26,12 +26,11 @@ public class TEQUploadTemplatePanel extends BasePanel {
         
         JLabel path = new JLabel("Path");
         JTextField pathField = new JTextField();
-        pathField.setEditable(false);
         this.panel.add(path);
         this.panel.add(pathField);
 
-        JButton browse = new JButton("Browse");
-        browse.addActionListener(new Browse());
+        JButton browse = new JButton("Browse...");
+        browse.addActionListener(new TEQUploadDialogBox(this.frame, this.panel, this.username, pathField));
         this.panel.add(browse);
 
         JButton submit = new JButton("Upload");
@@ -42,19 +41,6 @@ public class TEQUploadTemplatePanel extends BasePanel {
 
         this.frame.getContentPane().add(this.panel);
         this.restart();
-    }
-
-    class Browse implements ActionListener {
-        public void actionPerformed(ActionEvent ae) {
-            JFileChooser c = new JFileChooser();
-            int rVal = c.showOpenDialog(TEQUploadTemplatePanel.this);
-            if (rVal == JFileChooser.APPROVE_OPTION) {
-                pathField.setText(c.getCurrentDirectory().toString() + c.getSelectedFile().getName());
-            }
-            if (rVal == JFileChooser.CANCEL_OPTION) {
-                pathField.setText("");
-            }
-        }
     }
 
 }
