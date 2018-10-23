@@ -21,16 +21,11 @@ public class MainFrame {
 	public static void main(String[] args) {
 
 		LoginMenu login = new LoginMenu();
-		login.packCenterAndShow();
+		login.packAndShow();
 
-		if (login.isAuthenticated()) {
-			JFrame frame = initJFrame();
-			frame.pack();
-			frame.setVisible(true);
-			TEQMainMenu mainMenu = new TEQMainMenu(frame, null, login.getUsername());
-			mainMenu.restart();
-		}
-
+//		TEQMainMenu test = new TEQMainMenu();
+//		test.packAndShow();
+//		
 	}
 
 }

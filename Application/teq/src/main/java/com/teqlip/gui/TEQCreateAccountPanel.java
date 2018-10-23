@@ -1,45 +1,69 @@
 package com.teqlip.gui;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import java.sql.*;
 
-public class TEQCreateAccountPanel extends BasePanel {
+@SuppressWarnings("serial")
+public class TEQCreateAccountPanel extends BodyPanel {
+	
+	private BoxLayout layout;
+	
+	public class ActionConsts {
+		private final static String SUBMIT = "submit";
+		private final static String CANCEL = "cancel";
+	}
 
     public static final String[] ACCOUNT_FIELDS = {
         "Username",
         "Email"
     };
-    public JTextField[] textFields = new JTextField[this.ACCOUNT_FIELDS.length];
+    public JTextField[] textFields = new JTextField[TEQCreateAccountPanel.ACCOUNT_FIELDS.length];
 
-    public TEQCreateAccountPanel(JFrame frame, JPanel panel, String username) {
-        this.frame = frame;
-        this.panel = panel;
-        this.username = username;
+    public TEQCreateAccountPanel(AppFrame main) {
+    	super(main);
+        layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+        setLayout(layout);
+        
+        JComponent fields = createFieldsPane();
+        JComponent buttons = createButtonPane();
+        
+        add(fields);
+        add(buttons);
     }
-
-    public void actionPerformed(ActionEvent ae) {
-        this.close();
-        this.panel = new JPanel();
-        this.panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-        for (int i = 0; i < this.ACCOUNT_FIELDS.length; i++) {
-            JLabel label = new JLabel(this.ACCOUNT_FIELDS[i]);
+    
+    public JComponent createFieldsPane() {
+    	JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
+    	
+        for (int i = 0; i < TEQCreateAccountPanel.ACCOUNT_FIELDS.length; i++) {
+            JLabel label = new JLabel(TEQCreateAccountPanel.ACCOUNT_FIELDS[i]);
             this.textFields[i] = new JTextField();
-            this.panel.add(label);
-            this.panel.add(this.textFields[i]);
+            p.add(label);
+            p.add(this.textFields[i]);
         }
 
-        JButton submit = new JButton("Submit");
-        JButton cancel = new JButton("Cancel");
-        cancel.addActionListener(new TEQMainMenu(this.frame, this.panel, this.username));
-        this.panel.add(submit);
-        this.panel.add(cancel);
-
-        this.frame.getContentPane().add(this.panel);
-        this.restart();
+    	return p;
+    }
+    
+    public JComponent createButtonPane() {
+    	JPanel p = JGuiHelper.createPanelFlow();
+    	
+    	JButton submitBtn = JGuiHelper.createButton("Submit", this, ActionConsts.SUBMIT);
+    	JButton cancelBtn = JGuiHelper.createButton("Cancel", this, ActionConsts.CANCEL);
+    	
+    	p.add(submitBtn);
+    	p.add(cancelBtn);
+    	
+    	return p;
     }
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		
+		if (cmd.equals(ActionConsts.SUBMIT)) {
+			
+		} else if (cmd.equals(ActionConsts.CANCEL)) {
+			super.changeTo(new TEQMainMenuPanel(main));
+		}
+	}
 }
