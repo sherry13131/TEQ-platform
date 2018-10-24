@@ -1,8 +1,11 @@
-package com.teqlip.gui;
+package com.teqlip.gui.panels;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import com.teqlip.gui.frames.AppFrame;
+import com.teqlip.gui.helper.JGuiHelper;
 
 @SuppressWarnings("serial")
 public class TEQMainMenuPanel extends BodyPanel {

@@ -1,4 +1,4 @@
-package com.teqlip.gui;
+package com.teqlip.gui.frames;
 
 import java.awt.event.ActionListener;
 

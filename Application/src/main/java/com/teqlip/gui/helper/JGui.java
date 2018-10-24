@@ -1,4 +1,4 @@
-package com.teqlip.gui;
+package com.teqlip.gui.helper;
 
 public enum JGui {
 	LABEL,

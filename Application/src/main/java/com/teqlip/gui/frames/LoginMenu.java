@@ -1,4 +1,4 @@
-package com.teqlip.gui;
+package com.teqlip.gui.frames;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.TEQMainMenuPanel;
 
 @SuppressWarnings("serial")
 public class LoginMenu extends BaseFrame {

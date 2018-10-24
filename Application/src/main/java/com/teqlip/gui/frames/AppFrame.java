@@ -1,8 +1,10 @@
-package com.teqlip.gui;
+package com.teqlip.gui.frames;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import com.teqlip.gui.helper.JGuiHelper;
 
 @SuppressWarnings("serial")
 public class AppFrame extends BaseFrame implements ActionListener {
@@ -40,7 +42,7 @@ public class AppFrame extends BaseFrame implements ActionListener {
 		add(this.panel);
     }
     
-    protected void setBody(JPanel newBody) {
+    public void setBody(JPanel newBody) {
     	this.remove(this.panel);
     	this.panel = newBody;
     	this.add(this.panel);
