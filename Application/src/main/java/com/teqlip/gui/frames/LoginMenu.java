@@ -1,21 +1,24 @@
-package com.teqlip.gui;
+package com.teqlip.gui.frames;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginMenu2 extends JFrame implements ActionListener {
+import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.TEQMainMenuPanel;
+
+@SuppressWarnings("serial")
+public class LoginMenu extends BaseFrame {
 	
 	private final static String LOGIN = "login";
 	private final static String HELP = "help";
@@ -26,7 +29,7 @@ public class LoginMenu2 extends JFrame implements ActionListener {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	
-	public LoginMenu2() {
+	public LoginMenu() {
 		super("Welcome to TEQLIP!");
 		
 		container = getContentPane();
@@ -42,37 +45,37 @@ public class LoginMenu2 extends JFrame implements ActionListener {
 		add(buttonPane);
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		
 		if (LOGIN.equals(cmd)) {
 			// Process the password and what to do next.
-			char[] input = passwordField.getPassword();
-			if (isPasswordCorrect(input)) {
-				// Do something
-				this.setVisible(false);
-				TEQMainMenu mainMenu = new TEQMainMenu(MainFrame.initJFrame(), null, this.usernameField.getText());
+			String userInput = usernameField.getText();
+			char[] passInput = passwordField.getPassword();
+			if (isPasswordCorrect(passInput)) {
+				this.dispose();
+
+				AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+				main.setBody(new TEQMainMenuPanel(main));
+				
+				main.packAndShow();
+				
 			} else {
-				// Do something else
+				JOptionPane.showMessageDialog(null, "Incorrect username or password", "Fail Login", JOptionPane.ERROR_MESSAGE);
 			}
 			
 			//Zero out the possible password, for security.
-            Arrays.fill(input, '0');
+            Arrays.fill(passInput, '0');
 		} else if (HELP.equals(cmd)) {
-			// Do something for help
+			JOptionPane.showMessageDialog(null, "The password is 'test'", "Help", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
 	protected JComponent createButtonPane() {
 		JPanel p = new JPanel();
-		JButton loginBtn = new JButton("Login");
-		JButton helpBtn = new JButton("Help");
-		
-		loginBtn.addActionListener(this);
-		loginBtn.setActionCommand(LOGIN);
-		
-		helpBtn.addActionListener(this);
-		helpBtn.setActionCommand(HELP);
+		JButton loginBtn = JGuiHelper.createButton("Login", this, LOGIN);
+		JButton helpBtn = JGuiHelper.createButton("Help", this, HELP);
 		
 		p.add(loginBtn);
 		p.add(helpBtn);
@@ -102,7 +105,7 @@ public class LoginMenu2 extends JFrame implements ActionListener {
 	
 	private static boolean isPasswordCorrect(char[] input) {
 		boolean isCorrect = true;
-		char[] correctPassword = "MACROHARD".toCharArray();
+		char[] correctPassword = "test".toCharArray();
 		
 		if (input.length != correctPassword.length) {
 			isCorrect = false;
