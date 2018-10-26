@@ -62,9 +62,9 @@ public class TEQMainMenuPanel extends BodyPanel {
 		String cmd = e.getActionCommand();
 		
 		if (cmd.equals(ActionConsts.CREATE)) {
-			main.setBody(new TEQCreateAccountPanel(main));
+			super.goToMenu(MenuOptions.CREATE_ACCOUNT);
 		} else if (cmd.equals(ActionConsts.UPLOAD)) {
-			main.setBody(new TEQUploadTemplatePanel(main));
+			super.goToMenu(MenuOptions.UPLOAD_TEMPLATE);
 		} else if (cmd.equals(ActionConsts.DOWNLOAD)) {
 			
 		}

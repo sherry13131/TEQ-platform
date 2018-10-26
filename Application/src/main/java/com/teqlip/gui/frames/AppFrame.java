@@ -17,10 +17,6 @@ public class AppFrame extends BaseFrame implements ActionListener {
     
     private BoxLayout layout;
     private Container container;
-
-/*    public AppFrame(String username, String userRole) {
-    	this(username, userRole, new JPanel());
-    }*/
     
     public AppFrame(String username, String userRole) {
     	super("TEQLIP");

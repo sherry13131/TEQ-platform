@@ -66,7 +66,7 @@ public class TEQCreateAccountPanel extends BodyPanel {
 		if (cmd.equals(ActionConsts.SUBMIT)) {
 			
 		} else if (cmd.equals(ActionConsts.CANCEL)) {
-			super.changeTo(new TEQMainMenuPanel(main));
+			super.goToMenu(MenuOptions.MAIN_MENU);
 		}
 	}
 }

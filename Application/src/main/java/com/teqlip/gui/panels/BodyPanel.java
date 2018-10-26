@@ -13,13 +13,41 @@ abstract class BodyPanel extends JPanel implements ActionListener {
 	
 	protected AppFrame main;
 	
+	public enum MenuOptions {
+		MAIN_MENU,
+		CREATE_ACCOUNT,
+		UPLOAD_TEMPLATE,
+		DOWNLOAD_TEMPLATE,
+	}
+	
 	public BodyPanel(AppFrame main) {
 		this.main = main;
 	}
 	
-	public void changeTo(BodyPanel body) {
-		this.main.setBody(body);
+	protected BodyPanel goToMenu(MenuOptions menu) {
+		BodyPanel newMenu = null;
+		
+		switch (menu) {
+			case MAIN_MENU:
+				newMenu = new TEQMainMenuPanel(main);
+				break;
+			case CREATE_ACCOUNT:
+				newMenu = new TEQCreateAccountPanel(main);
+				break;
+			case UPLOAD_TEMPLATE:
+				newMenu = new TEQUploadTemplatePanel(main);
+				break;
+			case DOWNLOAD_TEMPLATE:
+				return null;
+		}
+		
+		this.main.setBody(newMenu);
+		return newMenu;
 	}
+	
+/*	public void changeTo(BodyPanel body) {
+		this.main.setBody(body);
+	}*/
 	
 	@Override
 	public void setLayout(LayoutManager layout) {
