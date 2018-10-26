@@ -1,16 +1,10 @@
 package com.teqlip.gui.panels;
 
-import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 
-import com.sun.xml.internal.ws.api.Component;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
-
-import javafx.scene.layout.BorderPane;
 
 @SuppressWarnings("serial")
 public class TEQUploadTemplatePanel extends BodyPanel {
@@ -22,6 +16,8 @@ public class TEQUploadTemplatePanel extends BodyPanel {
 	}
 	
 	private BoxLayout layout;
+	private JTextField filenameField;
+	private JTextField pathField;
 	
     public TEQUploadTemplatePanel(AppFrame main) {
         super(main);
@@ -33,9 +29,6 @@ public class TEQUploadTemplatePanel extends BodyPanel {
         JComponent pathPane = createPathPane();
         JComponent buttonsPane = createButtonPane();
         
-        Dimension size = this.getSize();
-        Dimension newSize = new Dimension((int) size.getWidth() / 3, (int) size.getHeight());
-        
         add(filenamePane);
         add(pathPane);
         add(buttonsPane);
@@ -45,10 +38,10 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     	
     	JLabel filenamelbl = new JLabel("Name file as:");
-    	JTextField textField = JGuiHelper.createTextField();
+    	this.filenameField = JGuiHelper.createTextField();
     	
     	p.add(filenamelbl);
-    	p.add(textField);
+    	p.add(this.filenameField);
     	
     	return p;
     }
@@ -63,9 +56,9 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	pathLbl.setAlignmentX(LEFT_ALIGNMENT);
     	
     	JPanel child = JGuiHelper.createPanelBox(BoxLayout.LINE_AXIS);
-    	JTextField textField = JGuiHelper.createTextField();
+    	this.pathField = JGuiHelper.createTextField();
     	JButton browseBtn = JGuiHelper.createButton("Browse...", this, ActionConsts.BROWSE);
-    	child.add(textField);
+    	child.add(this.pathField);
     	child.add(browseBtn);
     	
     	parent.add(pathLbl);
@@ -91,11 +84,11 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	String cmd = ae.getActionCommand();
 
         if (cmd.equals(ActionConsts.BROWSE)) {
-        	
+        	TEQUploadDialogBox dialog = new TEQUploadDialogBox(this, this.pathField);
         } else if (cmd.equals(ActionConsts.UPLOAD)) {
         	
         } else if (cmd.equals(ActionConsts.CANCEL)) {
-        	main.setBody(new TEQMainMenuPanel(main));
+        	super.goToMenu(MenuOptions.MAIN_MENU);
         }
     }
 
