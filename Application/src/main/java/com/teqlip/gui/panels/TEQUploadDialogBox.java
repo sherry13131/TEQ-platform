@@ -1,9 +1,12 @@
-package com.teqlip.gui;
+package com.teqlip.gui.panels;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+
+import com.teqlip.gui.BasePanel;
+
 import java.sql.*;
 
 public class TEQUploadDialogBox extends BasePanel implements ActionListener {

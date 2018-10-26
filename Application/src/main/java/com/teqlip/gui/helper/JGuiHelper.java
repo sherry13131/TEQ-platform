@@ -1,6 +1,7 @@
 package com.teqlip.gui.helper;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
@@ -71,5 +72,11 @@ public class JGuiHelper {
 		JPanel p = new JPanel(new FlowLayout());
 		p.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return p;
+	}
+	
+	public static JTextField createTextField() {
+		JTextField textField = new JTextField(20);
+		textField.setMaximumSize(new Dimension(160, 25));
+		return textField;
 	}
 }
