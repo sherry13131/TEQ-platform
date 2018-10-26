@@ -36,12 +36,6 @@ public class TEQUploadTemplatePanel extends BodyPanel {
         Dimension size = this.getSize();
         Dimension newSize = new Dimension((int) size.getWidth() / 3, (int) size.getHeight());
         
-        int top=10;
-        int left=10;
-        int bottom=10;
-        int right=10;
-        Border border = BorderFactory.createEmptyBorder(top, left, bottom, right);
-        this.setBorder(border);
         add(filenamePane);
         add(pathPane);
         add(buttonsPane);
