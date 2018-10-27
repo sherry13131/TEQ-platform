@@ -1,4 +1,4 @@
-﻿User Stories,Tasks,Dependency,Story Points,1,2,3,4,5
+User Stories,Tasks,Dependency,Story Points,1,2,3,4,5
 1,1,,2,,sherry:2,,,
 1,2,T1,2,,,sean:2,,
 1,3,,2,,,sean:2,,
@@ -8,5 +8,5 @@
 1,7,,2,,,andrew:2,,
 1,8,,4,,,,,
 2,9,,2,,,,,
-2,10,,13,,,,,
+2,10,,2,,,,,
 2,11,,2,,,,,
