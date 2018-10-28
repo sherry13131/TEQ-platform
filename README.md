@@ -1,7 +1,7 @@
 # Team 7 - Macrohard Rainforest Inc.
 
 ## Running
-From the Team7 directory, go into the Application directory, and use Maven to build and run the code.
+From the Team7 directory, change into the Application directory, then use Maven to build and run the code.
 ```
 .../Team7$ cd Application
 .../Team7/Application$ mvn compile
@@ -28,12 +28,14 @@ From the Team7 directory, go into the Application directory, and use Maven to bu
 - [user_stories_v1.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v1.pdf)
 
 ### Sprint 1 Backlog
+- [sprint_1](https://github.com/CSCC01/Team7/tree/master/sprint_backlog/sprint_1) 
 - [tasks_sprint_1.pdf](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_1/tasks_sprint_1.pdf)
 - [plan.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_1/plan.csv)
 - [execution.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_1/execution.csv)
 - [burndown.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_1/burndown.csv)
 
 ### Sprint 2 Backlog
+- [sprint_2](https://github.com/CSCC01/Team7/tree/master/sprint_backlog/sprint_2)
 - [tasks_sprint_2.pdf](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_2/tasks_sprint_2.pdf)
 - [plan.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_2/plan.csv)
 - [execution.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_2/execution.csv)
