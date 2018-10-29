@@ -10,6 +10,8 @@ import com.teqlip.gui.helper.JGuiHelper;
 @SuppressWarnings("serial")
 public class AppFrame extends BaseFrame implements ActionListener {
 	private static final String LOGOUT = "logout";
+	public static final int LOGOUT_FONT_SIZE = 10;
+	public static final Dimension LOGOUT_BUTTON_DIMENSION = new Dimension(80, 5);
 	
     protected JPanel bodyPanel = null;
     protected String username;
@@ -68,7 +70,10 @@ public class AppFrame extends BaseFrame implements ActionListener {
     	JPanel p = JGuiHelper.createPanelBox(BoxLayout.X_AXIS);
     	
     	JButton logoutBtn = JGuiHelper.createButton("Logout", this, LOGOUT);
-    	logoutBtn.setPreferredSize(new Dimension(80, 5));
+    	logoutBtn.setPreferredSize(new Dimension(LOGOUT_BUTTON_DIMENSION));
+    	
+    	Font oldFont = logoutBtn.getFont();
+    	logoutBtn.setFont(new Font(oldFont.getFontName(), oldFont.getStyle(), LOGOUT_FONT_SIZE));
     	
     	JLabel username = new JLabel(this.username + ", " + this.userRole);
     	

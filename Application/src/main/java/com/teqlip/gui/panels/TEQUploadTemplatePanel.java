@@ -1,5 +1,6 @@
 package com.teqlip.gui.panels;
 
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -14,6 +15,8 @@ public class TEQUploadTemplatePanel extends BodyPanel {
 		private static final String UPLOAD = "upload";
 		private static final String CANCEL = "cancel";
 	}
+	
+	private static final Dimension FILENAME_FIELD_DIMENSION = new Dimension(80, 30);
 	
 	private BoxLayout layout;
 	private JTextField filenameField;
@@ -39,6 +42,7 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	
     	JLabel filenamelbl = new JLabel("Name file as:");
     	this.filenameField = JGuiHelper.createTextField();
+    	this.filenameField.setPreferredSize(FILENAME_FIELD_DIMENSION);
     	
     	p.add(filenamelbl);
     	p.add(this.filenameField);
@@ -50,10 +54,8 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	// The parent panel will consist of the Path on top, then another panel below which contains the textfield
     	// and browse button horizontally
     	JPanel parent = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
-    	parent.setAlignmentY(LEFT_ALIGNMENT);
     	
     	JLabel pathLbl = new JLabel("Path:");
-    	pathLbl.setAlignmentX(LEFT_ALIGNMENT);
     	
     	JPanel child = JGuiHelper.createPanelBox(BoxLayout.LINE_AXIS);
     	this.pathField = JGuiHelper.createTextField();
@@ -84,9 +86,13 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	String cmd = ae.getActionCommand();
 
         if (cmd.equals(ActionConsts.BROWSE)) {
-        	TEQUploadDialogBox dialog = new TEQUploadDialogBox(this, this.pathField);
-        } else if (cmd.equals(ActionConsts.UPLOAD)) {
+        	TEQUploadDialogBox dialogBox = new TEQUploadDialogBox(this);
+        	dialogBox.showOpenDialog();
         	
+        	this.filenameField.setText(dialogBox.getFileName());
+        	this.pathField.setText(dialogBox.getPath());
+        } else if (cmd.equals(ActionConsts.UPLOAD)) {
+        	// TODO Connect to Database
         } else if (cmd.equals(ActionConsts.CANCEL)) {
         	super.goToMenu(MenuOptions.MAIN_MENU);
         }

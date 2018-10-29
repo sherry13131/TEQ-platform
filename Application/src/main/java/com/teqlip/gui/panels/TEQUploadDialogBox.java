@@ -1,34 +1,37 @@
 package com.teqlip.gui.panels;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
-import java.sql.*;
-
-public class TEQUploadDialogBox implements ActionListener {
+public class TEQUploadDialogBox {
 
 	private JPanel panel;
-    private JTextField field;
-    
-    private JFileChooser c;
-    private int rVal;
+	private String filename;
+	private String path;
 
-    public TEQUploadDialogBox(JPanel panel, JTextField field) {
-        this.panel = panel;
-        this.field = field;
-        
-        this.c = new JFileChooser();
-        this.rVal = c.showOpenDialog(this.panel);
-    }    
+	private JFileChooser fileChooser;
+	private int rVal;
 
-    public void actionPerformed(ActionEvent ae) {
-        if (rVal == JFileChooser.APPROVE_OPTION) {
-            this.field.setText(c.getCurrentDirectory().toString() + "/" + c.getSelectedFile().getName());
-        }
-        if (rVal == JFileChooser.CANCEL_OPTION) {
-            this.field.setText("");
-        }
-    }  
+	public TEQUploadDialogBox(JPanel panel) {
+		this.panel = panel;
+		this.fileChooser = new JFileChooser();
+	}
+
+	public void showOpenDialog() {
+		this.rVal = fileChooser.showOpenDialog(this.panel);
+		
+		if (rVal == JFileChooser.APPROVE_OPTION) {
+			this.filename = fileChooser.getSelectedFile().getName();
+			this.path = fileChooser.getSelectedFile().getPath(); 
+		} else if (rVal == JFileChooser.CANCEL_OPTION) {
+			this.filename = "";
+		}
+	}
+	
+	public String getFileName() {
+		return this.filename;
+	}
+	
+	public String getPath() {
+		return this.path;
+	}
 }
