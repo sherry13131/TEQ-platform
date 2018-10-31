@@ -3,25 +3,24 @@ package com.teqlip.gui.frames;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import com.teqlip.gui.helper.JGuiHelper;
 
 @SuppressWarnings("serial")
 public class AppFrame extends BaseFrame implements ActionListener {
 	private static final String LOGOUT = "logout";
+	public static final int LOGOUT_FONT_SIZE = 10;
+	public static final Dimension LOGOUT_BUTTON_DIMENSION = new Dimension(80, 5);
 	
-    protected JPanel panel = null;
+    protected JPanel bodyPanel = null;
     protected String username;
     protected String userRole;
     
     private BoxLayout layout;
     private Container container;
-
-    public AppFrame(String username, String userRole) {
-    	this(username, userRole, new JPanel());
-    }
     
-    public AppFrame(String username, String userRole, JPanel body) {
+    public AppFrame(String username, String userRole) {
     	super("TEQLIP");
 		setMinimumSize(new Dimension(800, 400));
     	
@@ -35,17 +34,23 @@ public class AppFrame extends BaseFrame implements ActionListener {
 		// This will be the name and logout button that's present on every screen
 		JComponent logoutPane = createLogoutPane();
 		
-		// This will be the body of the app that changes
-		this.panel = body;
+		// This will be the body of the app that changes. We will create a border for anesthetics
+        int top=10;
+        int left=10;
+        int bottom=10;
+        int right=10;
+        Border border = BorderFactory.createEmptyBorder(top, left, bottom, right);
+		
+		this.bodyPanel = new JPanel();
+		this.bodyPanel.setBorder(border);
 		
 		add(logoutPane);
-		add(this.panel);
+		add(this.bodyPanel);
     }
     
     public void setBody(JPanel newBody) {
-    	this.remove(this.panel);
-    	this.panel = newBody;
-    	this.add(this.panel);
+    	this.bodyPanel.removeAll();
+    	this.bodyPanel.add(newBody);
     	this.revalidate();
     	this.repaint();
     }
@@ -55,28 +60,20 @@ public class AppFrame extends BaseFrame implements ActionListener {
        this.revalidate();
        this.repaint();
     }
-    
-    public void UIUpdate() {
-    	if (this.isVisible()) {
-    		this.revalidate();
-    		this.repaint();
-    	} else {
-    		this.pack();
-        	this.setLocationRelativeTo(null);
-        	this.setVisible(true);
-    	}
-    }
 
     public void close() {
-        this.remove(this.panel);
-        this.panel = null;
+        this.remove(this.bodyPanel);
+        this.bodyPanel = null;
     }
     
     private JComponent createLogoutPane() {
     	JPanel p = JGuiHelper.createPanelBox(BoxLayout.X_AXIS);
     	
     	JButton logoutBtn = JGuiHelper.createButton("Logout", this, LOGOUT);
-    	logoutBtn.setPreferredSize(new Dimension(80, 5));
+    	logoutBtn.setPreferredSize(new Dimension(LOGOUT_BUTTON_DIMENSION));
+    	
+    	Font oldFont = logoutBtn.getFont();
+    	logoutBtn.setFont(new Font(oldFont.getFontName(), oldFont.getStyle(), LOGOUT_FONT_SIZE));
     	
     	JLabel username = new JLabel(this.username + ", " + this.userRole);
     	
@@ -88,7 +85,7 @@ public class AppFrame extends BaseFrame implements ActionListener {
     	
     	return p;
     }
-
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
