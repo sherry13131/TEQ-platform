@@ -17,7 +17,7 @@ public class Login {
 	/**
 	 * Take a username and check if there exist the same username already in db.
 	 * @param username used to check.
-	 * @return Whether or not the username already taken and is in db.
+	 * @return true if exist, false if not exist in db
 	 */
 	public static boolean checkUserName(String username) {
 		boolean valid = true;	
