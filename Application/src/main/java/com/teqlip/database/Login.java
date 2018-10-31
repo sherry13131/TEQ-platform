@@ -3,14 +3,16 @@ package com.teqlip.database;
 import java.sql.*;
 
 public class Login {
-	// main function
-	public static void main(String[] args) {
-		System.out.println(checkUserName("herry"));
-		System.out.println(newUserID());
-		System.out.println(getRoleID("utsc"));
-		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
-		System.out.println(checkLoginInfo("herry","mypwd"));
-	}
+	
+	// dead code for just testing db
+//	// main function
+//	public static void main(String[] args) {
+//		System.out.println(checkUserName("herry"));
+//		System.out.println(newUserID());
+//		System.out.println(getRoleID("utsc"));
+//		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
+//		System.out.println(checkLoginInfo("herry","mypwd"));
+//	}
 	
 	/**
 	 * Take a username and check if there exist the same username already in db.

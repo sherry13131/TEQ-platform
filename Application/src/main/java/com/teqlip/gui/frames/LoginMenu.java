@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.TEQMainMenuPanel;
+import com.teqlip.database.Login;
 
 @SuppressWarnings("serial")
 public class LoginMenu extends BaseFrame {
@@ -28,6 +29,8 @@ public class LoginMenu extends BaseFrame {
 	
 	private JTextField usernameField;
 	private JPasswordField passwordField;
+	
+	private Login db = new Login();
 	
 	public LoginMenu() {
 		super("Welcome to TEQLIP!");
@@ -53,7 +56,16 @@ public class LoginMenu extends BaseFrame {
 			// Process the password and what to do next.
 			String userInput = usernameField.getText();
 			char[] passInput = passwordField.getPassword();
-			if (isPasswordCorrect(passInput)) {
+			String pwd = String.copyValueOf(passInput);
+
+			// if password correct
+			if (db.checkUserName(userInput)) {
+				JOptionPane.showMessageDialog(null, "User does not exist", "Fail Login - no such user", JOptionPane.ERROR_MESSAGE);
+			}
+			// if user exist, check password
+			else if(db.checkLoginInfo(userInput, pwd)) {
+				// security reason - set string pwd to empty string
+				pwd = "";
 				this.dispose();
 
 				AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
@@ -62,7 +74,7 @@ public class LoginMenu extends BaseFrame {
 				main.packAndShow();
 				
 			} else {
-				JOptionPane.showMessageDialog(null, "Incorrect username or password", "Fail Login", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Incorrect password", "Fail Login - wrong password", JOptionPane.ERROR_MESSAGE);
 			}
 			
 			//Zero out the possible password, for security.
@@ -118,4 +130,6 @@ public class LoginMenu extends BaseFrame {
 		
 		return isCorrect;
 	}
+	
+	
 }
