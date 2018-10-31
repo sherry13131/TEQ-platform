@@ -73,9 +73,7 @@ public class TEQCreateAccountPanel extends BodyPanel {
 		
 		if (ActionConsts.SUBMIT.equals(cmd)) {
 			String usernameInput = this.textFields[0].getText();
-			System.out.println(usernameInput);
 			String emailInput = this.textFields[1].getText();
-			System.out.println(emailInput);
 			boolean flag = true;
 			
 			// replace these to value in field
