@@ -66,13 +66,29 @@ public class LoginMenu extends BaseFrame {
 			else if(db.checkLoginInfo(userInput, pwd)) {
 				// security reason - set string pwd to empty string
 				pwd = "";
+				String role = db.getRoleString(db.getUserRoleID(userInput));
+				System.out.println(role);
 				this.dispose();
-
-				AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-				main.setBody(new TEQMainMenuPanel(main));
 				
-				main.packAndShow();
-				
+				// check user role - might need to use some design pattern here...
+				if (role.equalsIgnoreCase("teqlip")) {
+					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+					main.setBody(new TEQMainMenuPanel(main));
+					
+					main.packAndShow();
+				} else if (role.equalsIgnoreCase("org")) {
+					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+					main.setBody(new TEQMainMenuPanel(main));
+					
+					main.packAndShow();
+				} else if (role.equalsIgnoreCase("utsc")) {
+					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+					main.setBody(new TEQMainMenuPanel(main));
+					
+					main.packAndShow();
+				} else {
+					JOptionPane.showMessageDialog(null, "Unknown error", "Fail Login - role not found", JOptionPane.ERROR_MESSAGE);
+				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Incorrect password", "Fail Login - wrong password", JOptionPane.ERROR_MESSAGE);
 			}
@@ -115,21 +131,21 @@ public class LoginMenu extends BaseFrame {
 		return p;
 	}
 	
-	private static boolean isPasswordCorrect(char[] input) {
-		boolean isCorrect = true;
-		char[] correctPassword = "test".toCharArray();
-		
-		if (input.length != correctPassword.length) {
-			isCorrect = false;
-		} else {
-			isCorrect = Arrays.equals(input, correctPassword);
-		}
-		
-		// Zero out for security
-		Arrays.fill(correctPassword, '0');
-		
-		return isCorrect;
-	}
+//	private static boolean isPasswordCorrect(char[] input) {
+//		boolean isCorrect = true;
+//		char[] correctPassword = "test".toCharArray();
+//		
+//		if (input.length != correctPassword.length) {
+//			isCorrect = false;
+//		} else {
+//			isCorrect = Arrays.equals(input, correctPassword);
+//		}
+//		
+//		// Zero out for security
+//		Arrays.fill(correctPassword, '0');
+//		
+//		return isCorrect;
+//	}
 	
 	
 }

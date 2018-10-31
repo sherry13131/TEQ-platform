@@ -88,6 +88,25 @@ public class Login {
 		return roleID;
 	}
 	
+	public static String getRoleString(Integer roleID) {
+		String role = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+			Statement stmt=con.createStatement();
+			//select the row where userID is the largest in users
+			String sql="SELECT role FROM roles WHERE roleID='"+roleID+"'";
+			ResultSet rs=stmt.executeQuery(sql);
+			//get the largest userID in db
+			while (rs.next()) {
+				role = rs.getString("role");
+			}
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		return role;
+	}
+	
 	
 	
 	/**
@@ -224,5 +243,24 @@ public class Login {
 			}
 		}
 		return userActive;
+	}
+	
+	public static int getUserRoleID(String username) {
+		int roleID = -1;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+			Statement stmt=con.createStatement();
+			//select the row where userID is the largest in users
+			String sql="SELECT u.roleID FROM users u, user_login ul WHERE ul.username='"+username+"' and ul.userID = u.userID";
+			ResultSet rs=stmt.executeQuery(sql);
+			//get the largest userID in db
+			while (rs.next()) {
+				roleID = rs.getInt("roleID");
+			}
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		return roleID;
 	}
 }
