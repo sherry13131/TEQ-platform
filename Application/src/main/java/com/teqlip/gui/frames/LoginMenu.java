@@ -67,7 +67,6 @@ public class LoginMenu extends BaseFrame {
 				// security reason - set string pwd to empty string
 				pwd = "";
 				String role = db.getRoleString(db.getUserRoleID(userInput));
-				System.out.println(role);
 				this.dispose();
 				
 				// check user role - might need to use some design pattern here...
