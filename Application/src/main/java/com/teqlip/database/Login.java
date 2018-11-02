@@ -3,19 +3,21 @@ package com.teqlip.database;
 import java.sql.*;
 
 public class Login {
-	// main function
-	public static void main(String[] args) {
-		System.out.println(checkUserName("herry"));
-		System.out.println(newUserID());
-		System.out.println(getRoleID("utsc"));
-		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
-		System.out.println(checkLoginInfo("herry","mypwd"));
-	}
+	
+	// dead code for just testing db
+//	// main function
+//	public static void main(String[] args) {
+//		System.out.println(checkUserName("herry"));
+//		System.out.println(newUserID());
+//		System.out.println(getRoleID("utsc"));
+//		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
+//		System.out.println(checkLoginInfo("herry","mypwd"));
+//	}
 	
 	/**
 	 * Take a username and check if there exist the same username already in db.
 	 * @param username used to check.
-	 * @return Whether or not the username already taken and is in db.
+	 * @return true if exist, false if not exist in db
 	 */
 	public static boolean checkUserName(String username) {
 		boolean valid = true;	
@@ -84,6 +86,25 @@ public class Login {
 			System.out.print(e);
 		}
 		return roleID;
+	}
+	
+	public static String getRoleString(Integer roleID) {
+		String role = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+			Statement stmt=con.createStatement();
+			//select the row where userID is the largest in users
+			String sql="SELECT role FROM roles WHERE roleID='"+roleID+"'";
+			ResultSet rs=stmt.executeQuery(sql);
+			//get the largest userID in db
+			while (rs.next()) {
+				role = rs.getString("role");
+			}
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		return role;
 	}
 	
 	
@@ -222,5 +243,24 @@ public class Login {
 			}
 		}
 		return userActive;
+	}
+	
+	public static int getUserRoleID(String username) {
+		int roleID = -1;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+			Statement stmt=con.createStatement();
+			//select the row where userID is the largest in users
+			String sql="SELECT u.roleID FROM users u, user_login ul WHERE ul.username='"+username+"' and ul.userID = u.userID";
+			ResultSet rs=stmt.executeQuery(sql);
+			//get the largest userID in db
+			while (rs.next()) {
+				roleID = rs.getInt("roleID");
+			}
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		return roleID;
 	}
 }
