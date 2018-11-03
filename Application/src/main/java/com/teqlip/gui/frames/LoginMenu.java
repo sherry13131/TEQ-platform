@@ -2,7 +2,9 @@ package com.teqlip.gui.frames;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.BoxLayout;
@@ -14,9 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+//import com.teqlip.gui.DatabaseSelector;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.TEQMainMenuPanel;
-import com.teqlip.database.Login;
+import com.teqlip.database.DatabaseSelectHelper;
+import com.teqlip.exceptions.ConnectionFailedException;
 
 @SuppressWarnings("serial")
 public class LoginMenu extends BaseFrame {
@@ -30,11 +34,12 @@ public class LoginMenu extends BaseFrame {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	
-	private Login db = new Login();
+//	private DatabaseSelectHelper db = new DatabaseSelectHelper();
 	
 	public LoginMenu() {
 		super("Welcome to TEQLIP!");
 		
+		new DatabaseSelectHelper();
 		container = getContentPane();
 		layout = new BoxLayout(container, BoxLayout.PAGE_AXIS);
 		setLayout(layout);
@@ -59,37 +64,49 @@ public class LoginMenu extends BaseFrame {
 			String pwd = String.copyValueOf(passInput);
 
 			// if password correct
-			if (db.checkUserName(userInput)) {
-				JOptionPane.showMessageDialog(null, "User does not exist", "Fail Login - no such user", JOptionPane.ERROR_MESSAGE);
-			}
-			// if user exist, check password
-			else if(db.checkLoginInfo(userInput, pwd)) {
-				// security reason - set string pwd to empty string
-				pwd = "";
-				String role = db.getRoleString(db.getUserRoleID(userInput));
-				this.dispose();
-				
-				// check user role - might need to use some design pattern here...
-				if (role.equalsIgnoreCase("teqlip")) {
-					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-					main.setBody(new TEQMainMenuPanel(main));
-					
-					main.packAndShow();
-				} else if (role.equalsIgnoreCase("org")) {
-					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-					main.setBody(new TEQMainMenuPanel(main));
-					
-					main.packAndShow();
-				} else if (role.equalsIgnoreCase("utsc")) {
-					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-					main.setBody(new TEQMainMenuPanel(main));
-					
-					main.packAndShow();
-				} else {
-					JOptionPane.showMessageDialog(null, "Unknown error", "Fail Login - role not found", JOptionPane.ERROR_MESSAGE);
+			try {
+				if (!DatabaseSelectHelper.checkUsernameExist(userInput)) {
+					JOptionPane.showMessageDialog(null, "User does not exist", "Fail Login - no such user", JOptionPane.ERROR_MESSAGE);
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Incorrect password", "Fail Login - wrong password", JOptionPane.ERROR_MESSAGE);
+				// if user exist, check password
+				else if(DatabaseSelectHelper.checkLoginInfo(userInput, pwd)) {
+					// security reason - set string pwd to empty string
+					pwd = "";
+					int userID = DatabaseSelectHelper.getUserID(userInput);
+					String role = "";
+					try {
+						role = DatabaseSelectHelper.getRoleName(DatabaseSelectHelper.getUserRoleId(userID));
+					} catch (SQLException | ConnectionFailedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					this.dispose();
+					
+					// check user role - might need to use some design pattern here...
+					if (role.equalsIgnoreCase("teqlip")) {
+						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+						main.setBody(new TEQMainMenuPanel(main));
+						
+						main.packAndShow();
+					} else if (role.equalsIgnoreCase("org")) {
+						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+						main.setBody(new TEQMainMenuPanel(main));
+						
+						main.packAndShow();
+					} else if (role.equalsIgnoreCase("utsc")) {
+						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
+						main.setBody(new TEQMainMenuPanel(main));
+						
+						main.packAndShow();
+					} else {
+						JOptionPane.showMessageDialog(null, "Unknown error", "Fail Login - role not found", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Incorrect password", "Fail Login - wrong password", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (HeadlessException | SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 			
 			//Zero out the possible password, for security.
@@ -128,23 +145,6 @@ public class LoginMenu extends BaseFrame {
 		p.add(textfield);
 		
 		return p;
-	}
-	
-//	private static boolean isPasswordCorrect(char[] input) {
-//		boolean isCorrect = true;
-//		char[] correctPassword = "test".toCharArray();
-//		
-//		if (input.length != correctPassword.length) {
-//			isCorrect = false;
-//		} else {
-//			isCorrect = Arrays.equals(input, correctPassword);
-//		}
-//		
-//		// Zero out for security
-//		Arrays.fill(correctPassword, '0');
-//		
-//		return isCorrect;
-//	}
-	
+	}	
 	
 }
