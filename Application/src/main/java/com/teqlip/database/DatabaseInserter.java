@@ -12,33 +12,6 @@ import java.sql.Statement;
 public class DatabaseInserter {
   
   /**
-   * Use this to insert new roles into the database.
-   * @param role the new role to be added.
-   * @param connection the database.
-   * @return the id of the role that was inserted.
-   * @throws DatabaseInsertException  on failure.
-   */
-  protected static int insertRole(String role, Connection connection) 
-      throws DatabaseInsertException {
-    String sql = "INSERT INTO ROLES(NAME) VALUES(?)";
-    try {
-      PreparedStatement preparedStatement = connection.prepareStatement(sql, 
-                                              Statement.RETURN_GENERATED_KEYS);
-      preparedStatement.setString(1,role);
-      int id = preparedStatement.executeUpdate();
-      if (id > 0) {
-        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
-        if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    throw new DatabaseInsertException();
-  }
-  
-  /**
    * Use this to insert a new user.
    * @param name the user's name.
    * @param age the user's age.
@@ -78,36 +51,6 @@ public class DatabaseInserter {
 	  }
 	return -1;
 	   
-  }
-
-/**
-   * Insert a relationship between a user and a role.
-   * @param userId the id of the user.
-   * @param roleId the role id of the user.
-   * @param connection the database connection.
-   * @return the unique relationship id.
-   * @throws DatabaseInsertException if there is a failure on the insert.
-   */
-  protected static int insertUserRole(int userId, int roleId, 
-      Connection connection) throws DatabaseInsertException {
-    String sql = "INSERT INTO USERROLE(USERID, ROLEID) VALUES (?, ?)";
-    try {
-      PreparedStatement preparedStatement = connection.prepareStatement(sql, 
-                                              Statement.RETURN_GENERATED_KEYS);
-      preparedStatement.setInt(1, userId);
-      preparedStatement.setInt(2, roleId);
-      int id = preparedStatement.executeUpdate();
-      if (id > 0) {
-        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
-        if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    
-    throw new DatabaseInsertException();
   }
   
   private static boolean insertPassword(String password, int userID, Connection con) {

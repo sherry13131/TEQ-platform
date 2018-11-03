@@ -168,6 +168,12 @@ public class DatabaseSelector {
 		return hashPassword;
 	}
 
+	/**
+	 * get the total number of users (with login account) in db
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
 	public static int getTotalNumOfUsers(Connection con) throws SQLException {
 		int newUserID = -1;
 		Statement stmt = con.createStatement();

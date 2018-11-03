@@ -259,6 +259,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return PasswordHelper.checkPassword(userID, password);
 	}
 
+	/**
+	 * get the next available userID
+	 * @return userID
+	 */
 	public static int newUserId() {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		int newUserID = 0;
