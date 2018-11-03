@@ -4,6 +4,7 @@ import com.teqlip.database.DatabaseSelector;
 import com.teqlip.exceptions.ConnectionFailedException;
 //import com.teqlip.database.ValidIdHelperFunctions;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,6 +36,30 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		results.close();
 		con.close();
 		return ids;
+	}
+	
+	/**
+	 * get roleID of a given role name
+	 * @param role
+	 * @return roleID
+	 * @throws SQLException
+	 */
+	public static int getRoleId(String role) throws SQLException {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		ResultSet results = DatabaseSelector.getRoles(con);
+		int roleID = -1;
+		while (results.next()) {
+			if (results.getString("role").equalsIgnoreCase(role)) {
+				// add the current row's ID
+				roleID = results.getInt("roleID");
+				return roleID;
+			}
+		}
+		// throw exception
+		System.out.println("role not found");
+		results.close();
+		con.close();
+		return roleID;
 	}
 
 	/**
@@ -72,7 +97,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		try {
 			roleId = DatabaseSelector.getUserRoleID(userId, con);
 		} catch (SQLException invalidUserId) {
-			System.out.println("sth wrong in getUserRoleId()");
+			System.out.println("Invalid userID");
 		}
 		con.close();
 		return roleId;
@@ -180,6 +205,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return usernames.contains(username);
 	}
 	
+	/**
+	 * get a list of usernames
+	 * @return a list of usernames
+	 * @throws SQLException
+	 */
 	public static List<String> getUsernames() throws SQLException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		ResultSet results = DatabaseSelector.getUsernames(con);
@@ -222,9 +252,23 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	 * @param password
 	 * @return true if password matched
 	 * @throws SQLException
+	 * @throws NoSuchAlgorithmException 
 	 */
-	public static boolean checkLoginPassword(int userID, String password) throws SQLException {
+	public static boolean checkLoginPassword(int userID, String password) 
+			throws SQLException, NoSuchAlgorithmException {
 		return PasswordHelper.checkPassword(userID, password);
+	}
+
+	public static int newUserId() {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		int newUserID = 0;
+		try {
+			newUserID = DatabaseSelector.getTotalNumOfUsers(con);
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		// return the next userID for new account.
+		return newUserID + 1;
 	}
 	
 	// testing SelectHelper

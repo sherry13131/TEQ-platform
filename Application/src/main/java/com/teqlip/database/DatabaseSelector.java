@@ -168,4 +168,16 @@ public class DatabaseSelector {
 		return hashPassword;
 	}
 
+	public static int getTotalNumOfUsers(Connection con) throws SQLException {
+		int newUserID = -1;
+		Statement stmt = con.createStatement();
+		String sql="SELECT count(*) found FROM users;";
+		ResultSet rs=stmt.executeQuery(sql);
+		//get the largest userID in db
+		while (rs.next()) {
+			newUserID = rs.getInt("found");
+		}
+		return newUserID;
+	}
+
 }

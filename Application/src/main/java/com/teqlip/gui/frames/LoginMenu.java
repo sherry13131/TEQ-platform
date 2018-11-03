@@ -34,8 +34,6 @@ public class LoginMenu extends BaseFrame {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	
-//	private DatabaseSelectHelper db = new DatabaseSelectHelper();
-	
 	public LoginMenu() {
 		super("Welcome to TEQLIP!");
 		
