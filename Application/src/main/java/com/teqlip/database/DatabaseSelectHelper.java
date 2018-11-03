@@ -4,23 +4,18 @@ import com.teqlip.database.DatabaseSelector;
 import com.teqlip.exceptions.ConnectionFailedException;
 //import com.teqlip.database.ValidIdHelperFunctions;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-/*
- * TODO: Complete the below methods to be able to get information out of the database.
- * TODO: The given code is there to aide you in building your methods.  You don't have
- * TODO: to keep the exact code that is given (for example, DELETE the System.out.println())
- */
+
 public class DatabaseSelectHelper extends DatabaseSelector {
 	
 	/**
-	 * @return list of all role IDs
+	 * get a list of roleID
+	 * @return list of all roleIDs
 	 * @throws SQLException
 	 * @throws ConnectionFailedException
 	 */
@@ -43,16 +38,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 
 	/**
+	 * get role name of a roleID
 	 * @param roleId
-	 * @return
+	 * @return role name of that roleID
 	 * @throws SQLException
 	 * @throws ConnectionFailedException
 	 */
 	public static String getRoleName(int roleId) throws SQLException, ConnectionFailedException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
-		// make a role string to empty if the role doesn't exist
 		String role = "";
-		// if the roleID exists within the list of role id's get the the role name
+		// if the roleID exists in the list
 //		if (ValidIdHelperFunctions.ValidRoleId(roleId, getRoleIds())) {
 		if (getRoleIds().contains(roleId)) {
 			role = DatabaseSelector.getRole(roleId, con);
@@ -62,8 +57,9 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 
 	/**
+	 * get user's roleID
 	 * @param userId
-	 * @return
+	 * @return user roleID
 	 * @throws SQLException
 	 */
 	public static int getUserRoleId(int userId) throws SQLException {
@@ -76,8 +72,6 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		try {
 			roleId = DatabaseSelector.getUserRoleID(userId, con);
 		} catch (SQLException invalidUserId) {
-			System.out.println(userId);
-			System.out.println(roleId);
 			System.out.println("sth wrong in getUserRoleId()");
 		}
 		con.close();
@@ -85,8 +79,9 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 
 	/**
+	 * get a list of users' role
 	 * @param roleId
-	 * @return
+	 * @return a list of userID of that role
 	 * @throws SQLException
 	 * @throws ConnectionFailedException
 	 */
@@ -114,106 +109,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 
 	/**
-	 * @return
+	 * check if there is anything wrong when login from main page
+	 * @param username
+	 * @param password
+	 * @return true if nothing wrong on checking during login
 	 * @throws SQLException
-	 * @throws ConnectionFailedException
 	 */
-//	public static List<User> getUsersDetailsHelper() throws SQLException {
-//		List<User> users = new ArrayList<User>();
-////		Connection connection = DatabaseDriverHelper.connectDataBase();
-//		ResultSet results = DatabaseSelector.getUsersDetails();
-//		while (results.next()) {
-//			User user = null;
-//			String name = results.getString("NAME");
-//			// get the age of the person at the current row and column
-//			int age = results.getInt("AGE");
-//			// get the address of the person at the current row and column
-//			String address = (results.getString("ADDRESS"));
-//			// add the user the array list.
-//			// get the roleID in order to see the role name to see which type of User
-//			// object we should create to add the list of all users.
-//			int roleId = getUserRoleId(results.getInt("ID"));
-//			// change the role to an uppercase to compare with the enum constant value
-//			String role = getRoleName(roleId).toUpperCase();
-//			// get the user's ID
-//			// get the the name of the person at the current row in the name column
-//			// check which role the user and create the user subclass according to their
-//			// role name
-//			if (roleId != 0) {
-//				if (Roles.ADMIN.toString().equals(role)) {
-//					user = new Admin(results.getInt("ID"), name, age, address);
-//				} else if (Roles.EMPLOYEE.toString().equals(role)) {
-//					user = new Employee(results.getInt("ID"), name, age, address);
-//				} else {
-//					user = new Customer(results.getInt("ID"), name, age, address);
-//				}
-//			}
-//			users.add(user);
-//		}
-//		results.close();
-//		connection.close();
-//		return users;
-//	}
-
-	/**
-	 * returns the user after giving in its userId
-	 * 
-	 * @param userId
-	 * @return user
-	 * @throws SQLException
-	 * @throws ConnectionFailedException
-	 */
-//	public static User getUserDetails(int userId) throws SQLException, ConnectionFailedException {
-//		User user = null;
-//		Connection connection = DatabaseDriverHelper.connectDataBase();
-//		ResultSet results = DatabaseSelector.getUserDetails(userId, connection);
-//		while (results.next()) {
-//			// check if the the row's current UserId is the same as the inputed userId
-//			if (results.getInt("ID") == userId) {
-//				// find out the role of the the given user
-//				String role = getRoleName(getUserRoleId(userId));
-//				// if the roleId is that of an admin then create an admin object
-//				if (Roles.ADMIN.toString().equals(role.toUpperCase())) {
-//					user = new Admin(userId, results.getString("NAME"), (results.getInt("AGE")),
-//							(results.getString("ADDRESS")));
-//					results.close();
-//					// if the roleId is that of an Employee then create an Employee object
-//				} else if (Roles.EMPLOYEE.toString().equals(role.toUpperCase())) {
-//					user = new Employee(userId, results.getString("NAME"), (results.getInt("AGE")),
-//							(results.getString("ADDRESS")));
-//					results.close();
-//				} else {
-//					// if the roleId is that of an Customer then create an Customer object
-//					user = new Customer(userId, results.getString("NAME"), (results.getInt("AGE")),
-//							(results.getString("ADDRESS")));
-//					results.close();
-//				}
-//			}
-//		}
-//		connection.close();
-//		return user;
-//	}
-
-	/**
-	 * @param userId
-	 * @return the Hashed password of the user
-	 */
-	public static String getPassword(int userId) {
-		Connection con = DatabaseDriverHelper.connectDataBase();
-		String password = "";
-		try {
-			password = DatabaseSelector.getPassword(userId, con);
-			con.close();
-		} catch (SQLException e) {
-		}
-		return password;
-	}
-	
 	public static boolean checkLoginInfo(String username, String password) throws SQLException {
 		boolean validLoginInfo = false;
 		// check if username is in db
 		boolean usernameInDB = checkUsernameExist(username);
-		System.out.println(usernameInDB);
 		int userActive = -1;
 		int userID = -1;
 		boolean correctPassword = false;
@@ -242,6 +147,12 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return validLoginInfo;
 	}
 	
+	/**
+	 * get a user status (active or not)
+	 * @param username
+	 * @return integer 1 if user is active, 0 if inactive, -1 if error
+	 * @throws SQLException
+	 */
 	public static int getUserStatus(String username) throws SQLException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		ResultSet results = DatabaseSelector.getUsersStatus(con);
@@ -257,14 +168,15 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return active;
 	}
 	
+	/**
+	 * check if username exist in the db
+	 * @param username
+	 * @return true if username exist in db
+	 * @throws SQLException
+	 */
 	public static boolean checkUsernameExist(String username) throws SQLException {
 		List<String> usernames = new ArrayList<String>();
 		usernames = getUsernames();
-//		 checks to see if there is another row with the column to add another ID.
-//		 moves to the next row if it exists.
-
-//		System.out.println(usernames);
-//		System.out.println(usernames.contains(username));
 		return usernames.contains(username);
 	}
 	
@@ -284,6 +196,12 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return usernames;
 	}
 	
+	/**
+	 * get userID of a username
+	 * @param username
+	 * @return userID of that username, -1 if error
+	 * @throws SQLException
+	 */
 	public static int getUserID(String username) throws SQLException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		ResultSet results = DatabaseSelector.getUserIds(con);
@@ -298,10 +216,18 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return -1;
 	}
 	
+	/**
+	 * check if login password match or not
+	 * @param userID
+	 * @param password
+	 * @return true if password matched
+	 * @throws SQLException
+	 */
 	public static boolean checkLoginPassword(int userID, String password) throws SQLException {
 		return PasswordHelper.checkPassword(userID, password);
 	}
 	
+	// testing SelectHelper
 //	public static void main(String args[]) {
 //		try {
 //			Connection con = DatabaseDriverHelper.connectDataBase();

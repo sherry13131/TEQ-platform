@@ -8,6 +8,13 @@ import java.sql.Statement;
 
 public class PasswordHelper {
 	
+	/**
+	 * check the login password of a user
+	 * @param userID
+	 * @param password
+	 * @return true if password matched
+	 * @throws SQLException
+	 */
 	public static boolean checkPassword(int userID, String password) throws SQLException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		Statement stmt = con.createStatement();
@@ -24,4 +31,21 @@ public class PasswordHelper {
 		}
 		return false;
 	}
+	
+	/** 
+	 * get hashed password of a user by userID
+	 * @param userId
+	 * @return the Hashed password of that user
+	 */
+	public static String getPassword(int userId) {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		String password = "";
+		try {
+			password = DatabaseSelector.getPassword(userId, con);
+			con.close();
+		} catch (SQLException e) {
+		}
+		return password;
+	}
+	
 }

@@ -1,7 +1,6 @@
 package com.teqlip.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +9,8 @@ import java.sql.Statement;
 public class DatabaseSelector {
 	
 	/**
-	 * get all the roles.
-	 * 
-	 * @param connection
-	 *            the connection.
+	 * get all the roles
+	 * @param connection db connection
 	 * @return a ResultSet containing all rows of the roles table.
 	 * @throws SQLException
 	 *             thrown if an SQLException occurs.
@@ -25,20 +22,17 @@ public class DatabaseSelector {
 	}
 
 	/**
-	 * get the role with id id.
-	 * 
+	 * get the role name by roleID
 	 * @param id
-	 *            the id of the role
-	 * @param connection
-	 *            the database connection
-	 * @return a String containing the role.
+	 * @param connection db connection
+	 * @return String - role name
 	 * @throws SQLException
 	 *             thrown when something goes wrong with query.
 	 */
-	protected static String getRole(int id, Connection con) throws SQLException {
+	protected static String getRole(int roleID, Connection con) throws SQLException {
 		String sql = "SELECT role FROM roles WHERE roleID = ?";
 		PreparedStatement preparedStatement = con.prepareStatement(sql);
-		preparedStatement.setInt(1, id);
+		preparedStatement.setInt(1, roleID);
 		ResultSet results = preparedStatement.executeQuery();
 		results.next();
 		String role = results.getString("role");
@@ -47,15 +41,11 @@ public class DatabaseSelector {
 	}
 
 	/**
-	 * get the role of the given user.
-	 * 
+	 * get the user's role by userID
 	 * @param userId
-	 *            the id of the user.
-	 * @param connection
-	 *            the connection to the database.
-	 * @return the roleId for the user.
+	 * @param connection db connection
+	 * @return the roleID of that user
 	 * @throws SQLException
-	 *             thrown if something goes wrong with the query.
 	 */
 	protected static int getUserRoleID(int userId, Connection con) throws SQLException {
 		String sql = "SELECT roleID FROM users WHERE userID = ?";
@@ -69,15 +59,11 @@ public class DatabaseSelector {
 	}
 
 	/**
-	 * get the role of the given user.
-	 * 
-	 * @param userId
-	 *            the id of the user.
-	 * @param connection
-	 *            the connection to the database.
-	 * @return the roleId for the user.
+	 * get a result set of userID with a specific roleID
+	 * @param roleId
+	 * @param connection db connection
+	 * @return a result set of userID
 	 * @throws SQLException
-	 *             thrown if something goes wrong with the query.
 	 */
 	protected static ResultSet getUsersByRole(int roleId, Connection con) throws SQLException {
 		String sql = "SELECT userID FROM users WHERE roleID = ?";
@@ -87,13 +73,10 @@ public class DatabaseSelector {
 	}
 
 	/**
-	 * Return all users from the database.
-	 * 
-	 * @param connection
-	 *            the connection to the database.
-	 * @return a results set of all rows in the table.
+	 * Return all users' infomation from the database
+	 * @param connection db connection
+	 * @return a results set of all rows in the table users
 	 * @throws SQLException
-	 *             thrown if there is an issue.
 	 */
 	protected static ResultSet getUsersDetails(Connection con) throws SQLException {
 		String sql = "SELECT * FROM users";
@@ -102,15 +85,11 @@ public class DatabaseSelector {
 	}
 
 	/**
-	 * find all the details about a given user.
-	 * 
+	 * find all the details about a given user
 	 * @param userId
-	 *            the id of the user.
-	 * @param connection
-	 *            a connection to the database.
-	 * @return a result set with the details of the user.
+	 * @param connection db connection
+	 * @return a result set with the details of the user
 	 * @throws SQLException
-	 *             thrown when something goes wrong with query.
 	 */
 	protected static ResultSet getUserDetails(int userId, Connection con) throws SQLException {
 		String sql = "SELECT * FROM users WHERE userID = ?";
@@ -119,20 +98,38 @@ public class DatabaseSelector {
 		return preparedStatement.executeQuery();
 	}
 	
+	/**
+	 * get a result set of all usernames
+	 * @param con
+	 * @return a result set of all usernames
+	 * @throws SQLException
+	 */
 	public static ResultSet getUsernames(Connection con) throws SQLException {
 		Statement stmt = con.createStatement();
 		ResultSet results = stmt.executeQuery("SELECT username FROM user_login;");
 		return results;
 	}
 	
+	/**
+	 * get a username by username
+	 * @param username
+	 * @param con
+	 * @return a username if found
+	 * @throws SQLException
+	 */
 	public static ResultSet getUsername(String username, Connection con) throws SQLException {
 		String sql = "SELECT username FROM user_login where username = ?;";
 		PreparedStatement preparedStatement = con.prepareStatement(sql);
 		preparedStatement.setString(1, username);
-//		System.out.println(results.getString("username"));
 		return preparedStatement.executeQuery();
 	}
 	
+	/**
+	 * get all users status (active)
+	 * @param con
+	 * @return a result set with username and active columns 
+	 * @throws SQLException
+	 */
 	public static ResultSet getUsersStatus(Connection con) throws SQLException {
 		//get the associated userID and activity
 		Statement stmt = con.createStatement();
@@ -141,6 +138,12 @@ public class DatabaseSelector {
 		return result;
 	}
 	
+	/**
+	 * get all userIDs with username
+	 * @param con
+	 * @return a result set with userID and username columns
+	 * @throws SQLException
+	 */
 	public static ResultSet getUserIds(Connection con) throws SQLException {
 		Statement stmt = con.createStatement();
 		String sql="SELECT userID, username FROM user_login";
@@ -149,15 +152,11 @@ public class DatabaseSelector {
 	}
 
 	/**
-	 * get the hashed version of the password.
-	 * 
+	 * get the hashed password
 	 * @param userId
-	 *            the user's id.
-	 * @param connection
-	 *            the database connection.
-	 * @return the hashed password to be checked against given password.
+	 * @param connection db connection
+	 * @return the hashed password
 	 * @throws SQLException
-	 *             if a database issue occurs.
 	 */
 	protected static String getPassword(int userId, Connection con) throws SQLException {
 		String sql = "SELECT password FROM user_password WHERE userID = ?";
