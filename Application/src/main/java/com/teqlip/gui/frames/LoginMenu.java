@@ -76,13 +76,13 @@ public class LoginMenu extends BaseFrame {
 					
 					main.packAndShow();
 				} else if (role.equalsIgnoreCase("org")) {
-					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-					main.setBody(new TEQMainMenuPanel(main));
+					AppFrame main = new AppFrame(userInput, "Participating Organization Volunteer");
+					main.setBody(new OrgMainMenuPanel(main));
 					
 					main.packAndShow();
 				} else if (role.equalsIgnoreCase("utsc")) {
-					AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-					main.setBody(new TEQMainMenuPanel(main));
+					AppFrame main = new AppFrame(userInput, "UTSC Project Staff");
+					main.setBody(new UTSCMainMenuPanel(main));
 					
 					main.packAndShow();
 				} else {

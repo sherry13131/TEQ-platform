@@ -79,4 +79,9 @@ public class JGuiHelper {
 		textField.setMaximumSize(new Dimension(160, 25));
 		return textField;
 	}
+
+    public static JComboBox createComboBox(String[] options) {
+        JComboBox comboBox = new JComboBox(options);
+        return comboBox;
+    }
 }

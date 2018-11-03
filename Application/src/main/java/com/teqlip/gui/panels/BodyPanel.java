@@ -18,6 +18,7 @@ abstract class BodyPanel extends JPanel implements ActionListener {
 		CREATE_ACCOUNT,
 		UPLOAD_TEMPLATE,
 		DOWNLOAD_TEMPLATE,
+        ORG_MAIN_MENU
 	}
 	
 	public BodyPanel(AppFrame main) {
@@ -38,7 +39,10 @@ abstract class BodyPanel extends JPanel implements ActionListener {
 				newMenu = new TEQUploadTemplatePanel(main);
 				break;
 			case DOWNLOAD_TEMPLATE:
-				return null;
+				newMenu = new OrgDownloadTemplatePanel(main);
+            case ORG_MAIN_MENU:
+				newMenu = new OrgMainMenuPanel(main);
+				break;
 		}
 		
 		this.main.setBody(newMenu);
