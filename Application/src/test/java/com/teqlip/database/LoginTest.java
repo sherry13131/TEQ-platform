@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 class LoginTest {
 
+  Login sys = new Login();
+  
   @Test
   @DisplayName("check a vaild user name")
   void testForVaildUserName() {
@@ -121,4 +123,23 @@ class LoginTest {
   void testForGetUSForDNEAccount() {
     assertEquals(0,Login.getUserStatus("admin6"));
   }
+  
+  @Test
+  @DisplayName("get role for teqlip")
+  void testForGetRoleTEQ() {
+    assertEquals("teqlip", Login.getRoleString(2));
+  }
+  
+  @Test
+  @DisplayName("get role for utsc")
+  void testForGetRoleUTSC() {
+    assertEquals("utsc", Login.getRoleString(1));
+  }
+  
+  @Test
+  @DisplayName("get role for org")
+  void testForGetRoleOrg() {
+    assertEquals("org", Login.getRoleString(3));
+  }
+  
 }
