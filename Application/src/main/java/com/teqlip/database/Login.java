@@ -3,26 +3,40 @@ package com.teqlip.database;
 import java.sql.*;
 
 public class Login {
-	// main function
-	public static void main(String[] args) {
-		System.out.println(checkUserName("herry"));
-		System.out.println(newUserID());
-		System.out.println(getRoleID("utsc"));
-		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
-		System.out.println(checkLoginInfo("herry","mypwd"));
+	
+	private static Statement stmt;
+	private static Connection con;
+	public Login() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+			stmt = con.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	// dead code for just testing db
+//	// main function
+//	public static void main(String[] args) {
+//		System.out.println(checkUserName("herry"));
+//		System.out.println(newUserID());
+//		System.out.println(getRoleID("utsc"));
+//		System.out.println(createAccount("herry", "mypwd","Herry","Ng","Hun","utsc","herry@gmial","1289432",1));
+//		System.out.println(checkLoginInfo("herry","mypwd"));
+//	}
 	
 	/**
 	 * Take a username and check if there exist the same username already in db.
 	 * @param username used to check.
-	 * @return Whether or not the username already taken and is in db.
+	 * @return true if exist, false if not exist in db
 	 */
 	public static boolean checkUserName(String username) {
 		boolean valid = true;	
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-			Statement stmt=con.createStatement();
+		try {			
 			String sql="SELECT * FROM user_login WHERE username='"+username+"'";
 			ResultSet rs=stmt.executeQuery(sql);
 			// if the result set is empty, then there is no duplicate
@@ -45,9 +59,9 @@ public class Login {
 	public static int newUserID() {
 		int newUserID = 0;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-			Statement stmt=con.createStatement();
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//			Statement stmt=con.createStatement();
 			//select the row where userID is the largest in users
 			String sql="SELECT * FROM users WHERE userID=(SELECT MAX(userID) FROM users)";
 			ResultSet rs=stmt.executeQuery(sql);
@@ -70,9 +84,9 @@ public class Login {
 	public static Integer getRoleID(String role) {
 		int roleID = -1;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-			Statement stmt=con.createStatement();
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//			Statement stmt=con.createStatement();
 			//select the row where userID is the largest in users
 			String sql="SELECT * FROM roles WHERE role='"+role+"'";
 			ResultSet rs=stmt.executeQuery(sql);
@@ -84,6 +98,25 @@ public class Login {
 			System.out.print(e);
 		}
 		return roleID;
+	}
+	
+	public static String getRoleString(Integer roleID) {
+		String role = "";
+		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//			Statement stmt=con.createStatement();
+			//select the row where userID is the largest in users
+			String sql="SELECT role FROM roles WHERE roleID='"+roleID+"'";
+			ResultSet rs=stmt.executeQuery(sql);
+			//get the largest userID in db
+			while (rs.next()) {
+				role = rs.getString("role");
+			}
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		return role;
 	}
 	
 	
@@ -105,9 +138,9 @@ public class Login {
 		// if the userId and role is valid then create account and add to db
 		if (usernameValid && roleID != -1) {
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-				Statement stmt=con.createStatement();
+//				Class.forName("com.mysql.jdbc.Driver");
+//				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//				Statement stmt=con.createStatement();
 				//add to users table
 				String sql="INSERT INTO users(userID, firstName, lastName, middleName, roleID, email, phoneNumber) VALUES ('"+userID+"', '"+firstName+"', '"+lastName+"', '"+middleName+"', '"+roleID+"', '"+email+"', '"+phoneNumber+"')";
 				stmt.execute(sql);
@@ -141,9 +174,9 @@ public class Login {
 		// if user is not in db login fail
 		if (usernameInDB) {
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-				Statement stmt=con.createStatement();
+//				Class.forName("com.mysql.jdbc.Driver");
+//				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//				Statement stmt=con.createStatement();
 				//get the associated userID and activity
 				userActive = getUserStatus(username);
 				userID = getUserID(username);
@@ -178,9 +211,9 @@ public class Login {
 		// if user is not in db login fail
 		if (usernameInDB) {
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-				Statement stmt=con.createStatement();
+//				Class.forName("com.mysql.jdbc.Driver");
+//				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//				Statement stmt=con.createStatement();
 				//get the associated userID and activity
 				String sql="SELECT userID FROM user_login WHERE username='"+username+"'";
 				ResultSet rs=stmt.executeQuery(sql);
@@ -207,9 +240,9 @@ public class Login {
 		// if user is not in db login fail
 		if (usernameInDB) {
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
-				Statement stmt=con.createStatement();
+//				Class.forName("com.mysql.jdbc.Driver");
+//				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//				Statement stmt=con.createStatement();
 				//get the associated userID and activity
 				String sql="SELECT active FROM user_login WHERE username='"+username+"'";
 				ResultSet rs=stmt.executeQuery(sql);
@@ -222,5 +255,24 @@ public class Login {
 			}
 		}
 		return userActive;
+	}
+	
+	public static int getUserRoleID(String username) {
+		int roleID = -1;
+		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/assignmentdb", "root", "");
+//			Statement stmt=con.createStatement();
+			//select the row where userID is the largest in users
+			String sql="SELECT u.roleID FROM users u, user_login ul WHERE ul.username='"+username+"' and ul.userID = u.userID";
+			ResultSet rs=stmt.executeQuery(sql);
+			//get the largest userID in db
+			while (rs.next()) {
+				roleID = rs.getInt("roleID");
+			}
+		} catch(Exception e){
+			System.out.print(e);
+		}
+		return roleID;
 	}
 }
