@@ -1,7 +1,7 @@
 package com.teqlip.database;
 
 import com.teqlip.exceptions.DatabaseInsertException;
-
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,4 +88,34 @@ public class DatabaseInserter {
     }
     return -1;
   }
+  /**
+   * Use this to insert a new template.
+   * @param name of the template.
+   * @param file path of the template.
+   * @param connection the database connection.
+   * @return -1 if fail 1 if inserted
+   * @throws DatabaseInsertException if there is a failure on the insert
+   * @throws SQLException 
+   */
+  public static int insertTemplate(String templateName,String templatePath, Connection con) {
+	  String sql = "INSERT INTO Template(templateName, file) VALUES(?,?);";
+	  try {
+			PreparedStatement preparedStatement = con.prepareStatement(sql);
+			preparedStatement.setString(1, templateName);
+			File file= new File(templatePath);
+			FileInputStream inputStream= new FileInputStream(file);
+			preparedStatement.setBinaryStream(2, inputStream, (int) file.length());
+			preparedStatement.executeUpdate();
+			return 1;
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	  return -1;
+  }
+  //test main function
+ // public static void main(String[] args) {
+	//  Connection con = DatabaseDriverHelper.connectOrCreateDataBase();
+	//  insertTemplate("iCare", "/Users/Sean/Desktop/iCARE_template.xlsx", con);
+ // }
+  
 }

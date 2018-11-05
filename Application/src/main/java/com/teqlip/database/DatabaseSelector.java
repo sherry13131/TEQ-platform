@@ -185,5 +185,16 @@ public class DatabaseSelector {
 		}
 		return newUserID;
 	}
-
+	
+	/**
+	 * get the templates in db
+	 * @param con
+	 * @return 
+	 * @throws SQLException
+	 */
+	public static ResultSet getTemplates(Connection con) throws SQLException {
+		Statement stmt = con.createStatement();
+		ResultSet results = stmt.executeQuery("SELECT * FROM Template;");
+		return results;
+	}
 }

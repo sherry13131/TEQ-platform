@@ -1,9 +1,16 @@
 package com.teqlip.database;
 
+import com.mysql.jdbc.Blob;
+import com.oracle.tools.packager.IOUtils;
 import com.teqlip.database.DatabaseSelector;
 import com.teqlip.exceptions.ConnectionFailedException;
 //import com.teqlip.database.ValidIdHelperFunctions;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -227,6 +234,60 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 	
 	/**
+	 * get a list of templates name
+	 * @return a list of templates
+	 * @throws SQLException
+	 */
+	public static List<String> getTemplatesName() throws SQLException {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		ResultSet results = DatabaseSelector.getTemplates(con);
+		// create a new List to add all template names into
+		List<String> templates = new ArrayList<String>();
+		// checks to see if there is another row with the column to add another ID.
+		// moves to the next row if it exists.
+		while (results.next()) {
+			// add the current row's ID
+			templates.add(results.getString("templateName"));
+		}
+		results.close();
+		con.close();
+		return templates;
+	}
+	
+	/**
+	 * get file of a template given the name
+	 * @param template name
+	 * @return file of that template, -1 if error
+	 * @throws SQLException
+	 * @throws IOException 
+	 */
+	public static File getTemplateFile(String name) throws SQLException, IOException {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		Blob file = null;
+		byte[] buffer = new byte[4096];
+		File newFile = File.createTempFile(name, ".xlsx", new File("."));
+		ResultSet results = DatabaseSelector.getTemplates(con);
+		while (results.next()) {
+			if(results.getString("templateName").equals(name)) {
+				file = (Blob)results.getBlob("file");
+				InputStream in = file.getBinaryStream();
+				OutputStream out = new FileOutputStream(newFile);
+				int b = 0;
+			    while ((b = in.read(buffer)) != -1) {
+			        out.write(buffer, 0, b);
+			    }
+			    out.close();
+			    return newFile;
+			}
+		}
+		// throw exception
+		System.out.println("file name not exist");
+		con.close();
+		return null;
+	}
+	
+	
+	/**
 	 * get userID of a username
 	 * @param username
 	 * @return userID of that username, -1 if error
@@ -276,18 +337,19 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 	
 	// testing SelectHelper
-//	public static void main(String args[]) {
-//		try {
-//			Connection con = DatabaseDriverHelper.connectDataBase();
+	//public static void main(String args[]) throws IOException {
+	//	try {
+	//			Connection con = DatabaseDriverHelper.connectDataBase();
+	//			System.out.println(getTemplateFile("iCare"));
 ////			checkLoginInfo("harmony", "1234");
 ////			System.out.println(checkUsernameExist("harmony"));
 ////			System.out.println(getUserStatus("amy"));
 ////			System.out.println(getUserID("harmony"));
 ////			System.out.println(checkLoginPassword(3, "1234"));
 //			System.out.println(DatabaseSelector.getUserRoleID(3, con));
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	//	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+	//		e.printStackTrace();
+	//	}
+	//}
 }
