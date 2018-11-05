@@ -2,6 +2,11 @@ package com.teqlip.database;
 
 import com.teqlip.exceptions.DatabaseInsertException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,4 +93,30 @@ public class DatabaseInserter {
     }
     return -1;
   }
+
+  /**
+   * upload a template in database table `template` with a given nickname for identification
+   * @param nickname of the file to be stored in db
+   * @param filename the name of the file that is going to be uploaded
+   * @param con connection
+   * @return 0 if successfully stored
+   * @throws FileNotFoundException
+   */
+  public static int insertTemplate(String nickname, String filename, Connection con) throws FileNotFoundException {
+	  String sql = "INSERT INTO template (nickname, data) VALUES (?,?);";
+	  try {
+		  File file = new File(filename);
+		  FileInputStream input = new FileInputStream(file);
+		  
+		  PreparedStatement preparedStatement = con.prepareStatement(sql);
+		  preparedStatement.setString(1, nickname);
+		  preparedStatement.setBinaryStream(2, input, (int) file.length());
+          
+		  preparedStatement.executeUpdate();
+	  } catch (SQLException e) {
+		  e.printStackTrace();
+	  }
+	return 0;
+  }
+
 }
