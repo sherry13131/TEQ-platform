@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import com.teqlip.gui.frames.AppFrame;
 
 @SuppressWarnings("serial")
-abstract class BodyPanel extends JPanel implements ActionListener {
+public abstract class BodyPanel extends JPanel implements ActionListener {
 	
 	protected AppFrame main;
 	
@@ -18,14 +18,15 @@ abstract class BodyPanel extends JPanel implements ActionListener {
 		CREATE_ACCOUNT,
 		UPLOAD_TEMPLATE,
 		DOWNLOAD_TEMPLATE,
-        ORG_MAIN_MENU
+        ORG_MAIN_MENU,
+        UTSC_MAIN_MENU
 	}
 	
 	public BodyPanel(AppFrame main) {
 		this.main = main;
 	}
 	
-	protected BodyPanel goToMenu(MenuOptions menu) {
+	public BodyPanel goToMenu(MenuOptions menu) {
 		BodyPanel newMenu = null;
 		
 		switch (menu) {
@@ -40,8 +41,12 @@ abstract class BodyPanel extends JPanel implements ActionListener {
 				break;
 			case DOWNLOAD_TEMPLATE:
 				newMenu = new OrgDownloadTemplatePanel(main);
+                break;
             case ORG_MAIN_MENU:
 				newMenu = new OrgMainMenuPanel(main);
+				break;
+            case UTSC_MAIN_MENU:
+				newMenu = new UTSCMainMenuPanel(main);
 				break;
 		}
 		

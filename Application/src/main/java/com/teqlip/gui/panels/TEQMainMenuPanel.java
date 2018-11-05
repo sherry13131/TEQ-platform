@@ -50,7 +50,6 @@ public class TEQMainMenuPanel extends BodyPanel {
     	
     	p.add(createBtn);
     	p.add(uploadBtn);
-    	p.add(downloadBtn);
     	
     	return p;
     }

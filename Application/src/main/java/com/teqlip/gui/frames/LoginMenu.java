@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.TEQMainMenuPanel;
+import com.teqlip.gui.panels.OrgMainMenuPanel;
+import com.teqlip.gui.panels.UTSCMainMenuPanel;
 import com.teqlip.database.Login;
 
 @SuppressWarnings("serial")
