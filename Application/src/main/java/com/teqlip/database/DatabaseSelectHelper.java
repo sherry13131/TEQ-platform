@@ -1,7 +1,6 @@
 package com.teqlip.database;
 
 import com.mysql.jdbc.Blob;
-import com.oracle.tools.packager.IOUtils;
 import com.teqlip.database.DatabaseSelector;
 import com.teqlip.exceptions.ConnectionFailedException;
 //import com.teqlip.database.ValidIdHelperFunctions;
