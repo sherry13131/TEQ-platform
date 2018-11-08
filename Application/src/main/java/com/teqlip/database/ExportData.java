@@ -7,8 +7,8 @@ public class ExportData {
 
 	public static void main(String[] args) {
 		//	path has to be somewhere granted permission to write/create, for now, create a new folder (eg C:\\exchange) under and store it there
-		String path = "C:\\\\exchange\\\\testing.csv";
-		String path2 = "C:\\\\exchange\\\\testingHeader.csv";
+		String path = "/Users/Sherry/Desktop/testing1.csv";
+//		String path2 = "C:\\\\exchange\\\\testingHeader.csv";
 		// only work when there is no group by / order by for now. have to improve
 		String query = "SELECT userID, username, active FROM user_login";
 		ArrayList<String> header = 	new ArrayList<String>() {{
@@ -17,7 +17,7 @@ public class ExportData {
 		    add("active");
 		}}; 
 		exportCSV(query, path);
-		exportCSVwHeader(header, query, path2);
+//		exportCSVwHeader(header, query, path);
 	}
 	
 	/**
