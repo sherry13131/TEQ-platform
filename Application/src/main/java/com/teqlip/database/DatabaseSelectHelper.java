@@ -335,6 +335,22 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return newUserID + 1;
 	}
 	
+	public static boolean getUserIdExist(int userId) {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		try {
+			ResultSet ids = DatabaseSelector.getUserIds(con);
+			while (ids.next()) {
+				if(ids.getInt("userID") == userId) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	// testing SelectHelper
 	//public static void main(String args[]) throws IOException {
 	//	try {
