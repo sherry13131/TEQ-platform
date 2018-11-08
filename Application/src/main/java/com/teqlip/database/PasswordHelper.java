@@ -2,6 +2,7 @@ package com.teqlip.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,24 +18,7 @@ public class PasswordHelper {
 	 * @param password
 	 * @return true if password matched
 	 * @throws SQLException
-	 */
-	public static boolean checkPassword2(int userID, String password) throws SQLException {
-		Connection con = DatabaseDriverHelper.connectDataBase();
-		Statement stmt = con.createStatement();
-		String sql="select COUNT(*) found from user_password where password = sha2(sha('"+ password + "'),384) and userID=" + userID ;
-		ResultSet rs=stmt.executeQuery(sql);
-		while (rs.next()) {
-			// check password in database with the input password
-			if (Integer.parseInt(rs.getString("found")) == 1) {
-				return true;
-			} else {
-				// throw exception
-				System.out.println("password incorrect");
-			}
-		}
-		return false;
-	}
-	
+	 */	
 	public static boolean checkPassword(int userID, String password) throws SQLException, NoSuchAlgorithmException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		Statement stmt = con.createStatement();
@@ -71,6 +55,46 @@ public class PasswordHelper {
 		} catch (SQLException e) {
 		}
 		return password;
+	}
+	
+	public static boolean updatePassword(int userID, String newRawPassword) {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		String sql = "update user_password set password = ? where userID = ?;";
+		try {
+			String PasswordHash = passwordHash(newRawPassword);
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, PasswordHash);
+			ps.setInt(2, userID);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	/**
+	 * update password with validating the old password of user
+	 * @param userID
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return true if successfully updated, else false
+	 */
+	public static boolean updatePasswordWithValidation(int userID, String oldPassword, String newPassword) {
+		boolean valid = true;
+		valid = DataValidator.validateUserId(userID);
+		if (valid) {
+			try {
+				valid = checkPassword(userID, oldPassword);
+				if (valid) {
+					valid = updatePassword(userID, newPassword);
+				}
+			} catch (NoSuchAlgorithmException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return valid;
 	}
 
 	public static String passwordHash(String password) throws NoSuchAlgorithmException {
@@ -125,5 +149,6 @@ public class PasswordHelper {
 	        System.out.println("ERROR: " + e.getMessage());
 	    }
 	    return null;
-    }	
+    }
+
 }
