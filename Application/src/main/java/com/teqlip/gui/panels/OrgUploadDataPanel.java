@@ -19,7 +19,7 @@ public class OrgUploadDataPanel extends BodyPanel {
 	private static final Dimension FILENAME_FIELD_DIMENSION = new Dimension(80, 30);
 	
 	private BoxLayout layout;
-	private JTextField filenameField;
+	private JComboBox filenameList;
 	private JTextField pathField;
 	
     public OrgUploadDataPanel(AppFrame main) {

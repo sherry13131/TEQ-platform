@@ -24,10 +24,10 @@ public class MainFrame {
 		// LoginMenu login = new LoginMenu();
 		// login.packAndShow();
 
-        AppFrame main = new AppFrame("Bob", "Participating Organization Volunteer");
+        AppFrame main = new AppFrame("Bob", "YEET");
         main.packAndShow();
-        OrgMainMenuPanel body = new OrgMainMenuPanel(main);
-        body.goToMenu(MenuOptions.ORG_MAIN_MENU);
+        TEQMainMenuPanel body = new TEQMainMenuPanel(main);
+        body.goToMenu(MenuOptions.MAIN_MENU);
 
 		// TEQMainMenu test = new TEQMainMenu();
 		// test.packAndShow();
