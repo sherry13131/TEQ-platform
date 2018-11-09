@@ -8,7 +8,7 @@ import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 
 @SuppressWarnings("serial")
-public class TEQUploadTemplatePanel extends BodyPanel {
+public class OrgUploadDataPanel extends BodyPanel {
 
 	public class ActionConsts {
 		private static final String BROWSE = "browse";
@@ -22,7 +22,7 @@ public class TEQUploadTemplatePanel extends BodyPanel {
 	private JTextField filenameField;
 	private JTextField pathField;
 	
-    public TEQUploadTemplatePanel(AppFrame main) {
+    public OrgUploadDataPanel(AppFrame main) {
         super(main);
         
         layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
@@ -37,15 +37,17 @@ public class TEQUploadTemplatePanel extends BodyPanel {
         add(buttonsPane);
     }
 
+    // TODO need method to get all templates from db
+
     public JComponent createFilenamePane() {
     	JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     	
-    	JLabel filenamelbl = new JLabel("Name file as:");
-    	this.filenameField = JGuiHelper.createTextField();
-    	this.filenameField.setPreferredSize(FILENAME_FIELD_DIMENSION);
+    	JLabel filenamelbl = new JLabel("Select corresponding template:");
+    	// this.filenameList = JGuiHelper.createComboBox(
+    	// this.filenameList.setPreferredSize(FILENAME_FIELD_DIMENSION);
     	
     	p.add(filenamelbl);
-    	p.add(this.filenameField);
+    	// p.add(this.filenameList);
     	
     	return p;
     }
@@ -86,12 +88,12 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	String cmd = ae.getActionCommand();
 
         if (cmd.equals(ActionConsts.BROWSE)) {
-        	TEQUploadDialogBox dialogBox = new TEQUploadDialogBox(this, this.pathField);
+        	OrgUploadDialogBox dialogBox = new OrgUploadDialogBox(this, this.pathField);
         	dialogBox.showOpenDialog();
         } else if (cmd.equals(ActionConsts.UPLOAD)) {
         	// TODO Connect to Database
         } else if (cmd.equals(ActionConsts.CANCEL)) {
-        	super.goToMenu(MenuOptions.MAIN_MENU);
+        	super.goToMenu(MenuOptions.ORG_MAIN_MENU);
         }
     }
 

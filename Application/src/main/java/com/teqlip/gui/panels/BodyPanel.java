@@ -19,7 +19,8 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
 		UPLOAD_TEMPLATE,
 		DOWNLOAD_TEMPLATE,
         ORG_MAIN_MENU,
-        UTSC_MAIN_MENU
+        UTSC_MAIN_MENU,
+        UPLOAD_DATA
 	}
 	
 	public BodyPanel(AppFrame main) {
@@ -47,6 +48,9 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
 				break;
             case UTSC_MAIN_MENU:
 				newMenu = new UTSCMainMenuPanel(main);
+				break;
+            case UPLOAD_DATA:
+				newMenu = new OrgUploadDataPanel(main);
 				break;
 		}
 		

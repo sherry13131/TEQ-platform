@@ -2,7 +2,7 @@ package com.teqlip.gui.panels;
 
 import javax.swing.*;
 
-public class TEQUploadDialogBox {
+public class OrgUploadDialogBox {
 
 	private JPanel panel;
 	private String path;
@@ -11,7 +11,7 @@ public class TEQUploadDialogBox {
 	private JFileChooser fileChooser;
 	private int rVal;
 
-	public TEQUploadDialogBox(JPanel panel, JTextField pathField) {
+	public OrgUploadDialogBox(JPanel panel, JTextField pathField) {
 		this.panel = panel;
         this.pathField = pathField;
 		this.fileChooser = new JFileChooser();

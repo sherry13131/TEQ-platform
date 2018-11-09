@@ -12,6 +12,7 @@ public class OrgMainMenuPanel extends BodyPanel {
 
     public class ActionConsts {
         private static final String DOWNLOAD = "download";
+        private static final String UPLOAD = "upload";
     }
 
     private BoxLayout layout;
@@ -43,8 +44,10 @@ public class OrgMainMenuPanel extends BodyPanel {
     	JPanel p = JGuiHelper.createPanelFlow();
     	
     	JButton downloadBtn = JGuiHelper.createButton("Download Files", this, ActionConsts.DOWNLOAD);
+    	JButton uploadBtn = JGuiHelper.createButton("Upload Data", this, ActionConsts.UPLOAD);
     	
     	p.add(downloadBtn);
+        p.add(uploadBtn);
     	
     	return p;
     }
@@ -55,7 +58,9 @@ public class OrgMainMenuPanel extends BodyPanel {
 		
         if (cmd.equals(ActionConsts.DOWNLOAD)) {
 			super.goToMenu(MenuOptions.DOWNLOAD_TEMPLATE);
-		}
+		} else if (cmd.equals(ActionConsts.UPLOAD)) {
+            super.goToMenu(MenuOptions.UPLOAD_DATA);
+        }
 		
 	}
 
