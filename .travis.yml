@@ -1,6 +1,7 @@
-before_script: cd Application/
 language: java
 before_script:
+- cd Application/
 - free -m
 - sleep 3
-- mkdir lib; cd lib; curl -Oq http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar ;
+- mkdir lib; cd lib; curl -Oq http://central.maven.org/maven2/mysql/mysql-connector-java/8.0.13/mysql-connector-java-8.0.13.jar ;
+- cd ..
