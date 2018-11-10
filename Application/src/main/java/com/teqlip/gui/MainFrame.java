@@ -21,13 +21,13 @@ public class MainFrame {
 
 	public static void main(String[] args) {
 
-		// LoginMenu login = new LoginMenu();
-		// login.packAndShow();
+		LoginMenu login = new LoginMenu();
+		login.packAndShow();
 
-        AppFrame main = new AppFrame("Bob", "YEET");
+        /*AppFrame main = new AppFrame("Bob", "YEET");
         main.packAndShow();
         TEQMainMenuPanel body = new TEQMainMenuPanel(main);
-        body.goToMenu(MenuOptions.MAIN_MENU);
+        body.goToMenu(MenuOptions.MAIN_MENU);*/
 
 		// TEQMainMenu test = new TEQMainMenu();
 		// test.packAndShow();
