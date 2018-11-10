@@ -23,30 +23,5 @@ public class DatabaseDriver {
     
     return connection;
   }
-  
-//  /**
-//   * This will initialize the database, or throw a ConnectionFailedException.
-//   * @param connection the database you'd like to write the tables to.
-//   * @return the connection you passed in, to allow you to continue.
-//   * @throws ConnectionFailedException If the tables couldn't be initialized, throw
-//   */
-//  protected static Connection initialize(Connection connection) throws ConnectionFailedException {
-//    if (!initializeDatabase(connection)) {
-//      throw new ConnectionFailedException();
-//    }
-//    return connection;
-//  }
-//  
-//  // maybe need to initialize db in later stage
-//  private static boolean initializeDatabase(Connection connection) {
-//    Statement statement = null;
-//    
-//    try {
-//      return true;
-//      
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//    return false;
-//  }
+
 }

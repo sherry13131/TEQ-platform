@@ -90,7 +90,6 @@ public class PasswordHelper {
 					valid = updatePassword(userID, newPassword);
 				}
 			} catch (NoSuchAlgorithmException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -4,19 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ExportData {
-
-//	public static void main(String[] args) {
-//		//	path has to be somewhere granted permission to write/create, for now, create a new folder (eg C:\\exchange) under and store it there
-//		String newfilename = "temp1.csv";
-//		String query = "SELECT userID, username, active FROM user_login";
-//		ArrayList<String> header = 	new ArrayList<String>() {{
-//		    add("userID");
-//		    add("username");
-//		    add("active");
-//		}}; 
-////	exportCSV(query, newfilename);
-//		exportCSVwHeader(header, query, newfilename);
-//	}
 	
 	/**
 	 * Export a csv file that contain all the data of the given query.

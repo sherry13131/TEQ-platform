@@ -9,7 +9,14 @@ import java.sql.SQLException;
 
 public class DatabaseUpdateHelper extends DatabaseUpdater {
 
-	
+	/**
+	 * update a user's role
+	 * @param roleId
+	 * @param userId
+	 * @return true if update successfully
+	 * @throws SQLException
+	 * @throws ConnectionFailedException
+	 */
 	public static boolean updateUserRole(int roleId, int userId) throws SQLException, ConnectionFailedException {
 		// in the case we aren't able to update the userRole possibly due to an invalid
 		// roleId or userId.

@@ -7,6 +7,17 @@ import java.util.List;
 
 public class DataValidator {
 
+  /**
+   * use to validate when new account is creating
+   * @param username
+   * @param password
+   * @param firstName
+   * @param lastName
+   * @param role
+   * @param email
+   * @return true if success, else false
+   * @throws SQLException
+   */
 	public static boolean createNewAccountValidation(String username, String password,
 			  String firstName,String lastName, String role,
 			  String email) throws SQLException {
@@ -22,6 +33,11 @@ public class DataValidator {
 		return valid;
 	}
 	
+	/**
+	 * validate if userID > 0
+	 * @param userID
+	 * @return true if userID > 0
+	 */
 	public static boolean validateUserId(int userID) {
 		boolean valid = true;
 		if (userID <= 0) {
@@ -33,6 +49,12 @@ public class DataValidator {
 		return valid;
 	}
 	
+	/**
+	 * validate user role exist in the current role list, and roleID > 0
+	 * @param roleID
+	 * @param ids
+	 * @return true if role ID exist in the current role list 
+	 */
 	public static boolean validateUserRole(int roleID, List<Integer> ids) {
 		boolean valid = true;
 		if (roleID <= 0) {
@@ -47,7 +69,11 @@ public class DataValidator {
 		return valid;
 	}
 
-	
+	/**
+	 * validate the roleID if it is a valid roleID
+	 * @param roleId
+	 * @return true if roleID is a exist
+	 */
 	public static boolean getRoleExist(int roleId) {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		try {
@@ -58,7 +84,6 @@ public class DataValidator {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

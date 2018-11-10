@@ -118,10 +118,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	public static List<Integer> getUsersByRoleHelper(int roleId) throws SQLException {
 		// create a list<integer to return usersByRole
 		List<Integer> userIds = new ArrayList<>();
-		// check if the inputed roleID is valid
-//		if (ValidIdHelperFunctions.ValidRoleId(roleId, getRoleIds())) {
 		try {
-			if (getRoleIds().equals(roleId)) {
+			if (getRoleIds().contains(roleId)) {
 			Connection con = DatabaseDriverHelper.connectDataBase();
 				ResultSet results = DatabaseSelector.getUsersByRole(roleId, con);
 				// go through each row and users ID by role
@@ -129,10 +127,9 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 					userIds.add(results.getInt("USERID"));
 				}
 				results.close();
-			con.close();
+			  con.close();
 			}
 		} catch (ConnectionFailedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return userIds;
@@ -186,7 +183,6 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	public static int getUserStatus(String username) throws SQLException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		ResultSet results = DatabaseSelector.getUsersStatus(con);
-		List<Integer> actives = new ArrayList<Integer>();
 		int active = -1;
 		while(results.next()) {
 			if (results.getString("username").equals(username)) {
@@ -344,26 +340,9 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
-	// testing SelectHelper
-	//public static void main(String args[]) throws IOException {
-	//	try {
-	//			Connection con = DatabaseDriverHelper.connectDataBase();
-	//			System.out.println(getTemplateFile("iCare"));
-////			checkLoginInfo("harmony", "1234");
-////			System.out.println(checkUsernameExist("harmony"));
-////			System.out.println(getUserStatus("amy"));
-////			System.out.println(getUserID("harmony"));
-////			System.out.println(checkLoginPassword(3, "1234"));
-//			System.out.println(DatabaseSelector.getUserRoleID(3, con));
-	//	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-	//		e.printStackTrace();
-	//	}
-	//}
+
 }
