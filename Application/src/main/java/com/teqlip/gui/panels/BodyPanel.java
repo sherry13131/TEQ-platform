@@ -21,7 +21,8 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
         ORG_MAIN_MENU,
         UTSC_MAIN_MENU,
         UPLOAD_DATA,
-        QUERY
+        QUERY,
+        CHANGE_PASSWORD
 	}
 	
 	public BodyPanel(AppFrame main) {
@@ -56,6 +57,9 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
             case QUERY:
 				newMenu = new TEQQueryPanel(main);
 				break;
+            case CHANGE_PASSWORD:
+                newMenu = new OrgChangePasswordPanel(main);
+                break;
 		}
 		
 		this.main.setBody(newMenu);

@@ -13,6 +13,7 @@ public class OrgMainMenuPanel extends BodyPanel {
     public class ActionConsts {
         private static final String DOWNLOAD = "download";
         private static final String UPLOAD = "upload";
+        private static final String CHANGE_PASSWORD = "change password";
     }
 
     private BoxLayout layout;
@@ -45,10 +46,12 @@ public class OrgMainMenuPanel extends BodyPanel {
     	
     	JButton downloadBtn = JGuiHelper.createButton("Download Files", this, ActionConsts.DOWNLOAD);
     	JButton uploadBtn = JGuiHelper.createButton("Upload Data", this, ActionConsts.UPLOAD);
+    	JButton changePasswordBtn = JGuiHelper.createButton("Change Password", this, ActionConsts.CHANGE_PASSWORD);
     	
     	p.add(downloadBtn);
         p.add(uploadBtn);
-    	
+    	p.add(changePasswordBtn);
+        
     	return p;
     }
 
@@ -60,6 +63,8 @@ public class OrgMainMenuPanel extends BodyPanel {
 			super.goToMenu(MenuOptions.DOWNLOAD_TEMPLATE);
 		} else if (cmd.equals(ActionConsts.UPLOAD)) {
             super.goToMenu(MenuOptions.UPLOAD_DATA);
+        } else if (cmd.equals(ActionConsts.CHANGE_PASSWORD)) {
+          super.goToMenu(MenuOptions.CHANGE_PASSWORD);
         }
 		
 	}
