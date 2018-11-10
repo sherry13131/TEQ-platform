@@ -107,7 +107,9 @@ public class TEQCreateAccountPanel extends BodyPanel {
 			}
 			this.textFields[0].setText("");
 			this.textFields[1].setText("");
-		}
+		} else if (cmd.equals(ActionConsts.CANCEL)) {
+        	super.goToMenu(MenuOptions.MAIN_MENU);
+        }
 	}
 
 	public static boolean checkValidEmail(String emailStr) {

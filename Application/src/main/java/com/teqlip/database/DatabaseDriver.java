@@ -11,7 +11,7 @@ public class DatabaseDriver {
    * Connect to existing database.
    * @return the database connection.
    */
-  protected static Connection connectDataBase() {
+  public static Connection connectDataBase() {
     Connection connection = null;
     try {
       Class.forName("com.mysql.jdbc.Driver");

@@ -19,6 +19,9 @@ import javax.swing.JTextField;
 //import com.teqlip.gui.DatabaseSelector;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.TEQMainMenuPanel;
+import com.teqlip.gui.panels.OrgMainMenuPanel;
+import com.teqlip.gui.panels.UTSCMainMenuPanel;
+import com.teqlip.database.Login;
 import com.teqlip.database.DatabaseSelectHelper;
 import com.teqlip.exceptions.ConnectionFailedException;
 
@@ -79,7 +82,6 @@ public class LoginMenu extends BaseFrame {
 						e1.printStackTrace();
 					}
 					this.dispose();
-					
 					// check user role - might need to use some design pattern here...
 					if (role.equalsIgnoreCase("teqlip")) {
 						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
@@ -87,13 +89,13 @@ public class LoginMenu extends BaseFrame {
 						
 						main.packAndShow();
 					} else if (role.equalsIgnoreCase("org")) {
-						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-						main.setBody(new TEQMainMenuPanel(main));
+						AppFrame main = new AppFrame(userInput, "Participating Organization Volunteer");
+					    main.setBody(new OrgMainMenuPanel(main));
 						
 						main.packAndShow();
 					} else if (role.equalsIgnoreCase("utsc")) {
-						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-						main.setBody(new TEQMainMenuPanel(main));
+						AppFrame main = new AppFrame(userInput, "UTSC Project Staff");
+					    main.setBody(new UTSCMainMenuPanel(main));
 						
 						main.packAndShow();
 					} else {
