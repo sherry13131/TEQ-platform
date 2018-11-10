@@ -26,9 +26,20 @@ DROP SCHEMA IF EXISTS `assignmentdb` ;
 CREATE SCHEMA IF NOT EXISTS `assignmentdb` DEFAULT CHARACTER SET utf8 ;
 USE `assignmentdb` ;
 
+-- -----------------------------------------------------
+-- Table `assignmentdb`.`Template`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `assignmentdb`.`Template` ;
+
+CREATE TABLE IF NOT EXISTS `assignmentdb`.`Template` (
+  `templateID` INT NOT NULL AUTO_INCREMENT,
+  `templateName` VARCHAR(100) NOT NULL,
+  `file` LONGBLOB NOT NULL,
+  PRIMARY KEY (`templateID`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`ClientProfile`
+-- Table `assignmentdb`.`ClientProfile`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `assignmentdb`.`ClientProfile` ;
 
@@ -50,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`ClientProfile` (
   `Postal Code` VARCHAR(45) NOT NULL,
   `Official Language of Preference` VARCHAR(45) NOT NULL,
   `Consent for Future Research/Consultation` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Unique Identifier Value`))
+  PRIMARY KEY (`Unique Identifier`,`Unique Identifier Value`))
 ENGINE = InnoDB;
 
 
@@ -152,7 +163,17 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`NeedsAssessmentAndReferrals` (
   `Settlement Plan completed and shared with client` VARCHAR(45) NOT NULL,
   `End Date of Assessment (YYYY-MM-DD)` DATE NOT NULL,
   `Reason for update` VARCHAR(45) NULL,
-  PRIMARY KEY (`Unique Identifier Value`))
+  PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
+  CONSTRAINT `fk_NeedsAssessmentAndReferrals_has_ClientProfile1`
+    FOREIGN KEY (`Unique Identifier`)
+    REFERENCES `ClientProfile` (`Unique Identifier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_NeedsAssessmentAndReferrals_has_ClientProfile2`
+    FOREIGN KEY (`Unique Identifier Value`)
+    REFERENCES `ClientProfile` (`Unique Identifier Value`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -231,7 +252,17 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Employment` (
   `Time Spent With Client's Employment Needs: Hours` INT NULL,
   `Time Spent With Client's Employment Needs: Minutes` INT NULL,
   `Reason for update` VARCHAR(45) NULL,
-  PRIMARY KEY (`Unique Identifier Value`))
+  PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
+  CONSTRAINT `fk_Employment_has_ClientProfile1`
+    FOREIGN KEY (`Unique Identifier`)
+    REFERENCES `ClientProfile` (`Unique Identifier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Employment_has_ClientProfile2`
+    FOREIGN KEY (`Unique Identifier Value`)
+    REFERENCES `ClientProfile` (`Unique Identifier Value`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -335,7 +366,17 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Info&Orien` (
   `Crisis Counselling` VARCHAR(45) NULL,
   `End Date of Service (YYYY-MM-DD)` DATE NOT NULL,
   `Reason for update` VARCHAR(45) NULL,
-  PRIMARY KEY (`Unique Identifier Value`))
+  PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
+  CONSTRAINT `fk_Info&Orien_has_ClientProfile1`
+    FOREIGN KEY (`Unique Identifier`)
+    REFERENCES `ClientProfile` (`Unique Identifier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Info&Orien_has_ClientProfile2`
+    FOREIGN KEY (`Unique Identifier Value`)
+    REFERENCES `ClientProfile` (`Unique Identifier Value`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -376,7 +417,17 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`LT Client Enrol` (
   `Interpretation language And` VARCHAR(45) NULL,
   `Crisis Counselling` VARCHAR(45) NULL,
   `Reason for update` VARCHAR(45) NULL,
-  PRIMARY KEY (`Unique Identifier Value`))
+  PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
+  CONSTRAINT `fk_LT Client Enrol_has_ClientProfile1`
+    FOREIGN KEY (`Unique Identifier`)
+    REFERENCES `ClientProfile` (`Unique Identifier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_LT Client Enrol_has_ClientProfile2`
+    FOREIGN KEY (`Unique Identifier Value`)
+    REFERENCES `ClientProfile` (`Unique Identifier Value`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -582,7 +633,17 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Community Connections` (
   `Total Length of Service: Hours` INT NULL,
   `Total Length of Service: Minutes` INT NULL,
   `Reason for update` VARCHAR(45) NULL,
-  PRIMARY KEY (`Unique Identifier`))
+  PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
+  CONSTRAINT `fk_Community Connections_has_ClientProfile1`
+    FOREIGN KEY (`Unique Identifier`)
+    REFERENCES `ClientProfile` (`Unique Identifier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Community Connections_has_ClientProfile2`
+    FOREIGN KEY (`Unique Identifier Value`)
+    REFERENCES `ClientProfile` (`Unique Identifier Value`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -630,7 +691,17 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`LT Client Exit` (
   `Interpretation language And` VARCHAR(45) NULL,
   `Crisis Counselling` VARCHAR(45) NULL,
   `Reason for update` VARCHAR(45) NULL,
-  PRIMARY KEY (`Unique Identifier Value`))
+  PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
+  CONSTRAINT `fk_Community Connections_has_ClientProfile1`
+    FOREIGN KEY (`Unique Identifier`)
+    REFERENCES `ClientProfile` (`Unique Identifier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Community Connections_has_ClientProfile2`
+    FOREIGN KEY (`Unique Identifier Value`)
+    REFERENCES `ClientProfile` (`Unique Identifier Value`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 --
 -- Table structure for table `roles`
@@ -703,7 +774,7 @@ CREATE TABLE `user_password` (
 
 LOCK TABLES `user_password` WRITE;
 /*!40000 ALTER TABLE `user_password` DISABLE KEYS */;
-INSERT INTO `user_password` VALUES (1,'a0bf4218468c026e73d3b04ea09bc7f00c00202c14085112f8fb6ff691b169da91723a9c04a5f0fe0bbcef73726296a5'),(2,'032fc01699516cfba0a856e29aa74b9f565c4a37296615eaf1218eb67ba478f3685f6b64ae51a22b2bc5ac1c260f77dc'),(3,'af14501a0bef30293aab9844d83e894f3cf3e5d2fbc692955e703e9692bb283f146e66bde6e17c8f563cd1f709342368'),(4,'7766b6e175a2af937d3225b536d50deb5d5c464567422873050774cb73e5f62121326a1019b06384f941eba326de91aa');
+INSERT INTO `user_password` VALUES (1,'97982a5b1414b9078103a1c008c4e3526c27b41cdbcf80790560a40f2a9bf2ed4427ab1428789915ed4b3dc07c454bd9'),(2,'3b903eebdb4b25efd0e911028181e87edf4234e64088fd60583f74fd2bf46ba17993484bee6cd451f296de279c42393e'),(3,'504f008c8fcf8b2ed5dfcde752fc5464ab8ba064215d9c5b5fc486af3d9ab8c81b14785180d2ad7cee1ab792ad44798c'),(4,'a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7');
 /*!40000 ALTER TABLE `user_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
