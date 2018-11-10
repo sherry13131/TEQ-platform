@@ -30,5 +30,5 @@ public class DatabaseDeleteHelper {
 		}
 		return true;
 	}
-	
+
 }
