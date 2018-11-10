@@ -6,6 +6,7 @@ import com.teqlip.exceptions.DatabaseInsertException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DatabaseInsertHelper extends DatabaseInserter {
 	
@@ -58,6 +59,43 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	    if (userID != -1) {
 	    	DatabaseInserter.insertPassword(password, userID, con);
 	      return userID;
+	    }
+	    throw new DatabaseInsertException();
+	  }
+	  
+	  /**
+	   * Use this to insert a new template and its file.
+	   * @param name of template.
+	   * @param path to xslx file.
+	   * @param connection the database connection.
+	   * @return 1 if insert suceeded, -1 is failed, 
+	   * @throws DatabaseInsertException if name is not unique
+	   * @throws SQLException 
+	   */
+	  public static int insertNewTemplate(String templateName, String templatePath,
+			  Connection con) throws DatabaseInsertException, SQLException {
+		// this make sure the template names are unique
+		List<String> templateNames = DatabaseSelectHelper.getTemplatesName();
+	    if (!templateNames.contains(templateName)) {
+	      return DatabaseInserter.insertTemplate(templateName, templatePath, con);
+	    }
+	    throw new DatabaseInsertException();
+	  }
+	  
+	  /**
+	   * Use this to insert a new query.
+	   * @param query.
+	   * @param connection the database connection.
+	   * @return 1 if insert suceeded, -1 is failed, 
+	   * @throws DatabaseInsertException if query is not unique
+	   * @throws SQLException 
+	   */
+	  public static int insertNewQuery(String query, Connection con) 
+			  throws DatabaseInsertException, SQLException {
+		// this make sure the query are unique
+		List<String> queries = DatabaseSelectHelper.getSavedQueries();
+	    if (!queries.contains(query)) {
+	      return DatabaseInserter.insertQuery(query,con);
 	    }
 	    throw new DatabaseInsertException();
 	  }
