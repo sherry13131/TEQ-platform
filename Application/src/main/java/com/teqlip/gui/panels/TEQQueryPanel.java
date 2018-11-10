@@ -3,9 +3,13 @@ package com.teqlip.gui.panels;
 import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
+import javax.swing.table.*;
+import java.util.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.database.*;
 
 @SuppressWarnings("serial")
 public class TEQQueryPanel extends BodyPanel {
@@ -30,12 +34,10 @@ public class TEQQueryPanel extends BodyPanel {
         
         JComponent savedQueryPane = createSavedQueryPane();
         JComponent queryPane = createQueryPane();
-        //JComponent tablePane =
         JComponent buttonPane = createButtonPane();
         
         add(savedQueryPane);
         add(queryPane);
-        //add(tablePane);
         add(buttonPane);
     }
 
@@ -69,6 +71,32 @@ public class TEQQueryPanel extends BodyPanel {
         return p;
     }
 
+    public static DefaultTableModel buildTableModel(ResultSet rs)
+        throws SQLException {
+
+        ResultSetMetaData metaData = rs.getMetaData();
+
+        // names of columns
+        Vector<String> columnNames = new Vector<String>();
+        int columnCount = metaData.getColumnCount();
+        for (int column = 1; column <= columnCount; column++) {
+            columnNames.add(metaData.getColumnName(column));
+        }
+
+        // data of the table
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        while (rs.next()) {
+            Vector<Object> vector = new Vector<Object>();
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                vector.add(rs.getObject(columnIndex));
+            }
+            data.add(vector);
+        }
+
+        return new DefaultTableModel(data, columnNames);
+
+    }
+
     public JComponent createButtonPane() {
     	JPanel p = JGuiHelper.createPanelFlow();
     	
@@ -84,7 +112,15 @@ public class TEQQueryPanel extends BodyPanel {
     	String cmd = ae.getActionCommand();
 
         if (cmd.equals(ActionConsts.EXECUTE)) {
-            // TODO Execute the query on the db and update table
+            try {
+                Connection con = DatabaseDriverHelper.connectDataBase();
+                ResultSet rs = DatabaseSelector.queryData(con, this.queryField.getText());
+                JTable table = new JTable(buildTableModel(rs));
+                con.close();
+                JOptionPane.showMessageDialog(null, new JScrollPane(table), "Data Table Preview", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else if (cmd.equals(ActionConsts.SAVE)) {
         	// TODO Save query into db
         } else if (cmd.equals(ActionConsts.BACK)) {

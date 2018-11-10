@@ -197,4 +197,10 @@ public class DatabaseSelector {
 		ResultSet results = stmt.executeQuery("SELECT * FROM Template;");
 		return results;
 	}
+
+    public static ResultSet queryData(Connection con, String query) throws SQLException {
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query + ";");
+        return rs;
+    }
 }
