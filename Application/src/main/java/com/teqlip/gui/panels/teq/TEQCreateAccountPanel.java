@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.teq;
 
 import java.awt.HeadlessException;
 import java.awt.event.*;
@@ -12,6 +12,9 @@ import com.teqlip.database.Login;
 import com.teqlip.exceptions.DatabaseInsertException;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

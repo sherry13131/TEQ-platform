@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.teq;
 
 import java.awt.Dimension;
 import java.awt.event.*;
@@ -6,9 +6,11 @@ import javax.swing.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 
 @SuppressWarnings("serial")
-public class OrgUploadDataPanel extends BodyPanel {
+public class TEQUploadTemplatePanel extends BodyPanel {
 
 	public class ActionConsts {
 		private static final String BROWSE = "browse";
@@ -19,10 +21,10 @@ public class OrgUploadDataPanel extends BodyPanel {
 	private static final Dimension FILENAME_FIELD_DIMENSION = new Dimension(80, 30);
 	
 	private BoxLayout layout;
-	private JComboBox filenameList;
+	private JTextField filenameField;
 	private JTextField pathField;
 	
-    public OrgUploadDataPanel(AppFrame main) {
+    public TEQUploadTemplatePanel(AppFrame main) {
         super(main);
         
         layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
@@ -37,24 +39,22 @@ public class OrgUploadDataPanel extends BodyPanel {
         add(buttonsPane);
     }
 
-    // TODO need method to get all templates from db
-
     public JComponent createFilenamePane() {
     	JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     	
-    	JLabel filenamelbl = new JLabel("Select corresponding template:");
-    	// this.filenameList = JGuiHelper.createComboBox(
-    	// this.filenameList.setPreferredSize(FILENAME_FIELD_DIMENSION);
+    	JLabel filenamelbl = new JLabel("Name file as:");
+    	this.filenameField = JGuiHelper.createTextField();
+    	this.filenameField.setPreferredSize(FILENAME_FIELD_DIMENSION);
     	
     	p.add(filenamelbl);
-    	// p.add(this.filenameList);
+    	p.add(this.filenameField);
     	
     	return p;
     }
     
     public JComponent createPathPane() {
-    	// The parent panel will consist of the Path on top, then another panel below which contains the textfield
-    	// and browse button horizontally
+    	// The parent panel will consist of the Path on top, then another panel below which contains 
+    	// the textfield and browse button horizontally
     	JPanel parent = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     	
     	JLabel pathLbl = new JLabel("Path:");
@@ -88,12 +88,12 @@ public class OrgUploadDataPanel extends BodyPanel {
     	String cmd = ae.getActionCommand();
 
         if (cmd.equals(ActionConsts.BROWSE)) {
-        	OrgUploadDialogBox dialogBox = new OrgUploadDialogBox(this, this.pathField);
+        	TEQUploadDialogBox dialogBox = new TEQUploadDialogBox(this, this.pathField);
         	dialogBox.showOpenDialog();
         } else if (cmd.equals(ActionConsts.UPLOAD)) {
         	// TODO Connect to Database
         } else if (cmd.equals(ActionConsts.CANCEL)) {
-        	super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+        	super.goToMenu(MenuOptions.MAIN_MENU);
         }
     }
 

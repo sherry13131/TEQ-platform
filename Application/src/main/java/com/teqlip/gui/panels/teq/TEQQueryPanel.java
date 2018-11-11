@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.teq;
 
 import java.awt.Dimension;
 import java.awt.event.*;
@@ -9,6 +9,8 @@ import java.util.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 import com.teqlip.database.*;
 
 @SuppressWarnings("serial")

@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.org;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,17 +6,20 @@ import javax.swing.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 
 @SuppressWarnings("serial")
-public class UTSCMainMenuPanel extends BodyPanel {
+public class OrgMainMenuPanel extends BodyPanel {
 
     public class ActionConsts {
-        private static final String VIEW = "view";
+        private static final String DOWNLOAD = "download";
+        private static final String UPLOAD = "upload";
     }
 
     private BoxLayout layout;
 
-    public UTSCMainMenuPanel(AppFrame main) {
+    public OrgMainMenuPanel(AppFrame main) {
     	super(main);
  
       	layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
@@ -42,9 +45,11 @@ public class UTSCMainMenuPanel extends BodyPanel {
     public JComponent createOptionsPane() {
     	JPanel p = JGuiHelper.createPanelFlow();
     	
-    	JButton viewBtn = JGuiHelper.createButton("View Data", this, ActionConsts.VIEW);
+    	JButton downloadBtn = JGuiHelper.createButton("Download Files", this, ActionConsts.DOWNLOAD);
+    	JButton uploadBtn = JGuiHelper.createButton("Upload Data", this, ActionConsts.UPLOAD);
     	
-    	p.add(viewBtn);
+    	p.add(downloadBtn);
+        p.add(uploadBtn);
     	
     	return p;
     }
@@ -53,9 +58,11 @@ public class UTSCMainMenuPanel extends BodyPanel {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		
-        if (cmd.equals(ActionConsts.VIEW)) {
-			
-		}
+        if (cmd.equals(ActionConsts.DOWNLOAD)) {
+			super.goToMenu(MenuOptions.DOWNLOAD_TEMPLATE);
+		} else if (cmd.equals(ActionConsts.UPLOAD)) {
+            super.goToMenu(MenuOptions.UPLOAD_DATA);
+        }
 		
 	}
 
