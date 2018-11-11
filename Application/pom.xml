@@ -55,6 +55,14 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.0</version>
 			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>com.teqlip.gui.MainFrame</mainClass>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
