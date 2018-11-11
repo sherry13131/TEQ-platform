@@ -86,6 +86,27 @@ public class DatabaseInserter {
 	    }
 	  return -1;
   }
+  
+  /**
+   * Use this to insert a new query.
+   * @param query.
+   * @param connection the database connection.
+   * @return -1 if fail 1 if inserted
+   * @throws DatabaseInsertException if there is a failure on the insert
+   * @throws SQLException 
+   */
+  public static int insertQuery(String query, Connection con) {
+	  String sql = "INSERT INTO queries(query) VALUES(?);";
+	  try {
+			PreparedStatement preparedStatement = con.prepareStatement(sql);
+			preparedStatement.setString(1, query);
+			preparedStatement.executeUpdate();
+			return 1;
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	  return -1;
+  }
   //test main function
  // public static void main(String[] args) {
 	//  Connection con = DatabaseDriverHelper.connectOrCreateDataBase();

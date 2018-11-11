@@ -197,6 +197,17 @@ public class DatabaseSelector {
 		ResultSet results = stmt.executeQuery("SELECT * FROM Template;");
 		return results;
 	}
+	/**
+	 * get the saved query in db
+	 * @param con
+	 * @return 
+	 * @throws SQLException
+	 */
+	public static ResultSet getQueries(Connection con) throws SQLException {
+		Statement stmt = con.createStatement();
+		ResultSet results = stmt.executeQuery("SELECT * FROM queries;");
+		return results;
+	}
 
     public static ResultSet queryData(Connection con, String query) throws SQLException {
         Statement stmt = con.createStatement();

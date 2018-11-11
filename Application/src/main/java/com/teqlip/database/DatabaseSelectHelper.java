@@ -247,6 +247,26 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		con.close();
 		return templates;
 	}
+	/**
+	 * get a list of saved queries
+	 * @return a list of queries
+	 * @throws SQLException
+	 */
+	public static List<String> getSavedQueries() throws SQLException {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		ResultSet results = DatabaseSelector.getQueries(con);
+		// create a new List to add all template names into
+		List<String> queries = new ArrayList<String>();
+		// checks to see if there is another row with the column to add another ID.
+		// moves to the next row if it exists.
+		while (results.next()) {
+			// add the current row's ID
+			queries.add(results.getString("query"));
+		}
+		results.close();
+		con.close();
+		return queries;
+	}
 	
 	/**
 	 * get file of a template given the name
@@ -344,5 +364,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		}
 		return false;
 	}
-
+    //test main function
+  //  public static void main(String[] args) throws SQLException {
+  //	  	System.out.println(getTemplatesName());
+  //  }
 }
