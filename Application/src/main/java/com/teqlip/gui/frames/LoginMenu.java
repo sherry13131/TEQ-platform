@@ -18,9 +18,9 @@ import javax.swing.JTextField;
 
 //import com.teqlip.gui.DatabaseSelector;
 import com.teqlip.gui.helper.JGuiHelper;
-import com.teqlip.gui.panels.TEQMainMenuPanel;
-import com.teqlip.gui.panels.OrgMainMenuPanel;
-import com.teqlip.gui.panels.UTSCMainMenuPanel;
+import com.teqlip.gui.panels.org.OrgMainMenuPanel;
+import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
+import com.teqlip.gui.panels.utsc.UTSCMainMenuPanel;
 import com.teqlip.database.Login;
 import com.teqlip.database.DatabaseSelectHelper;
 import com.teqlip.exceptions.ConnectionFailedException;
