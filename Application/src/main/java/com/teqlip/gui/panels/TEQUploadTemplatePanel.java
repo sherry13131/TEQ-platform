@@ -47,13 +47,11 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     }
     
     public JComponent createPathPane() {
-    	// The parent panel will consist of the Path on top, then another panel below which contains the textfield
-    	// and browse button horizontally
+    	// The parent panel will consist of the Path on top, then another panel below which contains 
+    	// the textfield and browse button horizontally
     	JPanel parent = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
-    	parent.setAlignmentY(LEFT_ALIGNMENT);
     	
     	JLabel pathLbl = new JLabel("Path:");
-    	pathLbl.setAlignmentX(LEFT_ALIGNMENT);
     	
     	JPanel child = JGuiHelper.createPanelBox(BoxLayout.LINE_AXIS);
     	this.pathField = JGuiHelper.createTextField();
