@@ -45,10 +45,6 @@ abstract class BodyPanel extends JPanel implements ActionListener {
 		return newMenu;
 	}
 	
-/*	public void changeTo(BodyPanel body) {
-		this.main.setBody(body);
-	}*/
-	
 	@Override
 	public void setLayout(LayoutManager layout) {
 		super.setLayout(layout);
