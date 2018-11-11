@@ -86,11 +86,8 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     	String cmd = ae.getActionCommand();
 
         if (cmd.equals(ActionConsts.BROWSE)) {
-        	TEQUploadDialogBox dialogBox = new TEQUploadDialogBox(this);
+        	TEQUploadDialogBox dialogBox = new TEQUploadDialogBox(this, this.pathField);
         	dialogBox.showOpenDialog();
-        	
-        	this.filenameField.setText(dialogBox.getFileName());
-        	this.pathField.setText(dialogBox.getPath());
         } else if (cmd.equals(ActionConsts.UPLOAD)) {
         	// TODO Connect to Database
         } else if (cmd.equals(ActionConsts.CANCEL)) {

@@ -13,7 +13,7 @@ public class TEQMainMenuPanel extends BodyPanel {
 	public class ActionConsts {
 		private static final String CREATE = "create";
 		private static final String UPLOAD = "upload";
-		private static final String DOWNLOAD = "download";
+        private static final String QUERY = "query";
 	}
 	
 	
@@ -48,11 +48,11 @@ public class TEQMainMenuPanel extends BodyPanel {
     	
     	JButton createBtn = JGuiHelper.createButton("Create/Manage Accounts", this, ActionConsts.CREATE);
     	JButton uploadBtn = JGuiHelper.createButton("Upload/Manage Files", this, ActionConsts.UPLOAD);
-    	JButton downloadBtn = JGuiHelper.createButton("Download Files", this, ActionConsts.DOWNLOAD);
+    	JButton queryBtn = JGuiHelper.createButton("Query", this, ActionConsts.QUERY);
     	
     	p.add(createBtn);
     	p.add(uploadBtn);
-    	p.add(downloadBtn);
+        p.add(queryBtn);
     	
     	return p;
     }
@@ -65,8 +65,8 @@ public class TEQMainMenuPanel extends BodyPanel {
 			super.goToMenu(MenuOptions.CREATE_ACCOUNT);
 		} else if (cmd.equals(ActionConsts.UPLOAD)) {
 			super.goToMenu(MenuOptions.UPLOAD_TEMPLATE);
-		} else if (cmd.equals(ActionConsts.DOWNLOAD)) {
-			
+		} else if (cmd.equals(ActionConsts.QUERY)) {
+			super.goToMenu(MenuOptions.QUERY);
 		}
 		
 	}

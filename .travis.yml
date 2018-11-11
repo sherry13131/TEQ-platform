@@ -1,2 +1,12 @@
-before_script: cd Application/
 language: java
+jdk: oraclejdk8
+before_script:
+- cd Application/
+- free -m
+- sleep 3
+- mkdir lib; cd lib; curl -Oq http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar ;
+- export JAVA_OPTS="-Daspace.config.db_url=jdbc:mysql://localhost:3306/assignmentdb?useUnicode=true&characterEncoding=UTF-8&user=root";
+- mysql -e "create database assignmentdb default character set utf8;";
+- 'export JAVA_OPTS="-Xmx1024m -verbose:gc $JAVA_OPTS"'
+- cd ..
+- mysql -u root --password="" < database_dump/dumpInitialDB3-modified.sql

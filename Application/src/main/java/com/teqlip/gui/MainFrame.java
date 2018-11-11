@@ -3,7 +3,10 @@ package com.teqlip.gui;
 import java.awt.*;
 import javax.swing.*;
 
-import com.teqlip.gui.frames.LoginMenu;
+import com.teqlip.gui.frames.*;
+import com.teqlip.gui.panels.*;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
+import com.teqlip.gui.helper.*;
 
 public class MainFrame {
 
@@ -20,6 +23,11 @@ public class MainFrame {
 
 		LoginMenu login = new LoginMenu();
 		login.packAndShow();
+
+        /*AppFrame main = new AppFrame("Bob", "YEET");
+        main.packAndShow();
+        TEQMainMenuPanel body = new TEQMainMenuPanel(main);
+        body.goToMenu(MenuOptions.MAIN_MENU);*/
 
 		// TEQMainMenu test = new TEQMainMenu();
 		// test.packAndShow();

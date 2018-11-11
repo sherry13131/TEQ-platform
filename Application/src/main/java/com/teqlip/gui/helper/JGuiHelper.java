@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -79,4 +80,9 @@ public class JGuiHelper {
 		textField.setMaximumSize(new Dimension(160, 25));
 		return textField;
 	}
+
+    public static JComboBox createComboBox(String[] options) {
+        JComboBox comboBox = new JComboBox(options);
+        return comboBox;
+    }
 }
