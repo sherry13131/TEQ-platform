@@ -17,6 +17,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.teqlip.Role.RoleEnum;
 import com.teqlip.exceptions.ConnectionFailedException;
 import com.teqlip.exceptions.DatabaseInsertException;
 
@@ -27,8 +28,8 @@ public class DatabaseSelectorTest {
 	@BeforeAll
 	public static void setUp() throws DatabaseInsertException, SQLException {
 		// insert test data row
-		user1 = DatabaseInsertHelper.createNewUserAccount("test1", "1234", "fn", "ln", null, "utsc", "1234@asdf.com", "1232341234", 1);
-		user2 = DatabaseInsertHelper.createNewUserAccount("test2", "abcd", "fn", "ln", null, "teqlip", "1234@asdf.com", "1232341234", 0);
+		user1 = DatabaseInsertHelper.createNewUserAccount("test1", "1234", "fn", "ln", null, RoleEnum.UTSC, "1234@asdf.com", "1232341234", 1);
+		user2 = DatabaseInsertHelper.createNewUserAccount("test2", "abcd", "fn", "ln", null, RoleEnum.TEQLIP, "1234@asdf.com", "1232341234", 0);
 	}
 	
 	@AfterAll
@@ -52,29 +53,22 @@ public class DatabaseSelectorTest {
     @Test
     @DisplayName("test getting roleID of utsc")
     public void testGetIdUtsc() throws SQLException {
-    	int id = DatabaseSelectHelper.getRoleId("utsc");
+    	int id = DatabaseSelectHelper.getRoleId(RoleEnum.UTSC);
     	assertEquals(1, id);
     }
     
     @Test
     @DisplayName("test getting roleID of teqlip")
     public void testGetIdTeqlip() throws SQLException {
-    	int id = DatabaseSelectHelper.getRoleId("teqlip");
+    	int id = DatabaseSelectHelper.getRoleId(RoleEnum.TEQLIP);
     	assertEquals(2, id);
     }
     
     @Test
     @DisplayName("test getting roleID of org")
     public void testGetIdOrg() throws SQLException {
-    	int id = DatabaseSelectHelper.getRoleId("org");
+    	int id = DatabaseSelectHelper.getRoleId(RoleEnum.ORG);
     	assertEquals(3, id);
-    }
-    
-    @Test
-    @DisplayName("test getting roleID of nonexist role")
-    public void testGetIdteqlip() throws SQLException {
-    	int id = DatabaseSelectHelper.getRoleId("hello");
-    	assertEquals(-1, id);
     }
     
     @Test
@@ -83,10 +77,10 @@ public class DatabaseSelectorTest {
     	String role = DatabaseSelectHelper.getRoleName(1);
     	String rightrole = "utsc";
     	assertEquals(rightrole, role);
-       	role = DatabaseSelectHelper.getRoleName(2);
+      role = DatabaseSelectHelper.getRoleName(2);
     	rightrole = "teqlip";
     	assertEquals(rightrole, role);
-       	role = DatabaseSelectHelper.getRoleName(3);
+      role = DatabaseSelectHelper.getRoleName(3);
     	rightrole = "org";
     	assertEquals(rightrole, role);
     }

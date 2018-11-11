@@ -1,6 +1,7 @@
 package com.teqlip.database;
 
 import com.mysql.jdbc.Blob;
+import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseSelector;
 import com.teqlip.exceptions.ConnectionFailedException;
 
@@ -44,17 +45,17 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 	}
 	
 	/**
-	 * get roleID of a given role name
-	 * @param role
+	 * get roleID of a given role name enum
+	 * @param RoleEnum
 	 * @return roleID
 	 * @throws SQLException
 	 */
-	public static int getRoleId(String role) throws SQLException {
+	public static int getRoleId(RoleEnum role) throws SQLException {
 		Connection con = DatabaseDriverHelper.connectDataBase();
 		ResultSet results = DatabaseSelector.getRoles(con);
 		int roleID = -1;
 		while (results.next()) {
-			if (results.getString("role").equalsIgnoreCase(role)) {
+			if (results.getString("role").equalsIgnoreCase(role.getString())) {
 				// add the current row's ID
 				roleID = results.getInt("roleID");
 				return roleID;

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
+import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseInsertHelper;
 import com.teqlip.database.DatabaseSelectHelper;
 import com.teqlip.database.Login;
@@ -88,7 +89,7 @@ public class TEQCreateAccountPanel extends BodyPanel {
 			String firstName = "fn";
 			String lastName = "ln";
 			String middleName = "midname";
-			String role = "teqlip";
+			RoleEnum role = RoleEnum.TEQLIP;
 			String phoneNumber = "1234093876";
 			int active = 1;
 			// check if username exist, if yes, error

@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.teqlip.Role.RoleEnum;
+
 public class DataValidator {
 
   /**
@@ -19,7 +21,7 @@ public class DataValidator {
    * @throws SQLException
    */
 	public static boolean createNewAccountValidation(String username, String password,
-			  String firstName,String lastName, String role,
+			  String firstName,String lastName, RoleEnum role,
 			  String email) throws SQLException {
 		boolean valid = true;
 		valid = !username.equals(null);

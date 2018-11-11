@@ -22,6 +22,7 @@ import com.teqlip.gui.panels.org.OrgMainMenuPanel;
 import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
 import com.teqlip.gui.panels.utsc.UTSCMainMenuPanel;
 import com.teqlip.database.Login;
+import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseSelectHelper;
 import com.teqlip.exceptions.ConnectionFailedException;
 
@@ -74,30 +75,19 @@ public class LoginMenu extends BaseFrame {
 					// security reason - set string pwd to empty string
 					pwd = "";
 					int userID = DatabaseSelectHelper.getUserID(userInput);
-					String role = "";
-					try {
-						role = DatabaseSelectHelper.getRoleName(DatabaseSelectHelper.getUserRoleId(userID));
-					} catch (SQLException | ConnectionFailedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					int roleid = -1;
+					RoleEnum roleEnum = null;
+
+          roleid = DatabaseSelectHelper.getUserRoleId(userID);
 					this.dispose();
-					// check user role - might need to use some design pattern here...
-					if (role.equalsIgnoreCase("teqlip")) {
-						AppFrame main = new AppFrame(userInput, "TEQ Project Staff");
-						main.setBody(new TEQMainMenuPanel(main));
-						
-						main.packAndShow();
-					} else if (role.equalsIgnoreCase("org")) {
-						AppFrame main = new AppFrame(userInput, "Participating Organization Volunteer");
-					    main.setBody(new OrgMainMenuPanel(main));
-						
-						main.packAndShow();
-					} else if (role.equalsIgnoreCase("utsc")) {
-						AppFrame main = new AppFrame(userInput, "UTSC Project Staff");
-					    main.setBody(new UTSCMainMenuPanel(main));
-						
-						main.packAndShow();
+					
+					for (RoleEnum re : roleEnum.enumIteration()) {
+					  if (re.getRoleId() == roleid) {
+					    roleEnum = re.getRoleEnum();
+					  }
+					}
+					if (roleEnum != null) {
+					  roleEnum.changeMenu(userInput);
 					} else {
 						JOptionPane.showMessageDialog(null, "Unknown error", "Fail Login - role not found", JOptionPane.ERROR_MESSAGE);
 					}
@@ -105,7 +95,6 @@ public class LoginMenu extends BaseFrame {
 					JOptionPane.showMessageDialog(null, "Incorrect password", "Fail Login - wrong password", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (HeadlessException | SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
