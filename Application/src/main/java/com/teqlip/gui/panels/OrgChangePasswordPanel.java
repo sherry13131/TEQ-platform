@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
+import com.teqlip.gui.panels.TEQCreateAccountPanel.ActionConsts;
 
 @SuppressWarnings("serial")
 public class OrgChangePasswordPanel extends BodyPanel {
@@ -67,8 +69,11 @@ public class OrgChangePasswordPanel extends BodyPanel {
   
   @Override
   public void actionPerformed(ActionEvent e) {
-    // TODO Auto-generated method stub
+    String cmd = e.getActionCommand();
     
+    if (cmd.equals(ActionConsts.CANCEL)) {
+      super.goToMenu(MenuOptions.MAIN_MENU);
+    }
   }
 
 }
