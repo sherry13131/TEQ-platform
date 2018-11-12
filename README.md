@@ -56,3 +56,4 @@ From the Team7 directory, change into the Application directory, then use Maven 
 
 ### Verification and Code Review
 - [Deliverable 4 Verification and Code Review Report.pdf](https://github.com/CSCC01/Team7/blob/master/deliverable_4/Deliverable%204%20Verification%20and%20Code%20Review%20Report.pdf)
+- [Code Review Summary Video](https://youtu.be/lXp6KYYPDYY)
