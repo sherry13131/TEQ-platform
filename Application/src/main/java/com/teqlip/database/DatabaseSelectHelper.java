@@ -1,6 +1,6 @@
 package com.teqlip.database;
 
-import com.mysql.cj.jdbc.Blob;
+import com.mysql.jdbc.Blob;
 import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseSelector;
 import com.teqlip.exceptions.ConnectionFailedException;
