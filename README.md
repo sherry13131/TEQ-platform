@@ -5,15 +5,16 @@ From the Team7 directory, change into the Application directory, then use Maven 
 ```
 .../Team7$ cd Application
 .../Team7/Application$ mvn compile
-.../Team7/Application$ mvn exec:java -Dexec.mainClass="com.teqlip.gui.MainFrame"
+.../Team7/Application$ mvn exec:java
 ```
 
 ## Current Product Backlog
-- [personas_v0.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/personas_v0.pdf)
-- [user_stories_v1.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v1.pdf)
+- [Our Trello Board](https://trello.com/b/mjnsukwq/project)
+- [personas_v1.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/personas_v1.pdf)
+- [user_stories_v2.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v2.pdf)
 
 ## Current Sprint Backlog
-- [sprint_2](https://github.com/CSCC01/Team7/tree/master/sprint_backlog/sprint_2)
+- [sprint_4](https://github.com/CSCC01/Team7/tree/master/sprint_backlog/sprint_4)
 
 ## Deliverable 1
 - [Deliverable 1 Report.pdf](https://github.com/CSCC01/Team7/blob/master/deliverable_1/Deliverable%201%20Report.pdf)
@@ -40,3 +41,19 @@ From the Team7 directory, change into the Application directory, then use Maven 
 - [plan.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_2/plan.csv)
 - [execution.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_2/execution.csv)
 - [burndown.csv](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_2/burndown.csv)
+
+## Deliverable 4
+
+### Product Backlog Updates
+- [personas_v1.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/personas_v1.pdf)
+- [user_stories_v2.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v2.pdf)
+
+### Sprint 3 Backlog
+- [sprint_3_report.pdf](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_3/sprint_3_report.pdf)
+
+### Sprint 4 Backlog
+- [sprint_4_report.pdf](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_4/sprint_4_report.pdf)
+
+### Verification and Code Review
+- [Deliverable 4 Verification and Code Review Report.pdf](https://github.com/CSCC01/Team7/blob/master/deliverable_4/Deliverable%204%20Verification%20and%20Code%20Review%20Report.pdf)
+- [Code Review Debriefing Meeting Video](https://youtu.be/lXp6KYYPDYY)
