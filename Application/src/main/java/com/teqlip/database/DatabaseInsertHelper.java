@@ -1,6 +1,7 @@
 package com.teqlip.database;
 
 import com.teqlip.database.DatabaseInserter;
+import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseDriverHelper;
 import com.teqlip.exceptions.DatabaseInsertException;
 
@@ -26,7 +27,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	 * @throws SQLException
 	 */
 	public static int createNewUserAccount(String username, String password,
-			  String firstName,String lastName, String middleName, String role,
+			  String firstName,String lastName, String middleName, RoleEnum role,
 			  String email, String phoneNumber, int active) throws DatabaseInsertException, SQLException {
 		Connection con = DatabaseDriverHelper.connectOrCreateDataBase();
 		int userID = -1;
@@ -49,7 +50,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	   * @throws SQLException 
 	   */
 	  public static int insertNewUserAccount(String username, String password,
-			  String firstName,String lastName, String middleName, String role,
+			  String firstName,String lastName, String middleName, RoleEnum role,
 			  String email, String phoneNumber, int active, 
 			  Connection con) throws DatabaseInsertException, SQLException {
 		// get -1 means error

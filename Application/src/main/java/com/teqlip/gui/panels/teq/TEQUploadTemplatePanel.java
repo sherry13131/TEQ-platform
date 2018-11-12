@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.teq;
 
 import java.awt.Dimension;
 import java.awt.event.*;
@@ -6,6 +6,8 @@ import javax.swing.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 
 @SuppressWarnings("serial")
 public class TEQUploadTemplatePanel extends BodyPanel {
@@ -51,8 +53,8 @@ public class TEQUploadTemplatePanel extends BodyPanel {
     }
     
     public JComponent createPathPane() {
-    	// The parent panel will consist of the Path on top, then another panel below which contains the textfield
-    	// and browse button horizontally
+    	// The parent panel will consist of the Path on top, then another panel below which contains 
+    	// the textfield and browse button horizontally
     	JPanel parent = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     	
     	JLabel pathLbl = new JLabel("Path:");

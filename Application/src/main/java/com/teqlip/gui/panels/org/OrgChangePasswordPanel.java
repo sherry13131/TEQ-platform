@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.org;
 
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
@@ -9,8 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
-import com.teqlip.gui.panels.BodyPanel.MenuOptions;
-import com.teqlip.gui.panels.TEQCreateAccountPanel.ActionConsts;
+import com.teqlip.gui.panels.BodyPanel;
 
 @SuppressWarnings("serial")
 public class OrgChangePasswordPanel extends BodyPanel {

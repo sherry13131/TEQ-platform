@@ -7,6 +7,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import com.teqlip.gui.frames.AppFrame;
+import com.teqlip.gui.panels.org.OrgChangePasswordPanel;
+import com.teqlip.gui.panels.org.OrgDownloadTemplatePanel;
+import com.teqlip.gui.panels.org.OrgMainMenuPanel;
+import com.teqlip.gui.panels.org.OrgUploadDataPanel;
+import com.teqlip.gui.panels.teq.TEQCreateAccountPanel;
+import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
+import com.teqlip.gui.panels.teq.TEQQueryPanel;
+import com.teqlip.gui.panels.teq.TEQUploadTemplatePanel;
+import com.teqlip.gui.panels.utsc.UTSCMainMenuPanel;
 
 @SuppressWarnings("serial")
 public abstract class BodyPanel extends JPanel implements ActionListener {

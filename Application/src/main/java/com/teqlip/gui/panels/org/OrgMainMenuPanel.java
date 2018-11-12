@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels;
+package com.teqlip.gui.panels.org;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
+import com.teqlip.gui.panels.BodyPanel;
 
 @SuppressWarnings("serial")
 public class OrgMainMenuPanel extends BodyPanel {
