@@ -2,6 +2,9 @@ package com.teqlip.database;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ExportData {
 	
@@ -11,10 +14,13 @@ public class ExportData {
 	 * @param query that to be executed
 	 * @param newfilename the new file name that will be written as
 	 */
-	public static void exportCSV(String query, String newfilename) {
+	public static void exportCSV(String query) {
 		try {
 			Connection con = DatabaseDriverHelper.connectDataBase();
-			newfilename = "./" + newfilename;
+            DateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm_ss");
+            Date date = new Date();
+            String date_str = dateFormat.format(date);
+			String newfilename = "./data_" + date_str;
 			String sql = query + " INTO OUTFILE '" + newfilename + "' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\\n'";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.execute();

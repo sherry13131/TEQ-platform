@@ -81,8 +81,10 @@ public class JGuiHelper {
 		return textField;
 	}
 
-    public static JComboBox createComboBox(String[] options) {
+    public static JComboBox createComboBox(String[] options, ActionListener listener, String actionCommand) {
         JComboBox comboBox = new JComboBox(options);
+        comboBox.addActionListener(listener);
+		comboBox.setActionCommand(actionCommand);
         return comboBox;
     }
 }

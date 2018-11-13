@@ -3,11 +3,15 @@ package com.teqlip.gui.panels.teq;
 import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
+import java.util.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
 import com.teqlip.gui.panels.BodyPanel.MenuOptions;
+import com.teqlip.database.*;
+import com.teqlip.exceptions.*;
 
 @SuppressWarnings("serial")
 public class TEQUploadTemplatePanel extends BodyPanel {
@@ -91,7 +95,22 @@ public class TEQUploadTemplatePanel extends BodyPanel {
         	TEQUploadDialogBox dialogBox = new TEQUploadDialogBox(this, this.pathField);
         	dialogBox.showOpenDialog();
         } else if (cmd.equals(ActionConsts.UPLOAD)) {
-        	// TODO Connect to Database
+        	Connection con = DatabaseDriverHelper.connectDataBase();
+            String tempName = this.filenameField.getText();
+            String tempPath = this.pathField.getText();
+            if (tempName.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Please enter a name for the template", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (tempPath.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Please enter a path to the template file", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            try {
+                DatabaseInsertHelper.insertNewTemplate(tempName, tempPath, con);
+                con.close();
+            } catch (DatabaseInsertException e) {
+                JOptionPane.showMessageDialog(null, "Template name already exists", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else if (cmd.equals(ActionConsts.CANCEL)) {
         	super.goToMenu(MenuOptions.MAIN_MENU);
         }

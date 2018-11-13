@@ -12,6 +12,7 @@ import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
 import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 import com.teqlip.database.*;
+import com.teqlip.exceptions.*;
 
 @SuppressWarnings("serial")
 public class TEQQueryPanel extends BodyPanel {
@@ -20,6 +21,8 @@ public class TEQQueryPanel extends BodyPanel {
 		private static final String EXECUTE = "execute";
 		private static final String SAVE = "save";
 		private static final String BACK = "back";
+        private static final String GETQUERY = "get query";
+        private static final String EXPORT = "export csv";
 	}
 
 	private static final Dimension QUERY_DIMENSION = new Dimension(300, 30);
@@ -33,8 +36,12 @@ public class TEQQueryPanel extends BodyPanel {
         
         layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
         super.setLayout(layout);
-        
-        JComponent savedQueryPane = createSavedQueryPane();
+        JComponent savedQueryPane = null;
+        try {
+            savedQueryPane = createSavedQueryPane();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         JComponent queryPane = createQueryPane();
         JComponent buttonPane = createButtonPane();
         
@@ -43,17 +50,19 @@ public class TEQQueryPanel extends BodyPanel {
         add(buttonPane);
     }
 
-    // TODO get saved queries from db
-
-    public JComponent createSavedQueryPane() {
+    public JComponent createSavedQueryPane() throws SQLException {
         JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
         
         JLabel savedQueryLabel = new JLabel("Saved Queries:");
-    	// this.chooseSavedQuery = JGuiHelper.createComboBox(
-    	// this.chooseSavedQuery.setPreferredSize(QUERY_DIMENSION);
-    	
+        List<String> savedQueriesList = DatabaseSelectHelper.getSavedQueries();
+        String [] savedQueriesArray = new String[savedQueriesList.size()];
+        for (int i = 0; i < savedQueriesList.size(); i++) {
+            savedQueriesArray[i] = savedQueriesList.get(i);
+        }
+    	this.chooseSavedQuery = JGuiHelper.createComboBox(savedQueriesArray, this, ActionConsts.GETQUERY);
+    	this.chooseSavedQuery.setPreferredSize(QUERY_DIMENSION);
     	p.add(savedQueryLabel);
-    	// p.add(this.chooseSavedQuery);
+    	p.add(this.chooseSavedQuery);
     	
     	return p;
     }
@@ -66,10 +75,12 @@ public class TEQQueryPanel extends BodyPanel {
         this.queryField.setMaximumSize(new Dimension(400, 25));
         JButton executeBtn = JGuiHelper.createButton("Execute Query", this, ActionConsts.EXECUTE);
         JButton saveBtn = JGuiHelper.createButton("Save Query", this, ActionConsts.SAVE);
+        JButton expBtn = JGuiHelper.createButton("Export CSV", this, ActionConsts.EXPORT);
         p.add(queryLabel);
         p.add(this.queryField);
         p.add(executeBtn);
         p.add(saveBtn);
+        p.add(expBtn);
         return p;
     }
 
@@ -124,9 +135,22 @@ public class TEQQueryPanel extends BodyPanel {
                 e.printStackTrace();
             }
         } else if (cmd.equals(ActionConsts.SAVE)) {
-        	// TODO Save query into db
+        	Connection con = DatabaseDriverHelper.connectDataBase();
+            String query = this.queryField.getText();
+            try {
+                DatabaseInsertHelper.insertNewQuery(query, con);
+                con.close();
+            } catch (DatabaseInsertException e) {
+                JOptionPane.showMessageDialog(null, "Saved query already exists", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else if (cmd.equals(ActionConsts.BACK)) {
         	super.goToMenu(MenuOptions.MAIN_MENU);
+        } else if (cmd.equals(ActionConsts.GETQUERY)) {
+            this.queryField.setText((String)this.chooseSavedQuery.getSelectedItem());
+        } else if (cmd.equals(ActionConsts.EXPORT)) {
+            ExportData.exportCSV(this.queryField.getText());
         }
     }
 }
