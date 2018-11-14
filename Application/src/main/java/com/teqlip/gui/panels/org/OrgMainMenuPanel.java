@@ -18,12 +18,14 @@ public class OrgMainMenuPanel extends BodyPanel {
     }
 
     private BoxLayout layout;
+    private String username;
 
     public OrgMainMenuPanel(AppFrame main) {
     	super(main);
  
-      	layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-		setLayout(layout);
+      layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+      setLayout(layout);
+      this.username = username;
 
     	JLabel msgs = createMessagePane();
 		
