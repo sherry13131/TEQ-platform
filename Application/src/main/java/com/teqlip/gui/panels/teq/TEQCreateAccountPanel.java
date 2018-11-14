@@ -8,6 +8,10 @@ import javax.swing.*;
 import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseInsertHelper;
 import com.teqlip.database.DatabaseSelectHelper;
+import com.teqlip.email.AccountCreatedEmail;
+import com.teqlip.email.ChangedPassEmail;
+import com.teqlip.email.EmailHandler;
+import com.teqlip.email.EmailInterface;
 import com.teqlip.exceptions.DatabaseInsertException;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
@@ -128,8 +132,10 @@ public class TEQCreateAccountPanel extends BodyPanel {
       String emailInput, String phoneNumber, int active) {
     boolean success = false;
     try {
-      DatabaseInsertHelper.createNewUserAccount(usernameInput, password, firstName, lastName, middleName, role, emailInput, phoneNumber, active);
+      int uid = DatabaseInsertHelper.createNewUserAccount(usernameInput, password, firstName, lastName, middleName, role, emailInput, phoneNumber, active);
       JOptionPane.showMessageDialog(null, "Account created with a default password: password", "created account", JOptionPane.INFORMATION_MESSAGE);
+      // send email
+      sendEmail(usernameInput, uid, "password");
       success = true;
     } catch (DatabaseInsertException e) {
       e.printStackTrace();
@@ -138,7 +144,15 @@ public class TEQCreateAccountPanel extends BodyPanel {
     }
     return success;
   }
-
+  
+  private void sendEmail(String username, int id, String password) {
+    String emailAddress = DatabaseSelectHelper.getUserEmailHelper(id);
+    EmailInterface email = new AccountCreatedEmail(username, emailAddress, password);
+    
+    EmailHandler.addEmail(email);
+    EmailHandler.sendEmails();
+  }
+  
   private boolean checkValidEmail(String emailStr) {
     Matcher matcher = VALID_EMAIL_REGEX .matcher(emailStr);
     return matcher.find();

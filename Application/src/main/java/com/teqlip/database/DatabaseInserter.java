@@ -1,6 +1,7 @@
 package com.teqlip.database;
 
 import com.teqlip.exceptions.DatabaseInsertException;
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Connection;
