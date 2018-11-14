@@ -20,8 +20,8 @@ public class ExportData {
             DateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm_ss");
             Date date = new Date();
             String date_str = dateFormat.format(date);
-			String newfilename = "./data_" + date_str;
-			String sql = query + " INTO OUTFILE '" + newfilename + "' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\\n'";
+			String newfilename = "./data_" + date_str + ".csv";
+			String sql = query + " INTO OUTFILE '" + newfilename + "' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' ESCAPED BY '\\\\' LINES TERMINATED BY '\\n'";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.execute();
 			System.out.print("File has been created. ");
