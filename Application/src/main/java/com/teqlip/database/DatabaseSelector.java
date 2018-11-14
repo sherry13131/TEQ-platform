@@ -209,9 +209,21 @@ public class DatabaseSelector {
 		return results;
 	}
 
-    public static ResultSet queryData(Connection con, String query) throws SQLException {
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(query + ";");
-        return rs;
-    }
+  public static ResultSet queryData(Connection con, String query) throws SQLException {
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery(query + ";");
+      return rs;
+  }
+  
+  public static String getUserEmail(Connection con, int userId) throws SQLException {
+    String sql = "SELECT email FROM users where userID = ?;";
+    PreparedStatement preparedStatement = con.prepareStatement(sql);
+    preparedStatement.setInt(1, userId);
+    ResultSet results = preparedStatement.executeQuery();
+    results.next();
+    String email = results.getString("email");
+    results.close();
+    return email;
+  }
+    
 }

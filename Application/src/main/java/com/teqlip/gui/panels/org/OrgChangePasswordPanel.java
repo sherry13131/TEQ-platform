@@ -15,6 +15,10 @@ import javax.swing.JTextField;
 import com.teqlip.database.DatabaseSelectHelper;
 import com.teqlip.database.DatabaseUpdateHelper;
 import com.teqlip.database.PasswordHelper;
+import com.teqlip.email.ChangedPassEmail;
+import com.teqlip.email.EmailHandler;
+import com.teqlip.email.EmailInterface;
+import com.teqlip.email.NoReplyEmail;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
@@ -94,8 +98,11 @@ public class OrgChangePasswordPanel extends BodyPanel {
       // change the password if both matched and confirmed
       if (matched && confirmed) {
         int uid = getUserID();
+        String emailAddress = DatabaseSelectHelper.getUserEmailHelper(uid);
         PasswordHelper.updatePassword(uid, newPwd);
         JOptionPane.showMessageDialog(null, "Password is changed successfully", "Password changed", JOptionPane.INFORMATION_MESSAGE);
+        // send email to user for notification
+        sendEmail(emailAddress);
       } else if (!matched) {
         JOptionPane.showMessageDialog(null, "The old password doesn't match the current password", "Incorrect password", JOptionPane.ERROR_MESSAGE);
       } else if (!confirmed) {
@@ -134,5 +141,11 @@ public class OrgChangePasswordPanel extends BodyPanel {
       e.printStackTrace();
     }
     return -1;
+  }
+  
+  private void sendEmail(String emailAddress) {
+    EmailInterface email = new ChangedPassEmail(main.getUsername(), emailAddress);
+    EmailHandler.addEmail(email);
+    EmailHandler.sendEmails();
   }
 }

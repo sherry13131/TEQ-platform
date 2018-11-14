@@ -25,7 +25,6 @@ public class OrgMainMenuPanel extends BodyPanel {
  
       layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
       setLayout(layout);
-      this.username = username;
 
     	JLabel msgs = createMessagePane();
 		
