@@ -153,7 +153,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		// if user is not in db login fail
 		if (usernameInDB) {
 			try {
-				userActive = 1;
+				userActive = getUserStatus(username);
 				userID = getUserID(username);
 				// login fail if user is not active
 				if (userActive == 1) {

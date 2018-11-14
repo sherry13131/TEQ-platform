@@ -80,7 +80,7 @@ public class OrgDownloadTemplatePanel extends BodyPanel {
     public void actionPerformed(ActionEvent ae) {
     	String cmd = ae.getActionCommand();
 
-        if (cmd.equals(ActionConsts.DOWNLOAD)) {
+        if (ActionConsts.DOWNLOAD.equals(cmd)) {
             String tempName = (String)this.filenameList.getSelectedItem();
             try {
                 DatabaseSelectHelper.getTemplateFile(tempName);
@@ -89,7 +89,7 @@ public class OrgDownloadTemplatePanel extends BodyPanel {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        } else if (cmd.equals(ActionConsts.CANCEL)) {
+        } else if (ActionConsts.CANCEL.equals(cmd)) {
         	super.goToMenu(MenuOptions.ORG_MAIN_MENU);
         }
     }
