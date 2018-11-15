@@ -81,7 +81,7 @@ public class LoginMenu extends BaseFrame {
           roleid = DatabaseSelectHelper.getUserRoleId(userID);
 					this.dispose();
 					
-					for (RoleEnum re : roleEnum.enumIteration()) {
+					for (RoleEnum re : RoleEnum.enumIteration()) {
 					  if (re.getRoleId() == roleid) {
 					    roleEnum = re.getRoleEnum();
 					  }

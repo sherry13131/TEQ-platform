@@ -1,12 +1,24 @@
 package com.teqlip.gui.panels.org;
 
 import java.awt.event.ActionEvent;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.teqlip.database.DatabaseSelectHelper;
+import com.teqlip.database.DatabaseUpdateHelper;
+import com.teqlip.database.PasswordHelper;
+import com.teqlip.email.ChangedPassEmail;
+import com.teqlip.email.EmailHandler;
+import com.teqlip.email.EmailInterface;
+import com.teqlip.email.NoReplyEmail;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
@@ -71,8 +83,69 @@ public class OrgChangePasswordPanel extends BodyPanel {
     String cmd = e.getActionCommand();
     
     if (cmd.equals(ActionConsts.CANCEL)) {
-      super.goToMenu(MenuOptions.MAIN_MENU);
+      super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+    } else if (cmd.equals(ActionConsts.SUBMIT)) {
+      String oldPwd = this.textFields[0].getText();
+      String newPwd = this.textFields[1].getText();
+      String confirmPwd = this.textFields[2].getText();
+      
+      boolean matched = false;
+      // check if the old Password match current password
+      matched = checkMatchCurrentPassword(oldPwd);
+      // check if new password match
+      boolean confirmed = confirmMatchPassword(newPwd, confirmPwd);
+      
+      // change the password if both matched and confirmed
+      if (matched && confirmed) {
+        int uid = getUserID();
+        String emailAddress = DatabaseSelectHelper.getUserEmailHelper(uid);
+        PasswordHelper.updatePassword(uid, newPwd);
+        JOptionPane.showMessageDialog(null, "Password is changed successfully", "Password changed", JOptionPane.INFORMATION_MESSAGE);
+        // send email to user for notification
+        sendEmail(emailAddress);
+      } else if (!matched) {
+        JOptionPane.showMessageDialog(null, "The old password doesn't match the current password", "Incorrect password", JOptionPane.ERROR_MESSAGE);
+      } else if (!confirmed) {
+        JOptionPane.showMessageDialog(null, "The new password doesn't match each other", "Password not match", JOptionPane.ERROR_MESSAGE);
+      }
     }
   }
+  
+  private boolean checkMatchCurrentPassword(String input) {
+    int uid = getUserID();
+    boolean matched = false;
+    try {
+      matched = DatabaseSelectHelper.checkLoginPassword(uid, input);
+    } catch (NoSuchAlgorithmException | SQLException e) {
+      e.printStackTrace();
+    }
+    
+    if (matched) {
+      return true;
+    }
+    return false;
+  }
 
+  private boolean confirmMatchPassword(String first, String second) {
+    if (first.equals(second)) {
+      return true;
+    }
+    return false;
+  }
+  
+  private int getUserID() {
+    String username = main.getUsername();
+    try {
+      return DatabaseSelectHelper.getUserID(username);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+  }
+  
+  private void sendEmail(String emailAddress) {
+    EmailInterface email = new ChangedPassEmail(main.getUsername(), emailAddress);
+    EmailHandler.addEmail(email);
+    EmailHandler.sendEmails();
+  }
 }

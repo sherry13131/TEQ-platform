@@ -366,7 +366,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		return false;
 	}
   
-	public static String getUserEmailHelper(int userId) {
+  public static String getUserEmailHelper(int userId) {
+
     Connection con = DatabaseDriverHelper.connectDataBase();
     String email = null;
     try {
@@ -376,5 +377,4 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     return email;
   }
-	
 }

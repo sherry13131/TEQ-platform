@@ -96,5 +96,9 @@ public class AppFrame extends BaseFrame implements ActionListener {
 			login.packAndShow();
 		}
 	}
+	
+	public String getUsername() {
+	  return this.username;
+	}
   
 }

@@ -225,5 +225,4 @@ public class DatabaseSelector {
     results.close();
     return email;
   }
-  
 }
