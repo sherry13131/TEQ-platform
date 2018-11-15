@@ -10,6 +10,9 @@ import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseInsertHelper;
 import com.teqlip.database.DatabaseSelectHelper;
 import com.teqlip.database.Login;
+import com.teqlip.email.EmailHandler;
+import com.teqlip.email.NewAccountEmail;
+import com.teqlip.email.NoReplyEmail;
 import com.teqlip.exceptions.DatabaseInsertException;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
@@ -33,7 +36,12 @@ public class TEQCreateAccountPanel extends BodyPanel {
 
     public static final String[] ACCOUNT_FIELDS = {
         "Username",
-        "Email"
+        "Email",
+        "First Name",
+        "Middle Name",
+        "Last Name",
+        "Role (ORG, TEQLIP, UTSC)",
+        "Phone Number"
     };
     public JTextField[] textFields = new JTextField[TEQCreateAccountPanel.ACCOUNT_FIELDS.length];
     
@@ -84,25 +92,37 @@ public class TEQCreateAccountPanel extends BodyPanel {
 		if (ActionConsts.SUBMIT.equals(cmd)) {
 			String usernameInput = this.textFields[0].getText();
 			String emailInput = this.textFields[1].getText();
-			
-			// replace these to value in field
-			String firstName = "fn";
-			String lastName = "ln";
-			String middleName = "midname";
-			RoleEnum role = RoleEnum.TEQLIP;
-			String phoneNumber = "1234093876";
+			String firstName = this.textFields[2].getText();
+			String lastName = this.textFields[4].getText();
+			String middleName = this.textFields[3].getText();
+			String phoneNumber = this.textFields[6].getText();
 			int active = 1;
+			// set after checking input
+			RoleEnum role = null;
+			String roleName = this.textFields[5].getText();
+			
 			// check if username exist, if yes, error
+			// then chec if role is valid, if not error
 			try {
 				if (DatabaseSelectHelper.checkUsernameExist(usernameInput)) {
 					JOptionPane.showMessageDialog(null, "Username already exist", "Fail create account - username existed", JOptionPane.ERROR_MESSAGE);
 				} else {
 					if(!checkValidEmail(emailInput)) {
 						JOptionPane.showMessageDialog(null, "Not a valid email", "Fail create account - invalid email", JOptionPane.ERROR_MESSAGE);	
-					} else {
-						// create account - default teqlip account/role
-						DatabaseInsertHelper.createNewUserAccount(usernameInput, "password", firstName, lastName, middleName, role, emailInput, phoneNumber, active);
-						JOptionPane.showMessageDialog(null, "Account created with a default password: password", "created account", JOptionPane.INFORMATION_MESSAGE);
+					}else if(!checkValidRole(roleName)) {
+						JOptionPane.showMessageDialog(null, "Not a valid role", "Fail create account - invalid role", JOptionPane.ERROR_MESSAGE);
+					}else {
+						// get the role the user chose
+						role = getRoleEnumGivenName(roleName);
+						// create a random 8 letter password
+						String password = getRandomPassword(8);
+						// create account
+						DatabaseInsertHelper.createNewUserAccount(usernameInput, password, firstName, lastName, middleName, role, emailInput, phoneNumber, active);
+						// sent login credential to email
+						NoReplyEmail email = new NewAccountEmail(firstName, usernameInput, password, emailInput);
+						EmailHandler.addEmail(email);
+						EmailHandler.sendEmails();
+						JOptionPane.showMessageDialog(null, "Account created, credentials are sent to the email listed", "created account", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			} catch (HeadlessException | SQLException | DatabaseInsertException e1) {
@@ -111,6 +131,11 @@ public class TEQCreateAccountPanel extends BodyPanel {
 			}
 			this.textFields[0].setText("");
 			this.textFields[1].setText("");
+			this.textFields[2].setText("");
+			this.textFields[3].setText("");
+			this.textFields[4].setText("");
+			this.textFields[5].setText("");
+			this.textFields[6].setText("");
 		} else if (cmd.equals(ActionConsts.CANCEL)) {
         	super.goToMenu(MenuOptions.MAIN_MENU);
         }
@@ -119,5 +144,33 @@ public class TEQCreateAccountPanel extends BodyPanel {
 	public static boolean checkValidEmail(String emailStr) {
 	        Matcher matcher = VALID_EMAIL_REGEX .matcher(emailStr);
 	        return matcher.find();
+	}
+	
+	public static boolean checkValidRole(String role) {
+		for (RoleEnum roleValid : RoleEnum.values()) {
+	        if (roleValid.name().equals(role.toUpperCase())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	public static RoleEnum getRoleEnumGivenName(String role) {
+		for (RoleEnum roleValid : RoleEnum.values()) {
+	        if (roleValid.name().equals(role.toUpperCase())) {
+	            return roleValid;
+	        }
+	    }
+	    return null;
+	}
+	
+	public static String getRandomPassword(int length) {
+		String alphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		String password = "";
+		while (password.length() < length){
+			int randomNumber = (int)(Math.random() * alphaNum.length());
+			password += alphaNum.charAt(randomNumber);
+		}
+		return password;
 	}
 }
