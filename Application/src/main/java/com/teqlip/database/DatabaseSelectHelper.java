@@ -365,8 +365,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		}
 		return false;
 	}
-    //test main function
-  //  public static void main(String[] args) throws SQLException {
-  //	  	System.out.println(getTemplatesName());
-  //  }
+  
+	public static String getUserEmailHelper(int userId) {
+    Connection con = DatabaseDriverHelper.connectDataBase();
+    String email = null;
+    try {
+      email = DatabaseSelector.getUserEmail(con, userId);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return email;
+  }
+	
 }

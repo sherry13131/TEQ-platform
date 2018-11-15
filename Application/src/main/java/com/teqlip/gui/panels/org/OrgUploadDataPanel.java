@@ -3,11 +3,17 @@ package com.teqlip.gui.panels.org;
 import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.*;
+import java.sql.*;
+import java.util.*;
+import java.io.*;
 
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
 import com.teqlip.gui.panels.BodyPanel.MenuOptions;
+import com.teqlip.database.*;
+import com.teqlip.exceptions.*;
 
 @SuppressWarnings("serial")
 public class OrgUploadDataPanel extends BodyPanel {
@@ -30,7 +36,12 @@ public class OrgUploadDataPanel extends BodyPanel {
         layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
         super.setLayout(layout);
         
-        JComponent filenamePane = createFilenamePane();
+        JComponent filenamePane = null;
+        try {
+            filenamePane = createFilenamePane();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         JComponent pathPane = createPathPane();
         JComponent buttonsPane = createButtonPane();
         
@@ -39,17 +50,20 @@ public class OrgUploadDataPanel extends BodyPanel {
         add(buttonsPane);
     }
 
-    // TODO need method to get all templates from db
-
-    public JComponent createFilenamePane() {
+    public JComponent createFilenamePane() throws SQLException {
     	JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     	
     	JLabel filenamelbl = new JLabel("Select corresponding template:");
-    	// this.filenameList = JGuiHelper.createComboBox(
-    	// this.filenameList.setPreferredSize(FILENAME_FIELD_DIMENSION);
+    	List<String> templateList = DatabaseSelectHelper.getTemplatesName();
+        String [] templateArray = new String[templateList.size()];
+        for (int i = 0; i < templateList.size(); i++) {
+            templateArray[i] = templateList.get(i);
+        }
+    	this.filenameList = JGuiHelper.createComboBox(templateArray, this, null);
+    	this.filenameList.setPreferredSize(FILENAME_FIELD_DIMENSION);
     	
     	p.add(filenamelbl);
-    	// p.add(this.filenameList);
+    	p.add(this.filenameList);
     	
     	return p;
     }
@@ -89,12 +103,12 @@ public class OrgUploadDataPanel extends BodyPanel {
     public void actionPerformed(ActionEvent ae) {
     	String cmd = ae.getActionCommand();
 
-        if (cmd.equals(ActionConsts.BROWSE)) {
+        if (ActionConsts.BROWSE.equals(cmd)) {
         	OrgUploadDialogBox dialogBox = new OrgUploadDialogBox(this, this.pathField);
         	dialogBox.showOpenDialog();
-        } else if (cmd.equals(ActionConsts.UPLOAD)) {
+        } else if (ActionConsts.UPLOAD.equals(cmd)) {
         	// TODO Connect to Database
-        } else if (cmd.equals(ActionConsts.CANCEL)) {
+        } else if (ActionConsts.CANCEL.equals(cmd)) {
         	super.goToMenu(MenuOptions.ORG_MAIN_MENU);
         }
     }
