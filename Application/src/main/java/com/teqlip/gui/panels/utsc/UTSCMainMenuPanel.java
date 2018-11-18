@@ -7,6 +7,7 @@ import javax.swing.*;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 
 @SuppressWarnings("serial")
 public class UTSCMainMenuPanel extends BodyPanel {
@@ -55,7 +56,7 @@ public class UTSCMainMenuPanel extends BodyPanel {
 		String cmd = e.getActionCommand();
 		
         if (cmd.equals(ActionConsts.VIEW)) {
-			
+          super.goToMenu(MenuOptions.VIEW_DATA);
 		}
 		
 	}
