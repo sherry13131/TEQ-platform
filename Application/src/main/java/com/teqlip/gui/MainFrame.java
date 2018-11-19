@@ -4,6 +4,7 @@ import com.teqlip.email.ChangedPassEmail;
 import com.teqlip.email.EmailHandler;
 import com.teqlip.email.EmailInterface;
 import com.teqlip.email.NoReplyEmail;
+import com.teqlip.excel.ExcelBook;
 import com.teqlip.gui.frames.*;
 import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
@@ -17,6 +18,8 @@ public class MainFrame {
 		// runMainMenu();
 
 		// runEmail();
+		
+		// runExcel();
 	}
 
 	// These just make it easier to test
@@ -39,5 +42,12 @@ public class MainFrame {
 		EmailHandler.addEmail(email);
 		EmailHandler.addEmail(email2);
 		EmailHandler.sendEmails();
+	}
+	
+	private static void runExcel() {
+		String filename = "New_iCARE_Template_Comb_with_Examples.xlsx";
+		
+		ExcelBook excelBook = new ExcelBook(filename);
+		System.out.println(excelBook.getSheetMap().get("LT Client Exit"));
 	}
 }
