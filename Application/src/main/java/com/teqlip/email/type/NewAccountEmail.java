@@ -1,4 +1,4 @@
-package com.teqlip.email;
+package com.teqlip.email.type;
 
 public class NewAccountEmail extends NoReplyEmail{
 	public static final String subject = "New Account Credentials";

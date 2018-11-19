@@ -1,4 +1,4 @@
-package com.teqlip.email;
+package com.teqlip.email.type;
 
 public class ChangedPassEmail extends NoReplyEmail {
 

@@ -10,10 +10,8 @@ import com.teqlip.database.DatabaseInsertHelper;
 import com.teqlip.database.DatabaseSelectHelper;
 
 import com.teqlip.email.EmailHandler;
-import com.teqlip.email.NewAccountEmail;
-
 import com.teqlip.email.EmailInterface;
-
+import com.teqlip.email.type.NewAccountEmail;
 import com.teqlip.exceptions.DatabaseInsertException;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;

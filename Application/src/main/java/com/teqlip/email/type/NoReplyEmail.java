@@ -1,4 +1,6 @@
-package com.teqlip.email;
+package com.teqlip.email.type;
+
+import com.teqlip.email.EmailAbstract;
 
 public class NoReplyEmail extends EmailAbstract {
 

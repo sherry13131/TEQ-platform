@@ -1,9 +1,9 @@
 package com.teqlip.gui;
 
-import com.teqlip.email.ChangedPassEmail;
 import com.teqlip.email.EmailHandler;
 import com.teqlip.email.EmailInterface;
-import com.teqlip.email.NoReplyEmail;
+import com.teqlip.email.type.ChangedPassEmail;
+import com.teqlip.email.type.NoReplyEmail;
 import com.teqlip.excel.ExcelBook;
 import com.teqlip.gui.frames.*;
 import com.teqlip.gui.panels.BodyPanel.MenuOptions;
