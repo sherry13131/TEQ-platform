@@ -39,6 +39,25 @@ public class DatabaseSelector {
 		results.close();
 		return role;
 	}
+	
+	/**
+	 * get the queryID by query String
+	 * @param query
+	 * @param connection db connection
+	 * @return queryID
+	 * @throws SQLException
+	 */
+	protected static int getQueryID(String queryString, Connection con) throws SQLException {
+		String sql = "SELECT queryID FROM queries WHERE  query = ?";
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		preparedStatement.setString(1, queryString);
+		ResultSet results = preparedStatement.executeQuery();
+		results.next();
+		int queryID = results.getInt("queryID");
+		results.close();
+		return queryID;
+	}
+	
 
 	/**
 	 * get the user's role by userID

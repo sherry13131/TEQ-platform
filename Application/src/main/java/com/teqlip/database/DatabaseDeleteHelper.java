@@ -1,6 +1,7 @@
 package com.teqlip.database;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class DatabaseDeleteHelper {
 
@@ -30,5 +31,31 @@ public class DatabaseDeleteHelper {
 		}
 		return true;
 	}
+	
+	/**
+	 * delete all relevant rows of record of a user. USE IT WISELY.
+	 * @param queryID
+	 * @param con
+	 * @return true if successfully deleted/no action, else false
+	 * @throws SQLException 
+	 */
+	public static boolean deleteQueryHelper(int queryID) throws SQLException {
+		int status = 0;
+		Connection con = DatabaseDriverHelper.connectOrCreateDataBase();
+		// if query exist
+		if (DatabaseSelectHelper.getSavedQueriesID().contains(queryID)) {
+			status = DatabaseDeleter.deleteSavedQuery(queryID, con);
+			if (status == -1) {
+				// something wrong when deleting from table
+				System.out.println("delete not success");
+				return false;
+			}
+		} else {
+			// query not exist
+			System.out.println("query does not exist, no action");
+		}
+		return true;
+	}
 
 }
+

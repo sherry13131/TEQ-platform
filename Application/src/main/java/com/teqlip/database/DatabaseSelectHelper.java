@@ -268,6 +268,26 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		con.close();
 		return queries;
 	}
+	/**
+	 * get a list of saved queries' id
+	 * @return a list of queries
+	 * @throws SQLException
+	 */
+	public static List<Integer> getSavedQueriesID() throws SQLException {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		ResultSet results = DatabaseSelector.getQueries(con);
+		// create a new List to add all template names into
+		List<Integer> queriesID = new ArrayList<Integer>();
+		// checks to see if there is another row with the column to add another ID.
+		// moves to the next row if it exists.
+		while (results.next()) {
+			// add the current row's ID
+			queriesID.add(results.getInt("queryID"));
+		}
+		results.close();
+		con.close();
+		return queriesID;
+	}
 	
 	/**
 	 * get file of a template given the name
