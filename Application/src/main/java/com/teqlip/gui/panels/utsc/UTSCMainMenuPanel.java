@@ -14,6 +14,7 @@ public class UTSCMainMenuPanel extends BodyPanel {
 
     public class ActionConsts {
         private static final String VIEW = "view";
+        private static final String CHANGE_PASSWORD = "change password";
     }
 
     private BoxLayout layout;
@@ -45,8 +46,9 @@ public class UTSCMainMenuPanel extends BodyPanel {
     	JPanel p = JGuiHelper.createPanelFlow();
     	
     	JButton viewBtn = JGuiHelper.createButton("View Data", this, ActionConsts.VIEW);
-    	
+    	JButton changePasswordBtn = JGuiHelper.createButton("Change Password", this, ActionConsts.CHANGE_PASSWORD);
     	p.add(viewBtn);
+        p.add(changePasswordBtn);
     	
     	return p;
     }
@@ -57,7 +59,9 @@ public class UTSCMainMenuPanel extends BodyPanel {
 		
         if (cmd.equals(ActionConsts.VIEW)) {
           super.goToMenu(MenuOptions.VIEW_DATA);
-		}
+		} else if (cmd.equals(ActionConsts.CHANGE_PASSWORD)) {
+          super.goToMenu(MenuOptions.CHANGE_PASSWORD);
+        }
 		
 	}
 

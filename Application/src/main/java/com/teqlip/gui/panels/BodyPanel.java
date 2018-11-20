@@ -15,6 +15,7 @@ import com.teqlip.gui.panels.teq.TEQCreateAccountPanel;
 import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
 import com.teqlip.gui.panels.teq.TEQQueryPanel;
 import com.teqlip.gui.panels.teq.TEQUploadTemplatePanel;
+import com.teqlip.gui.panels.teq.TEQDeleteAccountPanel;
 import com.teqlip.gui.panels.utsc.UTSCDataPanel;
 import com.teqlip.gui.panels.utsc.UTSCMainMenuPanel;
 
@@ -33,7 +34,8 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
         UPLOAD_DATA,
         QUERY,
         CHANGE_PASSWORD,
-        VIEW_DATA
+        VIEW_DATA,
+        REMOVE
 	}
 	
 	public BodyPanel(AppFrame main) {
@@ -73,6 +75,8 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
                 break;
             case VIEW_DATA:
                 newMenu = new UTSCDataPanel(main);
+            case REMOVE:
+                newMenu = new TEQDeleteAccountPanel(main);
 		}
 		
 		this.main.setBody(newMenu);
