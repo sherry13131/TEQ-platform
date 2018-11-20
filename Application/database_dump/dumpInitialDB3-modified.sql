@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS `assignmentdb`.`Template` ;
 
 CREATE TABLE IF NOT EXISTS `assignmentdb`.`Template` (
   `templateID` INT NOT NULL AUTO_INCREMENT,
-  `templateName` VARCHAR(100) NOT NULL,
+  `templateName` VARCHAR(100) NOT NULL UNIQUE,
   `file` LONGBLOB NOT NULL,
   PRIMARY KEY (`templateID`))
 ENGINE = InnoDB;
@@ -412,11 +412,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`LT Couse Setup`
+-- Table `mydb`.`LT Course Setup`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `assignmentdb`.`LT Couse Setup` ;
+DROP TABLE IF EXISTS `assignmentdb`.`LT Course Setup` ;
 
-CREATE TABLE IF NOT EXISTS `assignmentdb`.`LT Couse Setup` (
+CREATE TABLE IF NOT EXISTS `assignmentdb`.`LT Course Setup` (
   `Processing Details` VARCHAR(150) NULL,
   `Update record ID` VARCHAR(45) NULL,
   `Course Code` VARCHAR(45) NOT NULL,

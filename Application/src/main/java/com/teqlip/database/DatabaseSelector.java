@@ -208,6 +208,18 @@ public class DatabaseSelector {
 		ResultSet results = stmt.executeQuery("SELECT * FROM queries;");
 		return results;
 	}
+	/**
+	 * get the anonymized data given a table(template) name
+	 * @param con
+	 * @return Result set that is the anonymized data, without identifier
+	 * @throws SQLException
+	 */
+	public static ResultSet getAnonymizedData(Connection con, String tableName) throws SQLException {
+		Statement stmt = con.createStatement();
+		ResultSet results;
+		results = stmt.executeQuery("SELECT * FROM `"+tableName+"`;");
+		return results;
+	}
 
   public static ResultSet queryData(Connection con, String query) throws SQLException {
       Statement stmt = con.createStatement();

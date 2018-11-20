@@ -2,6 +2,7 @@ package com.teqlip.gui.panels.utsc;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -13,19 +14,28 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.teqlip.Role.RoleEnum;
+import com.teqlip.database.DatabaseDriverHelper;
+import com.teqlip.database.DatabaseSelector;
 import com.teqlip.gui.frames.AppFrame;
 import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
+import com.teqlip.gui.panels.teq.TEQQueryPanel.ActionConsts;
+
+import Templates.TemplateEnum;
 
 @SuppressWarnings("serial")
 public class UTSCDataPanel extends BodyPanel {
   
   public class ActionConsts {
     private static final String EXECUTE = "execute";
-    private static final String SAVE = "save";
     private static final String BACK = "back";
     private static final String GETDATA = "get data";
   }
@@ -34,8 +44,7 @@ public class UTSCDataPanel extends BodyPanel {
   
   private BoxLayout layout;
   @SuppressWarnings("rawtypes")
-  private JComboBox chooseSavedTemplate;
-  private JTextField templateField;
+  private JComboBox chooseTemplate;
   
   public UTSCDataPanel(AppFrame main) {
     super(main);
@@ -58,33 +67,26 @@ public class UTSCDataPanel extends BodyPanel {
   public JComponent createSavedTemplatePane() throws SQLException {
     JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     
-    JLabel savedQueryLabel = new JLabel("Saved Templates:");
-    //TODO need a new function to save savedTemplateslist to database 
-    List<String> savedTemplatesList = new ArrayList<String>();
-    String [] savedTemplatesArray = new String[savedTemplatesList.size()];
-    for (int i = 0; i < savedTemplatesList.size(); i++) {
-        savedTemplatesArray[i] = savedTemplatesList.get(i);
+    JLabel savedQueryLabel = new JLabel("Templates:");
+    //get the all templates name (table names) from enum
+    String [] templateNames = new String[TemplateEnum.values().length];
+    int i = 0;
+    for (TemplateEnum template : TemplateEnum.values()) {
+    	templateNames[i] = template.getString();
+    	i++;
     }
-    this.chooseSavedTemplate = JGuiHelper.createComboBox(savedTemplatesArray, this, ActionConsts.GETDATA);
-    this.chooseSavedTemplate.setPreferredSize(QUERY_DIMENSION);
-    p.add(savedQueryLabel);
-    p.add(this.chooseSavedTemplate);
+    this.chooseTemplate = JGuiHelper.createComboBox(templateNames, this, ActionConsts.GETDATA);
+    this.chooseTemplate.setPreferredSize(QUERY_DIMENSION);
+    p.add(chooseTemplate);
+    p.add(this.chooseTemplate);
     
     return p;
   }
   
   public JComponent createTemplatePane() {
     JPanel p = JGuiHelper.createPanelFlow();
-
-    JLabel templateLabel = new JLabel("Template:");
-    this.templateField = JGuiHelper.createTextField();
-    this.templateField.setMaximumSize(new Dimension(400, 25));
-    JButton executeBtn = JGuiHelper.createButton("Execute Template", this, ActionConsts.EXECUTE);
-    JButton saveBtn = JGuiHelper.createButton("Save Template", this, ActionConsts.SAVE);
-    p.add(templateLabel);
-    p.add(this.templateField);
+    JButton executeBtn = JGuiHelper.createButton("Get Data", this, ActionConsts.EXECUTE);
     p.add(executeBtn);
-    p.add(saveBtn);
     return p;
   }
   
@@ -130,6 +132,16 @@ public class UTSCDataPanel extends BodyPanel {
     
     if (cmd.equals(ActionConsts.BACK)) {
       super.goToMenu(MenuOptions.UTSC_MAIN_MENU);
+    } else if (cmd.equals(ActionConsts.EXECUTE)) {
+        try {
+            Connection con = DatabaseDriverHelper.connectDataBase();
+            ResultSet rs = DatabaseSelector.getAnonymizedData(con, (String)this.chooseTemplate.getSelectedItem());
+            JTable table = new JTable(buildTableModel(rs));
+            con.close();
+            JOptionPane.showMessageDialog(null, new JScrollPane(table), "Data For "+this.chooseTemplate.getSelectedItem() + " Preview", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
   }
 
