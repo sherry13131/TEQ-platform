@@ -288,6 +288,19 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 		con.close();
 		return queriesID;
 	}
+
+    /**
+	 * get a saved query's id
+     * @param the query
+	 * @return a query id
+	 * @throws SQLException
+	 */
+	public static int getSavedQueryID(String query) throws SQLException {
+		Connection con = DatabaseDriverHelper.connectDataBase();
+		int id = DatabaseSelector.getQueryID(query, con);
+		con.close();
+		return id;
+	}
 	
 	/**
 	 * get file of a template given the name
