@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -30,6 +31,7 @@ public class FileHelper {
 		Logger.info("Attempting to open excel workbook...");
 		try {
 			workbook = new XSSFWorkbook(inputStream);
+			workbook.setMissingCellPolicy(MissingCellPolicy.CREATE_NULL_AS_BLANK);
 			inputStream.close();
 		} catch (IOException e) {
 			Logger.error("Workbook couldn't be opened!");

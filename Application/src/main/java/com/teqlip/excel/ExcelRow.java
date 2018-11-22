@@ -19,6 +19,10 @@ public class ExcelRow {
 		return this.rowData;
 	}
 	
+	public Object getCell(int i) {
+	  return this.rowData.get(i);
+	}
+	
 	@Override
 	public String toString() {
 		String result = "";
@@ -31,11 +35,18 @@ public class ExcelRow {
 	
 	private void initializeRowData(Row row) {
 		Iterator<Cell> cellIterator = row.cellIterator();
-		
+		boolean flag = false;
 		while(cellIterator.hasNext()) {
 			Cell cell = cellIterator.next();
-			rowData.add(getCellValue(cell));
+			if (!getCellValue(cell).equals("")) {
+		    rowData.add(getCellValue(cell));
+			  flag = true;
+			}
 		}
+	}
+	
+	public int myGetRowSize() {
+	  return this.rowData.size();
 	}
 	
 	protected Object getCellValue(Cell cell) {
@@ -47,7 +58,7 @@ public class ExcelRow {
 			case NUMERIC:
 				return cell.getNumericCellValue();
 			case BLANK:
-				return "";
+				return "NULL";
 			default:
 				return null;
 		}

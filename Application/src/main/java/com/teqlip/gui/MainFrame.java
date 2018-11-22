@@ -13,13 +13,13 @@ public class MainFrame {
 
 	public static void main(String[] args) {
 
-		runLoginMenu();
+//		runLoginMenu();
 
 		// runMainMenu();
 
 		// runEmail();
 		
-		// runExcel();
+		 runExcel();
 	}
 
 	// These just make it easier to test
@@ -48,6 +48,6 @@ public class MainFrame {
 		String filename = "New_iCARE_Template_Comb_with_Examples.xlsx";
 		
 		ExcelBook excelBook = new ExcelBook(filename);
-		System.out.println(excelBook.getSheetMap().get("LT Client Exit"));
+		System.out.println(excelBook.getSheetMap().get("Employment"));
 	}
 }

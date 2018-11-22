@@ -26,6 +26,10 @@ public class ExcelSheet {
 		return this.sheetData;
 	}
 	
+	public int myGetSize() {
+	  return this.getRows().size();
+	}
+	
 	@Override
 	public String toString() {
 		String result = "";
