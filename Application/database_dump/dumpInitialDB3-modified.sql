@@ -762,7 +762,7 @@ CREATE TABLE `users` (
   `middleName` varchar(45) DEFAULT NULL,
   `roleID` int(11) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `Telephone Number (###-###-####)` VARCHAR(45) NOT NULL,
+  `phoneNumber` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`userID`),
   KEY `fk_users_roles1_idx` (`roleID`),
   CONSTRAINT `fk_users_roles1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleid`)
