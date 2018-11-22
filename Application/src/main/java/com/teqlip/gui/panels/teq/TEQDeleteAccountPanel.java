@@ -74,6 +74,7 @@ public class TEQDeleteAccountPanel extends BodyPanel {
 			    int id = DatabaseSelectHelper.getUserID(this.usernameField.getText());
                 DatabaseDeleteHelper.deleteAUserHelper(id);
                 JOptionPane.showMessageDialog(null, "Account removed, user has been notified through email", "removed account", JOptionPane.INFORMATION_MESSAGE);
+                super.goToMenu(MenuOptions.MAIN_MENU);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "User does not exist", "Fail remove account - invalid user", JOptionPane.ERROR_MESSAGE);
             }

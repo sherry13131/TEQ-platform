@@ -106,6 +106,8 @@ public class TEQUploadTemplatePanel extends BodyPanel {
             try {
                 DatabaseInsertHelper.insertNewTemplate(tempName, tempPath, con);
                 con.close();
+                JOptionPane.showMessageDialog(null, "Template uploaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                super.goToMenu(MenuOptions.MAIN_MENU);
             } catch (DatabaseInsertException e) {
                 JOptionPane.showMessageDialog(null, "Template name already exists", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {

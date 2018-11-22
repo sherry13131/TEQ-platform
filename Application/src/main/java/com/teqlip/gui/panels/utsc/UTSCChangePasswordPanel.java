@@ -104,6 +104,7 @@ public class UTSCChangePasswordPanel extends BodyPanel {
         JOptionPane.showMessageDialog(null, "Password is changed successfully", "Password changed", JOptionPane.INFORMATION_MESSAGE);
         // send email to user for notification
         sendEmail(emailAddress);
+        super.goToMenu(MenuOptions.UTSC_MAIN_MENU);
       } else if (!matched) {
         JOptionPane.showMessageDialog(null, "The old password doesn't match the current password", "Incorrect password", JOptionPane.ERROR_MESSAGE);
       } else if (!confirmed) {

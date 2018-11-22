@@ -108,6 +108,8 @@ public class OrgUploadDataPanel extends BodyPanel {
         	dialogBox.showOpenDialog();
         } else if (ActionConsts.UPLOAD.equals(cmd)) {
         	// TODO Connect to Database
+            // JOptionPane.showMessageDialog(null, "Data uploaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            // super.goToMenu(MenuOptions.ORG_MAIN_MENU);
         } else if (ActionConsts.CANCEL.equals(cmd)) {
         	super.goToMenu(MenuOptions.ORG_MAIN_MENU);
         }
