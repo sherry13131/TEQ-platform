@@ -1,5 +1,9 @@
 package com.teqlip.gui;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+
+import com.teqlip.database.DatabaseInsertHelper;
 import com.teqlip.email.EmailHandler;
 import com.teqlip.email.EmailInterface;
 import com.teqlip.email.type.ChangedPassEmail;
@@ -11,7 +15,7 @@ import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
 
 public class MainFrame {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ParseException {
 
 //		runLoginMenu();
 
@@ -19,7 +23,9 @@ public class MainFrame {
 
 		// runEmail();
 		
-		 runExcel();
+//		 runExcel();
+	  
+	  tryAddFileData();
 	}
 
 	// These just make it easier to test
@@ -49,5 +55,11 @@ public class MainFrame {
 		
 		ExcelBook excelBook = new ExcelBook(filename);
 		System.out.println(excelBook.getSheetMap().get("Employment"));
+	}
+	
+	private static void tryAddFileData() throws SQLException, ParseException {
+	  // file default location: Application/
+	  String filename = "New_iCARE_Template_Comb_with_Examples.xlsx";
+	  DatabaseInsertHelper.insertTemplateDataHelper(filename);
 	}
 }
