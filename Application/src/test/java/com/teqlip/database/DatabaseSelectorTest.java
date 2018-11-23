@@ -23,20 +23,59 @@ import com.teqlip.exceptions.DatabaseInsertException;
 
 public class DatabaseSelectorTest {
 	
-	static int user1, user2;
+	static int user1, user2, query1, query2;
+	static Connection con = DatabaseDriverHelper.connectDataBase();
 	
 	@BeforeAll
 	public static void setUp() throws DatabaseInsertException, SQLException {
 		// insert test data row
 		user1 = DatabaseInsertHelper.createNewUserAccount("test1", "1234", "fn", "ln", null, RoleEnum.UTSC, "1234@asdf.com", "1232341234", 1);
 		user2 = DatabaseInsertHelper.createNewUserAccount("test2", "abcd", "fn", "ln", null, RoleEnum.TEQLIP, "1234@asdf.com", "1232341234", 0);
+		
+		// insert test queries
+		query1 = DatabaseInserter.insertQuery("SELECT hihi FROM HAHA", con);
+		query2 = DatabaseInserter.insertQuery("SELECT huhu FROM HAHA", con);
 	}
 	
 	@AfterAll
-	public static void cleanUp() {
+	public static void cleanUp() throws SQLException {
 		// delete all the account created here
 		DatabaseDeleteHelper.deleteAUserHelper(user1);
 		DatabaseDeleteHelper.deleteAUserHelper(user2);
+		// delete all saved query created here
+		DatabaseDeleteHelper.deleteQueryHelper(query1);
+		DatabaseDeleteHelper.deleteQueryHelper(query2);
+	}
+	@Test
+	@DisplayName("get queryID")
+	public void getQueryID() throws SQLException, ConnectionFailedException {
+    	int queryID = DatabaseSelectHelper.getQueryID("SELECT hihi FROM HAHA", con);
+    	assertEquals(queryID, query1);
+	}
+	@Test
+	@DisplayName("Test get all queries")
+	public void getAllQuery() throws SQLException, ConnectionFailedException {
+    	List<String> queries = DatabaseSelectHelper.getSavedQueries();
+    	assertEquals(1, queries.contains("SELECT huhu FROM HAHA"));
+	}
+	
+	@Test
+	@DisplayName("Test get all queries id")
+	public void getAllQueryID() throws SQLException, ConnectionFailedException {
+    	List<Integer> queriesID = DatabaseSelectHelper.getSavedQueriesID();
+    	assertEquals(1, queriesID.contains(query1));
+	}
+	@Test
+	@DisplayName("Test queryID not in queries table")
+	public void queryNotInAllQueryID() throws SQLException, ConnectionFailedException {
+    	List<Integer> queriesID = DatabaseSelectHelper.getSavedQueriesID();
+    	assertEquals(0, queriesID.contains(-3));
+	}
+	@Test
+	@DisplayName("Test query not in queries table")
+	public void queryNotInAllQuery() throws SQLException, ConnectionFailedException {
+    	List<String> queriesID = DatabaseSelectHelper.getSavedQueries();
+    	assertEquals(0, queriesID.contains("DIS NOT IN TABLE"));
 	}
 	
     @Test

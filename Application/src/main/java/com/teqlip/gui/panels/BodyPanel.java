@@ -15,6 +15,7 @@ import com.teqlip.gui.panels.teq.TEQCreateAccountPanel;
 import com.teqlip.gui.panels.teq.TEQMainMenuPanel;
 import com.teqlip.gui.panels.teq.TEQQueryPanel;
 import com.teqlip.gui.panels.teq.TEQUploadTemplatePanel;
+import com.teqlip.gui.panels.utsc.UTSCDataPanel;
 import com.teqlip.gui.panels.utsc.UTSCMainMenuPanel;
 
 @SuppressWarnings("serial")
@@ -31,7 +32,8 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
         UTSC_MAIN_MENU,
         UPLOAD_DATA,
         QUERY,
-        CHANGE_PASSWORD
+        CHANGE_PASSWORD,
+        VIEW_DATA
 	}
 	
 	public BodyPanel(AppFrame main) {
@@ -69,6 +71,8 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
             case CHANGE_PASSWORD:
                 newMenu = new OrgChangePasswordPanel(main);
                 break;
+            case VIEW_DATA:
+                newMenu = new UTSCDataPanel(main);
 		}
 		
 		this.main.setBody(newMenu);

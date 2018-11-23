@@ -49,4 +49,25 @@ public class DatabaseDeleter {
 		}
 		return success;
 	}
+	
+	/**
+	 * delete saved query. USE IT WISELY.
+	 * @param queryID
+	 * @param con
+	 * @return 1 if successfully deleted, -1 if failed to delete
+	 */
+	public static int deleteSavedQuery(int queryID, Connection con) {
+		PreparedStatement ps;
+		String sql = "DELETE FROM queries WHERE queryID = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, queryID);
+			ps.executeUpdate();
+			return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
+	}
 }

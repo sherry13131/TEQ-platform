@@ -105,7 +105,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	   * Use this to insert a new query.
 	   * @param query.
 	   * @param connection the database connection.
-	   * @return 1 if insert suceeded, -1 is failed, 
+	   * @return the id of the query inserted, -1 if fail to insert
 	   * @throws DatabaseInsertException if query is not unique
 	   * @throws SQLException 
 	   */
@@ -114,7 +114,12 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 		// this make sure the query are unique
 		List<String> queries = DatabaseSelectHelper.getSavedQueries();
 	    if (!queries.contains(query)) {
-	      return DatabaseInserter.insertQuery(query,con);
+	      if(DatabaseInserter.insertQuery(query,con) == 1) {
+	    	  return DatabaseSelector.getQueryID(query, con);
+	      }
+	      else {
+	    	  return -1;
+	      }
 	    }
 	    throw new DatabaseInsertException();
 	  }
