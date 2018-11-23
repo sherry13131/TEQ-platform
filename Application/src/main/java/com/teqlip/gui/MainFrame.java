@@ -17,7 +17,7 @@ public class MainFrame {
 
 	public static void main(String[] args) throws SQLException, ParseException {
 
-//		runLoginMenu();
+		runLoginMenu();
 
 		// runMainMenu();
 
@@ -25,7 +25,7 @@ public class MainFrame {
 		
 //		 runExcel();
 	  
-	  tryAddFileData();
+//	  tryAddFileData();
 	}
 
 	// These just make it easier to test
