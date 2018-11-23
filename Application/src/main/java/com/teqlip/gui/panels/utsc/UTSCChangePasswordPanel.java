@@ -1,4 +1,4 @@
-package com.teqlip.gui.panels.org;
+package com.teqlip.gui.panels.utsc;
 
 import java.awt.event.ActionEvent;
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +25,7 @@ import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
 
 @SuppressWarnings("serial")
-public class OrgChangePasswordPanel extends BodyPanel {
+public class UTSCChangePasswordPanel extends BodyPanel {
 
   private BoxLayout layout;
   
@@ -40,9 +40,9 @@ public class OrgChangePasswordPanel extends BodyPanel {
       "ConfirmNewPassword"
   };
   
-  public JPasswordField[] textFields = new JPasswordField[OrgChangePasswordPanel.CHANGE_FIELDS.length];
+  public JPasswordField[] textFields = new JPasswordField[UTSCChangePasswordPanel.CHANGE_FIELDS.length];
   
-  public OrgChangePasswordPanel(AppFrame main) {
+  public UTSCChangePasswordPanel(AppFrame main) {
     super(main);
     layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
     setLayout(layout);
@@ -57,8 +57,8 @@ public class OrgChangePasswordPanel extends BodyPanel {
   public JComponent createFieldsPane() {
     JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
     
-    for (int i = 0; i < OrgChangePasswordPanel.CHANGE_FIELDS.length; i++) {
-        JLabel label = new JLabel(OrgChangePasswordPanel.CHANGE_FIELDS[i]);
+    for (int i = 0; i < UTSCChangePasswordPanel.CHANGE_FIELDS.length; i++) {
+        JLabel label = new JLabel(UTSCChangePasswordPanel.CHANGE_FIELDS[i]);
         this.textFields[i] = new JPasswordField();
         p.add(label);
         p.add(this.textFields[i]);
@@ -84,7 +84,7 @@ public class OrgChangePasswordPanel extends BodyPanel {
     String cmd = e.getActionCommand();
     
     if (cmd.equals(ActionConsts.CANCEL)) {
-      super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+      super.goToMenu(MenuOptions.UTSC_MAIN_MENU);
     } else if (cmd.equals(ActionConsts.SUBMIT)) {
       String oldPwd = this.textFields[0].getText();
       String newPwd = this.textFields[1].getText();
@@ -104,7 +104,7 @@ public class OrgChangePasswordPanel extends BodyPanel {
         JOptionPane.showMessageDialog(null, "Password is changed successfully", "Password changed", JOptionPane.INFORMATION_MESSAGE);
         // send email to user for notification
         sendEmail(emailAddress);
-        super.goToMenu(ORG_MAIN_MENU);
+        super.goToMenu(MenuOptions.UTSC_MAIN_MENU);
       } else if (!matched) {
         JOptionPane.showMessageDialog(null, "The old password doesn't match the current password", "Incorrect password", JOptionPane.ERROR_MESSAGE);
       } else if (!confirmed) {

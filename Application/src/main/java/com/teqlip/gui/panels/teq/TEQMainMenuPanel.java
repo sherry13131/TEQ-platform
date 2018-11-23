@@ -16,6 +16,8 @@ public class TEQMainMenuPanel extends BodyPanel {
 		private static final String CREATE = "create";
 		private static final String UPLOAD = "upload";
         private static final String QUERY = "query";
+        private static final String CHANGE_PASSWORD = "change password";
+        private static final String REMOVE = "remove";
 	}
 	
 	
@@ -49,12 +51,16 @@ public class TEQMainMenuPanel extends BodyPanel {
     	JPanel p = JGuiHelper.createPanelFlow();
     	
     	JButton createBtn = JGuiHelper.createButton("Create/Manage Accounts", this, ActionConsts.CREATE);
+        JButton removeBtn = JGuiHelper.createButton("Remove Accounts", this, ActionConsts.REMOVE);
     	JButton uploadBtn = JGuiHelper.createButton("Upload/Manage Files", this, ActionConsts.UPLOAD);
     	JButton queryBtn = JGuiHelper.createButton("Query", this, ActionConsts.QUERY);
+        JButton changePasswordBtn = JGuiHelper.createButton("Change Password", this, ActionConsts.CHANGE_PASSWORD);
     	
     	p.add(createBtn);
+        p.add(removeBtn);
     	p.add(uploadBtn);
         p.add(queryBtn);
+        p.add(changePasswordBtn);
     	
     	return p;
     }
@@ -69,7 +75,11 @@ public class TEQMainMenuPanel extends BodyPanel {
 			super.goToMenu(MenuOptions.UPLOAD_TEMPLATE);
 		} else if (cmd.equals(ActionConsts.QUERY)) {
 			super.goToMenu(MenuOptions.QUERY);
-		}
+		} else if (cmd.equals(ActionConsts.CHANGE_PASSWORD)) {
+          super.goToMenu(MenuOptions.CHANGE_PASSWORD);
+        } else if (cmd.equals(ActionConsts.REMOVE)) {
+          super.goToMenu(MenuOptions.REMOVE);
+        }
 		
 	}
 }

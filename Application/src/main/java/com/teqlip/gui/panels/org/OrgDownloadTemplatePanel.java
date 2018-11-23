@@ -84,6 +84,8 @@ public class OrgDownloadTemplatePanel extends BodyPanel {
             String tempName = (String)this.filenameList.getSelectedItem();
             try {
                 DatabaseSelectHelper.getTemplateFile(tempName);
+                JOptionPane.showMessageDialog(null, "Template downloaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                super.goToMenu(MenuOptions.ORG_MAIN_MENU);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Couldn't download template", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {

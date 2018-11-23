@@ -23,6 +23,7 @@ public class TEQQueryPanel extends BodyPanel {
 		private static final String BACK = "back";
         private static final String GETQUERY = "get query";
         private static final String EXPORT = "export csv";
+        private static final String DELETE = "delete";
 	}
 
 	private static final Dimension QUERY_DIMENSION = new Dimension(300, 30);
@@ -51,7 +52,7 @@ public class TEQQueryPanel extends BodyPanel {
     }
 
     public JComponent createSavedQueryPane() throws SQLException {
-        JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
+        JPanel p = JGuiHelper.createPanelFlow();
         
         JLabel savedQueryLabel = new JLabel("Saved Queries:");
         List<String> savedQueriesList = DatabaseSelectHelper.getSavedQueries();
@@ -61,8 +62,10 @@ public class TEQQueryPanel extends BodyPanel {
         }
     	this.chooseSavedQuery = JGuiHelper.createComboBox(savedQueriesArray, this, ActionConsts.GETQUERY);
     	this.chooseSavedQuery.setPreferredSize(QUERY_DIMENSION);
+        JButton deleteBtn = JGuiHelper.createButton("Delete Saved Query", this, ActionConsts.DELETE);
     	p.add(savedQueryLabel);
     	p.add(this.chooseSavedQuery);
+        p.add(deleteBtn);
     	
     	return p;
     }
@@ -151,6 +154,13 @@ public class TEQQueryPanel extends BodyPanel {
             this.queryField.setText((String)this.chooseSavedQuery.getSelectedItem());
         } else if (cmd.equals(ActionConsts.EXPORT)) {
             ExportData.exportCSV(this.queryField.getText());
+        } else if (cmd.equals(ActionConsts.DELETE)) {
+            try {
+                int id = DatabaseSelectHelper.getSavedQueryID((String)this.chooseSavedQuery.getSelectedItem());
+                DatabaseDeleteHelper.deleteQueryHelper(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
