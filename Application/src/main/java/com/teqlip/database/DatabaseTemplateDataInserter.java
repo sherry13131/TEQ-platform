@@ -726,7 +726,7 @@ public class DatabaseTemplateDataInserter {
    }
    
    public static void insertLTCourseSetup(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-     String sql = "INSERT INTO `assignmentdb`.`lt couse setup` " + 
+     String sql = "INSERT INTO `assignmentdb`.`lt course setup` " + 
          "(`Processing Details`, " + 
          "`Update record ID`, " + 
          "`Course Code`, " + 

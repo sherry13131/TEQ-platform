@@ -9,6 +9,8 @@ import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseDriverHelper;
 import com.teqlip.exceptions.DatabaseInsertException;
 
+import Templates.TemplateEnum;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -131,34 +133,15 @@ public class DatabaseInsertHelper extends DatabaseInserter {
       ExcelSheet excelSheet;
 	    for(String sheetName : sheets.keySet()) {
 	      System.out.println(sheetName);
-	      if (sheetName.equalsIgnoreCase("LT Client Exit")) {
-	        excelSheet = excelBook.getSheetMap().get("LT Client Exit");
-	        DatabaseTemplateDataInserter.insertLTClientExit(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("Client Profile")) {
-	        excelSheet = excelBook.getSheetMap().get("Client Profile");
-	        DatabaseTemplateDataInserter.insertClientProfile(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("Needs Assessment&Referrals")) {
-	        excelSheet = excelBook.getSheetMap().get("Needs Assessment&Referrals");
-	        DatabaseTemplateDataInserter.insertNeedsAssessmentReferrals(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("Community Connections")) {
-	        excelSheet = excelBook.getSheetMap().get("Community Connections");
-	        DatabaseTemplateDataInserter.insertCommunityConnections(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("Info&Orien")) {
-	        excelSheet = excelBook.getSheetMap().get("Info&Orien");
-	        DatabaseTemplateDataInserter.insertInfoAndOrien(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("Employment")) {
-	        excelSheet = excelBook.getSheetMap().get("Employment");
-	        DatabaseTemplateDataInserter.insertEmploymentTemplateData(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("LT Client Enrol")) {
-	        excelSheet = excelBook.getSheetMap().get("LT Client Enrol");
-	        DatabaseTemplateDataInserter.insertLTClientEnroll(filename, excelSheet, con);
-	      } else if (sheetName.equalsIgnoreCase("LT Course Setup")) {
-	        excelSheet = excelBook.getSheetMap().get("LT Course Setup");
-	        DatabaseTemplateDataInserter.insertLTCourseSetup(filename, excelSheet, con);
-	      } else {
-	        System.out.println("Skip this sheet since we don't need it");
-	        continue;
+	      for (TemplateEnum tenum : TemplateEnum.enumIteration()) {
+	        if (tenum.getString().equalsIgnoreCase(sheetName)) {
+	          excelSheet = excelBook.getSheetMap().get(tenum.getString());
+	          tenum.insertThisSheet(filename, excelSheet, con);
+	          System.out.println("inserted sheet "+ sheetName);
+	          break;
+	        }
 	      }
+        continue;
 	    }
 	    System.out.println("Done inserting excel sheets data");
 	  }
