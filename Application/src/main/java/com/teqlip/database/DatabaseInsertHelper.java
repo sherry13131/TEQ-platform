@@ -2,32 +2,19 @@ package com.teqlip.database;
 
 import com.teqlip.database.DatabaseInserter;
 import com.teqlip.excel.ExcelBook;
-import com.teqlip.excel.ExcelRow;
 import com.teqlip.excel.ExcelSheet;
-import com.teqlip.excel.FileHelper;
 import com.teqlip.Role.RoleEnum;
 import com.teqlip.database.DatabaseDriverHelper;
 import com.teqlip.exceptions.DatabaseInsertException;
 
 import Templates.TemplateEnum;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
 
 public class DatabaseInsertHelper extends DatabaseInserter {
 	
