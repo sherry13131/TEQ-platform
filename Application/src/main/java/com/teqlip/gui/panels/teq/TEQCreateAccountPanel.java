@@ -114,7 +114,6 @@ public class TEQCreateAccountPanel extends BodyPanel {
           String password = getRandomPassword(8);
           // create new account
           addNewUserAccount(usernameInput, password, firstName, lastName, middleName, role, emailInput, phoneNumber, active);
-          JOptionPane.showMessageDialog(null, "Account created succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
           super.goToMenu(MenuOptions.MAIN_MENU);
         }
       }
