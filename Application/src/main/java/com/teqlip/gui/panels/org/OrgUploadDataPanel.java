@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.*;
 import java.io.*;
 
@@ -108,8 +109,23 @@ public class OrgUploadDataPanel extends BodyPanel {
         	dialogBox.showOpenDialog();
         } else if (ActionConsts.UPLOAD.equals(cmd)) {
         	// TODO Connect to Database
-            // JOptionPane.showMessageDialog(null, "Data uploaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            // super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+          if (!pathField.getText().equals("")) {
+//              tryAddFileData(pathField.getText());
+              try {
+                DatabaseInsertHelper.insertTemplateDataHelper(pathField.getText());
+                JOptionPane.showMessageDialog(null, "Data uploaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+              } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+              } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+              }
+               
+          } else {
+            JOptionPane.showMessageDialog(null, "Please choose the file to upload", "Need file", JOptionPane.ERROR_MESSAGE);
+          }
         } else if (ActionConsts.CANCEL.equals(cmd)) {
         	super.goToMenu(MenuOptions.ORG_MAIN_MENU);
         }

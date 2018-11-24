@@ -17,7 +17,7 @@ public class MainFrame {
 
 	public static void main(String[] args) throws SQLException, ParseException {
 
-//		runLoginMenu();
+		runLoginMenu();
 
 		// runMainMenu();
 
@@ -25,7 +25,7 @@ public class MainFrame {
 		
 //		 runExcel();
 	  
-	  tryAddFileData();
+//	  tryAddFileData();
 	}
 
 	// These just make it easier to test
@@ -57,9 +57,9 @@ public class MainFrame {
 		System.out.println(excelBook.getSheetMap().get("Employment"));
 	}
 	
-	private static void tryAddFileData() throws SQLException, ParseException {
+	private static void tryAddFileData(String filepath) throws SQLException, ParseException {
 	  // file default location: Application/
-	  String filename = "New_iCARE_Template_Comb_with_Examples.xlsx";
-	  DatabaseInsertHelper.insertTemplateDataHelper(filename);
+//	  String filename = "New_iCARE_Template_Comb_with_Examples.xlsx";
+	  DatabaseInsertHelper.insertTemplateDataHelper(filepath);
 	}
 }

@@ -135,7 +135,7 @@ public class TEQQueryPanel extends BodyPanel {
                 con.close();
                 JOptionPane.showMessageDialog(null, new JScrollPane(table), "Data Table Preview", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "There is something wrong in the query.", "Wrong query input", JOptionPane.ERROR_MESSAGE);
             }
         } else if (cmd.equals(ActionConsts.SAVE)) {
         	Connection con = DatabaseDriverHelper.connectDataBase();

@@ -113,9 +113,9 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	    throw new DatabaseInsertException();
 	  }
 	  
-	  public static void insertTemplateDataHelper(String filename) throws SQLException, ParseException {
+	  public static void insertTemplateDataHelper(String filepath) throws SQLException, ParseException {
 	    Connection con = DatabaseDriverHelper.connectOrCreateDataBase();
-	    ExcelBook excelBook = new ExcelBook(filename);
+	    ExcelBook excelBook = new ExcelBook(filepath);
       HashMap<String, ExcelSheet> sheets = excelBook.getSheetMap();
       ExcelSheet excelSheet;
 	    for(String sheetName : sheets.keySet()) {
@@ -123,7 +123,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	      for (TemplateEnum tenum : TemplateEnum.enumIteration()) {
 	        if (tenum.getString().equalsIgnoreCase(sheetName)) {
 	          excelSheet = excelBook.getSheetMap().get(tenum.getString());
-	          tenum.insertThisSheet(filename, excelSheet, con);
+	          tenum.insertThisSheet(filepath, excelSheet, con);
 	          System.out.println("inserted sheet "+ sheetName);
 	          break;
 	        }

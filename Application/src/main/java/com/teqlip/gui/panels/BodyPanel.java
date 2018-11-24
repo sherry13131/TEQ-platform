@@ -57,28 +57,28 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
 				break;
 			case DOWNLOAD_TEMPLATE:
 				newMenu = new OrgDownloadTemplatePanel(main);
-                break;
-            case ORG_MAIN_MENU:
+          break;
+      case ORG_MAIN_MENU:
 				newMenu = new OrgMainMenuPanel(main);
 				break;
-            case UTSC_MAIN_MENU:
+      case UTSC_MAIN_MENU:
 				newMenu = new UTSCMainMenuPanel(main);
 				break;
-            case UPLOAD_DATA:
+      case UPLOAD_DATA:
 				newMenu = new OrgUploadDataPanel(main);
 				break;
-            case QUERY:
+      case QUERY:
 				newMenu = new TEQQueryPanel(main);
 				break;
-            case CHANGE_PASSWORD:
-                newMenu = new OrgChangePasswordPanel(main);
-                break;
-            case VIEW_DATA:
-                newMenu = new UTSCDataPanel(main);
-                break;
-            case REMOVE:
-                newMenu = new TEQDeleteAccountPanel(main);
-                break;
+      case CHANGE_PASSWORD:
+          newMenu = new OrgChangePasswordPanel(main);
+          break;
+      case VIEW_DATA:
+          newMenu = new UTSCDataPanel(main);
+          break;
+      case REMOVE:
+          newMenu = new TEQDeleteAccountPanel(main);
+          break;
 		}
 		
 		this.main.setBody(newMenu);
