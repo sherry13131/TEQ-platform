@@ -143,6 +143,7 @@ public class TEQQueryPanel extends BodyPanel {
             try {
                 DatabaseInsertHelper.insertNewQuery(query, con);
                 con.close();
+                JOptionPane.showMessageDialog(null, "Query saved succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (DatabaseInsertException e) {
                 JOptionPane.showMessageDialog(null, "Saved query already exists", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
@@ -154,10 +155,12 @@ public class TEQQueryPanel extends BodyPanel {
             this.queryField.setText((String)this.chooseSavedQuery.getSelectedItem());
         } else if (cmd.equals(ActionConsts.EXPORT)) {
             ExportData.exportCSV(this.queryField.getText());
+            JOptionPane.showMessageDialog(null, "Data exported succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else if (cmd.equals(ActionConsts.DELETE)) {
             try {
                 int id = DatabaseSelectHelper.getSavedQueryID((String)this.chooseSavedQuery.getSelectedItem());
                 DatabaseDeleteHelper.deleteQueryHelper(id);
+                JOptionPane.showMessageDialog(null, "Query removed succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
