@@ -25,10 +25,8 @@ public class OrgUploadDataPanel extends BodyPanel {
 		private static final String CANCEL = "cancel";
 	}
 	
-	private static final Dimension FILENAME_FIELD_DIMENSION = new Dimension(80, 30);
 	
 	private BoxLayout layout;
-	private JComboBox filenameList;
 	private JTextField pathField;
 	
     public OrgUploadDataPanel(AppFrame main) {
@@ -37,36 +35,11 @@ public class OrgUploadDataPanel extends BodyPanel {
         layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
         super.setLayout(layout);
         
-        JComponent filenamePane = null;
-        try {
-            filenamePane = createFilenamePane();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         JComponent pathPane = createPathPane();
         JComponent buttonsPane = createButtonPane();
         
-        add(filenamePane);
         add(pathPane);
         add(buttonsPane);
-    }
-
-    public JComponent createFilenamePane() throws SQLException {
-    	JPanel p = JGuiHelper.createPanelBox(BoxLayout.PAGE_AXIS);
-    	
-    	JLabel filenamelbl = new JLabel("Select corresponding template:");
-    	List<String> templateList = DatabaseSelectHelper.getTemplatesName();
-        String [] templateArray = new String[templateList.size()];
-        for (int i = 0; i < templateList.size(); i++) {
-            templateArray[i] = templateList.get(i);
-        }
-    	this.filenameList = JGuiHelper.createComboBox(templateArray, this, null);
-    	this.filenameList.setPreferredSize(FILENAME_FIELD_DIMENSION);
-    	
-    	p.add(filenamelbl);
-    	p.add(this.filenameList);
-    	
-    	return p;
     }
     
     public JComponent createPathPane() {

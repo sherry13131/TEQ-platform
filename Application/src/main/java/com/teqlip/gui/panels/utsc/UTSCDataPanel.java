@@ -137,6 +137,7 @@ public class UTSCDataPanel extends BodyPanel {
             Connection con = DatabaseDriverHelper.connectDataBase();
             ResultSet rs = DatabaseSelector.getAnonymizedData(con, (String)this.chooseTemplate.getSelectedItem());
             JTable table = new JTable(buildTableModel(rs));
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             con.close();
             JOptionPane.showMessageDialog(null, new JScrollPane(table), "Data For "+this.chooseTemplate.getSelectedItem() + " Preview", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
