@@ -83,7 +83,12 @@ public class LoginMenu extends BaseFrame {
 			//Zero out the possible password, for security.
       Arrays.fill(passInput, '0');
 		} else if (HELP.equals(cmd)) {
-			JOptionPane.showMessageDialog(null, "The password is 'test'", "Help", JOptionPane.INFORMATION_MESSAGE);
+		    //help message no longer in use
+			// JOptionPane.showMessageDialog(null, "The password is 'test'", "Help", JOptionPane.INFORMATION_MESSAGE);
+		  
+		  this.dispose();
+		  ForgetPassword forgetPassword = new ForgetPassword();
+		  forgetPassword.packAndShow();
 		}
 	}
 	
