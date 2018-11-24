@@ -75,8 +75,10 @@ public abstract class BodyPanel extends JPanel implements ActionListener {
                 break;
             case VIEW_DATA:
                 newMenu = new UTSCDataPanel(main);
+                break;
             case REMOVE:
                 newMenu = new TEQDeleteAccountPanel(main);
+                break;
 		}
 		
 		this.main.setBody(newMenu);

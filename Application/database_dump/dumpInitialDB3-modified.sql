@@ -39,11 +39,11 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Template` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `assignmentdb`.`ClientProfile`
+-- Table `assignmentdb`.`Client Profile`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `assignmentdb`.`ClientProfile` ;
+DROP TABLE IF EXISTS `assignmentdb`.`Client Profile` ;
 
-CREATE TABLE IF NOT EXISTS `assignmentdb`.`ClientProfile` (
+CREATE TABLE IF NOT EXISTS `assignmentdb`.`Client Profile` (
   `Processing Details` VARCHAR(250) NULL,
   `Unique Identifier` VARCHAR(45) NOT NULL,
   `Unique Identifier Value` VARCHAR(45) NOT NULL,
@@ -66,11 +66,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`NeedsAssessmentAndReferrals`
+-- Table `mydb`.`Needs Assessment&Referrals`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `assignmentdb`.`NeedsAssessmentAndReferrals` ;
+DROP TABLE IF EXISTS `assignmentdb`.`Needs Assessment&Referrals` ;
 
-CREATE TABLE IF NOT EXISTS `assignmentdb`.`NeedsAssessmentAndReferrals` (
+CREATE TABLE IF NOT EXISTS `assignmentdb`.`Needs Assessment&Referrals` (
   `Processing Details` VARCHAR(250) NULL,
   `Update Record ID` VARCHAR(45) NULL,
   `Unique Identifier` VARCHAR(45) NOT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`NeedsAssessmentAndReferrals` (
   PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
   CONSTRAINT `fk_NeedsAssessmentAndReferrals_has_ClientProfile1`
     FOREIGN KEY (`Unique Identifier`,`Unique Identifier Value`)
-    REFERENCES `ClientProfile` (`Unique Identifier`,`Unique Identifier Value`)
+    REFERENCES `Client Profile` (`Unique Identifier`,`Unique Identifier Value`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Employment` (
   PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
   CONSTRAINT `fk_Employment_has_ClientProfile1`
     FOREIGN KEY (`Unique Identifier`,`Unique Identifier Value`)
-    REFERENCES `ClientProfile` (`Unique Identifier`,`Unique Identifier Value`)
+    REFERENCES `Client Profile` (`Unique Identifier`,`Unique Identifier Value`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -359,7 +359,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Info&Orien` (
   PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
   CONSTRAINT `fk_Info&Orien_has_ClientProfile1`
     FOREIGN KEY (`Unique Identifier`,`Unique Identifier Value`)
-    REFERENCES `ClientProfile` (`Unique Identifier`,`Unique Identifier Value`)
+    REFERENCES `Client Profile` (`Unique Identifier`,`Unique Identifier Value`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -405,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`LT Client Enrol` (
   PRIMARY KEY (`Unique Identifier Type`, `Unique Identifier Value`),
   CONSTRAINT `fk_LT Client Enrol_has_ClientProfile1`
     FOREIGN KEY (`Unique Identifier Type`,`Unique Identifier Value`)
-    REFERENCES `ClientProfile` (`Unique Identifier`,`Unique Identifier Value`)
+    REFERENCES `Client Profile` (`Unique Identifier`,`Unique Identifier Value`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -617,7 +617,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`Community Connections` (
   PRIMARY KEY (`Unique Identifier`, `Unique Identifier Value`),
   CONSTRAINT `fk_Community Connections_has_ClientProfile1`
     FOREIGN KEY (`Unique Identifier`,`Unique Identifier Value`)
-    REFERENCES `ClientProfile` (`Unique Identifier`,`Unique Identifier Value`)
+    REFERENCES `Client Profile` (`Unique Identifier`,`Unique Identifier Value`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -670,7 +670,7 @@ CREATE TABLE IF NOT EXISTS `assignmentdb`.`LT Client Exit` (
   PRIMARY KEY (`Unique Identifier Type`, `Unique Identifier Value`),
   CONSTRAINT `fk_LT Client Exit_has_ClientProfile1`
     FOREIGN KEY (`Unique Identifier Type`,`Unique Identifier Value`)
-    REFERENCES `ClientProfile` (`Unique Identifier`,`Unique Identifier Value`)
+    REFERENCES `Client Profile` (`Unique Identifier`,`Unique Identifier Value`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

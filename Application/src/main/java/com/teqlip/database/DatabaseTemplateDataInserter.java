@@ -92,7 +92,7 @@ public class DatabaseTemplateDataInserter {
   }
   
    public static void insertClientProfile(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-      String sql = "INSERT ignore INTO `assignmentdb`.`clientprofile` " + 
+      String sql = "INSERT ignore INTO `assignmentdb`.`client profile` " + 
           "(`Processing Details`, " + 
           "`Unique Identifier`, " + 
           "`Unique Identifier Value`, " + 
@@ -152,7 +152,7 @@ public class DatabaseTemplateDataInserter {
     }
    
    public static void insertNeedsAssessmentReferrals(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-     String sql = "INSERT ignore INTO `assignmentdb`.`needsassessmentandreferrals` " + 
+     String sql = "INSERT ignore INTO `assignmentdb`.`needs assessment&referrals` " + 
          "(`Processing Details`, " + 
          "`Update Record ID`, " + 
          "`Unique Identifier`, " + 
