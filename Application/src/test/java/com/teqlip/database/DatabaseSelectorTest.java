@@ -56,26 +56,26 @@ public class DatabaseSelectorTest {
 	@DisplayName("Test get all queries")
 	public void getAllQuery() throws SQLException, ConnectionFailedException {
     	List<String> queries = DatabaseSelectHelper.getSavedQueries();
-    	assertEquals(1, queries.contains("SELECT huhu FROM HAHA"));
+    	assertTrue(queries.contains("SELECT huhu FROM HAHA"));
 	}
 	
 	@Test
 	@DisplayName("Test get all queries id")
 	public void getAllQueryID() throws SQLException, ConnectionFailedException {
     	List<Integer> queriesID = DatabaseSelectHelper.getSavedQueriesID();
-    	assertEquals(1, queriesID.contains(query1));
+    	assertTrue(queriesID.contains(query1));
 	}
 	@Test
 	@DisplayName("Test queryID not in queries table")
 	public void queryNotInAllQueryID() throws SQLException, ConnectionFailedException {
     	List<Integer> queriesID = DatabaseSelectHelper.getSavedQueriesID();
-    	assertEquals(0, queriesID.contains(-3));
+    	assertFalse(queriesID.contains(-3));
 	}
 	@Test
 	@DisplayName("Test query not in queries table")
 	public void queryNotInAllQuery() throws SQLException, ConnectionFailedException {
     	List<String> queriesID = DatabaseSelectHelper.getSavedQueries();
-    	assertEquals(0, queriesID.contains("DIS NOT IN TABLE"));
+    	assertFalse(queriesID.contains("DIS NOT IN TABLE"));
 	}
 	
     @Test

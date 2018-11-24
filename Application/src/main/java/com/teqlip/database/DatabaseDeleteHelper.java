@@ -33,7 +33,7 @@ public class DatabaseDeleteHelper {
 	}
 	
 	/**
-	 * delete all relevant rows of record of a user. USE IT WISELY.
+	 * delete a query.
 	 * @param queryID
 	 * @param con
 	 * @return true if successfully deleted/no action, else false
@@ -56,6 +56,6 @@ public class DatabaseDeleteHelper {
 		}
 		return true;
 	}
-
+	
 }
 

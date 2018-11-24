@@ -92,17 +92,19 @@ public class DatabaseInserter {
    * Use this to insert a new query.
    * @param query.
    * @param connection the database connection.
-   * @return -1 if fail 1 if inserted
+   * @return -1 if fail, query id if inserted
    * @throws DatabaseInsertException if there is a failure on the insert
    * @throws SQLException 
    */
   public static int insertQuery(String query, Connection con) {
 	  String sql = "INSERT INTO queries(query) VALUES(?);";
+	  int qid = -1;
 	  try {
 			PreparedStatement preparedStatement = con.prepareStatement(sql);
 			preparedStatement.setString(1, query);
 			preparedStatement.executeUpdate();
-			return 1;
+			qid = DatabaseSelectHelper.getQueryID(query, con);
+			return qid;
 	    } catch (Exception e) {
 	      e.printStackTrace();
 	    }
