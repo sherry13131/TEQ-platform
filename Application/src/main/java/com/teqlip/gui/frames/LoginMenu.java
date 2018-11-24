@@ -145,5 +145,4 @@ public class LoginMenu extends BaseFrame {
     }
     
 	}
-	
 }

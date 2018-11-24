@@ -410,4 +410,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     return email;
   }
+
+  public static String getUserEmailHelper(String username) {
+    int uid;
+    String email = "";
+    try {
+      uid = DatabaseSelectHelper.getUserID(username);
+      email = getUserEmailHelper(uid);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return email;
+  }
 }

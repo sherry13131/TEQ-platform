@@ -11,6 +11,10 @@ import com.teqlip.gui.helper.JGuiHelper;
 import com.teqlip.gui.panels.BodyPanel;
 import com.teqlip.gui.panels.BodyPanel.MenuOptions;
 import com.teqlip.database.*;
+import com.teqlip.email.EmailHandler;
+import com.teqlip.email.EmailInterface;
+import com.teqlip.email.type.AccountDeletedEmail;
+import com.teqlip.email.type.ChangedPassEmail;
 
 @SuppressWarnings("serial")
 public class TEQDeleteAccountPanel extends BodyPanel {
@@ -70,15 +74,28 @@ public class TEQDeleteAccountPanel extends BodyPanel {
 		if (cmd.equals(ActionConsts.CANCEL)) {
 			super.goToMenu(MenuOptions.MAIN_MENU);
 		} else if (cmd.equals(ActionConsts.SUBMIT)) {
-            try {
-			    int id = DatabaseSelectHelper.getUserID(this.usernameField.getText());
-                DatabaseDeleteHelper.deleteAUserHelper(id);
-                JOptionPane.showMessageDialog(null, "Account removed, user has been notified through email", "removed account", JOptionPane.INFORMATION_MESSAGE);
-                super.goToMenu(MenuOptions.MAIN_MENU);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "User does not exist", "Fail remove account - invalid user", JOptionPane.ERROR_MESSAGE);
-            }
+      try {
+		    int id = DatabaseSelectHelper.getUserID(this.usernameField.getText());
+        if(id > 0) {
+          sendEmail();
+          DatabaseDeleteHelper.deleteAUserHelper(id);
+          JOptionPane.showMessageDialog(null, "Account removed, user has been notified through email", "removed account", JOptionPane.INFORMATION_MESSAGE);
+          super.goToMenu(MenuOptions.MAIN_MENU);
+        } else {
+          JOptionPane.showMessageDialog(null, "User does not exist", "Fail remove account - invalid user", JOptionPane.ERROR_MESSAGE);
+          usernameField.setText("");
+        }
+      } catch (SQLException ex) {
+          ex.printStackTrace();
+      }
 		}
 		
+	}
+	
+	public void sendEmail() {
+	  String emailAddress = DatabaseSelectHelper.getUserEmailHelper(this.usernameField.getText());
+	  EmailInterface email = new AccountDeletedEmail(main.getUsername(), emailAddress);
+    EmailHandler.addEmail(email);
+    EmailHandler.sendEmails();
 	}
 }
