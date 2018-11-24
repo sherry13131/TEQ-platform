@@ -72,25 +72,7 @@ public class LoginMenu extends BaseFrame {
 				}
 				// if user exist, check password
 				else if(DatabaseSelectHelper.checkLoginInfo(userInput, pwd)) {
-					// security reason - set string pwd to empty string
-					pwd = "";
-					int userID = DatabaseSelectHelper.getUserID(userInput);
-					int roleid = -1;
-					RoleEnum roleEnum = null;
-
-          roleid = DatabaseSelectHelper.getUserRoleId(userID);
-					this.dispose();
-					
-					for (RoleEnum re : RoleEnum.enumIteration()) {
-					  if (re.getRoleId() == roleid) {
-					    roleEnum = re.getRoleEnum();
-					  }
-					}
-					if (roleEnum != null) {
-					  roleEnum.changeMenu(userInput);
-					} else {
-						JOptionPane.showMessageDialog(null, "Unknown error", "Fail Login - role not found", JOptionPane.ERROR_MESSAGE);
-					}
+				  tryToLogin(userInput);
 				} else {
 					JOptionPane.showMessageDialog(null, "Incorrect password", "Fail Login - wrong password", JOptionPane.ERROR_MESSAGE);
 				}
@@ -99,7 +81,7 @@ public class LoginMenu extends BaseFrame {
 			}
 			
 			//Zero out the possible password, for security.
-            Arrays.fill(passInput, '0');
+      Arrays.fill(passInput, '0');
 		} else if (HELP.equals(cmd)) {
 			JOptionPane.showMessageDialog(null, "The password is 'test'", "Help", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -135,5 +117,33 @@ public class LoginMenu extends BaseFrame {
 		
 		return p;
 	}	
+	
+	private void tryToLogin(String userInput) {
+	// security reason - set string pwd to empty string
+    String pwd = "";
+    int userID;
+    int roleid = -1;
+    try {
+      userID = DatabaseSelectHelper.getUserID(userInput);
+      RoleEnum roleEnum = null;
+
+      roleid = DatabaseSelectHelper.getUserRoleId(userID);
+      this.dispose();
+      
+      for (RoleEnum re : RoleEnum.enumIteration()) {
+        if (re.getRoleId() == roleid) {
+          roleEnum = re.getRoleEnum();
+        }
+      }
+      if (roleEnum != null) {
+        roleEnum.changeMenu(userInput);
+      } else {
+        JOptionPane.showMessageDialog(null, "Unknown error", "Fail Login - role not found", JOptionPane.ERROR_MESSAGE);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    
+	}
 	
 }

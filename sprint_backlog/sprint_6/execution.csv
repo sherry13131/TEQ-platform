@@ -1,0 +1,13 @@
+User Story,Task,Dependency,Story Points,1,2,3,4,5
+4,47,,3,,,,anthony:2,anthony:1
+4,48,,4,,sherry:2,sherry:2,,
+5,49,T48,3,,,,sean:3,
+5,50,,1,,,sean:1,,
+8,51,,2,andrew:2,,,,
+8,52,,2,,andrew:2,,,
+15,53,,2,,,,,sherry:2
+15,54,,2,,andrew:2,,,
+15,55,,2,,,anthony:2,,
+17,56,,2,,,andrew:2,,
+20,57,T56,2,,,,,sherry:2
+20,58,,3,,,,eric:3,
