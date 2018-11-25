@@ -133,6 +133,7 @@ public class TEQQueryPanel extends BodyPanel {
                 ResultSet rs = DatabaseSelector.queryData(con, this.queryField.getText());
                 JTable table = new JTable(buildTableModel(rs));
                 con.close();
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 JOptionPane.showMessageDialog(null, new JScrollPane(table), "Data Table Preview", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "There is something wrong in the query.", "Wrong query input", JOptionPane.ERROR_MESSAGE);

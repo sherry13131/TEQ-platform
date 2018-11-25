@@ -30,7 +30,7 @@ import com.teqlip.exceptions.ConnectionFailedException;
 public class LoginMenu extends BaseFrame {
 	
 	private final static String LOGIN = "login";
-	private final static String HELP = "help";
+	private final static String FORGOT = "forgot password";
 	
 	private BoxLayout layout;
 	private Container container;
@@ -82,7 +82,7 @@ public class LoginMenu extends BaseFrame {
 			
 			//Zero out the possible password, for security.
       Arrays.fill(passInput, '0');
-		} else if (HELP.equals(cmd)) {
+		} else if (FORGOT.equals(cmd)) {
 		    //help message no longer in use
 			// JOptionPane.showMessageDialog(null, "The password is 'test'", "Help", JOptionPane.INFORMATION_MESSAGE);
 		  
@@ -95,10 +95,10 @@ public class LoginMenu extends BaseFrame {
 	protected JComponent createButtonPane() {
 		JPanel p = new JPanel();
 		JButton loginBtn = JGuiHelper.createButton("Login", this, LOGIN);
-		JButton helpBtn = JGuiHelper.createButton("Help", this, HELP);
+		JButton forgotBtn = JGuiHelper.createButton("Forgot Password?", this, FORGOT);
 		
 		p.add(loginBtn);
-		p.add(helpBtn);
+		p.add(forgotBtn);
 		
 		return p;
 	}
