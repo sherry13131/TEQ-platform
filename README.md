@@ -1,6 +1,8 @@
 # Team 7 - Macrohard Rainforest Inc.
 
 ## Running
+You must use the latest **MySQL Server** to set up a local database with **username being root**, and **no passoword**. Then in this database, run the **dumpInitialDB3-modified.sql** script which can be found in the **Application/database_dump** directory.
+
 From the Team7 directory, change into the Application directory, then use Maven to build and run the code.
 ```
 .../Team7$ cd Application
@@ -11,10 +13,10 @@ From the Team7 directory, change into the Application directory, then use Maven 
 ## Current Product Backlog
 - [Our Trello Board](https://trello.com/b/mjnsukwq/project)
 - [personas_v1.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/personas_v1.pdf)
-- [user_stories_v2.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v2.pdf)
+- [user_stories_v4.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v4.pdf)
 
 ## Current Sprint Backlog
-- [sprint_4](https://github.com/CSCC01/Team7/tree/master/sprint_backlog/sprint_4)
+- [sprint_6](https://github.com/CSCC01/Team7/tree/master/sprint_backlog/sprint_6)
 
 ## Deliverable 1
 - [Deliverable 1 Report.pdf](https://github.com/CSCC01/Team7/blob/master/deliverable_1/Deliverable%201%20Report.pdf)
@@ -57,3 +59,18 @@ From the Team7 directory, change into the Application directory, then use Maven 
 ### Verification and Code Review
 - [Deliverable 4 Verification and Code Review Report.pdf](https://github.com/CSCC01/Team7/blob/master/deliverable_4/Deliverable%204%20Verification%20and%20Code%20Review%20Report.pdf)
 - [Code Review Debriefing Meeting Video](https://youtu.be/lXp6KYYPDYY)
+
+## Deliverable 5
+
+### Product Backlog Updates
+- [user_stories_v3.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v3.pdf)
+- [user_stories_v4.pdf](https://github.com/CSCC01/Team7/blob/master/product_backlog/user_stories_v4.pdf)
+
+### Sprint 5 Backlog
+- [sprint_5_report.pdf](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_5/sprint_5_report.pdf)
+
+### Sprint 6 Backlog
+- [sprint_6_report.pdf](https://github.com/CSCC01/Team7/blob/master/sprint_backlog/sprint_6/sprint_6_report.pdf)
+
+### Verification and Code Review
+- [Deliverable 5 Verification and Code Review Report.pdf](https://github.com/CSCC01/Team7/blob/master/deliverable_5/Deliverable%205%20Verification%20and%20Code%20Review%20Report.pdf)
