@@ -15,6 +15,8 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 
 public class DatabaseInsertHelper extends DatabaseInserter {
 	
@@ -113,23 +115,53 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 	    throw new DatabaseInsertException();
 	  }
 	  
-	  public static void insertTemplateDataHelper(String filepath) throws SQLException, ParseException {
+	  public static boolean insertTemplateDataHelper(String filepath) throws SQLException, ParseException {
 	    Connection con = DatabaseDriverHelper.connectOrCreateDataBase();
-	    ExcelBook excelBook = new ExcelBook(filepath);
-      HashMap<String, ExcelSheet> sheets = excelBook.getSheetMap();
-      ExcelSheet excelSheet;
-	    for(String sheetName : sheets.keySet()) {
-	      System.out.println(sheetName);
-	      for (TemplateEnum tenum : TemplateEnum.enumIteration()) {
-	        if (tenum.getString().equalsIgnoreCase(sheetName)) {
-	          excelSheet = excelBook.getSheetMap().get(tenum.getString());
-	          tenum.insertThisSheet(filepath, excelSheet, con);
-	          System.out.println("inserted sheet "+ sheetName);
-	          break;
-	        }
-	      }
-        continue;
-	    }
-	    System.out.println("Done inserting excel sheets data");
+	    try {
+  	    con.setAutoCommit(false);
+  	    ExcelBook excelBook = new ExcelBook(filepath);
+        HashMap<String, ExcelSheet> sheets = excelBook.getSheetMap();
+        ExcelSheet excelSheet;
+  	    for(String sheetName : sheets.keySet()) {
+  	      System.out.println(sheetName);
+  	      for (TemplateEnum tenum : TemplateEnum.enumIteration()) {
+  	        if (tenum.getString().equalsIgnoreCase(sheetName)) {
+  	          excelSheet = excelBook.getSheetMap().get(tenum.getString());
+  	          tenum.insertThisSheet(filepath, excelSheet, con);
+  	          System.out.println("inserted sheet "+ sheetName);
+  	          break;
+  	        }
+  	      }
+          continue;
+  	    }
+  	    con.commit();
+  	    return true;
+      } catch (SQLException e) {
+        try {
+          con.rollback();
+          System.out.println("Something wrong when inserting template data");
+          System.out.println("Rolling back data...");
+          e.printStackTrace();
+          int count = 1;
+          while (e != null) {
+//            System.out.println("SQLException " + count);
+//            System.out.println("Code: " + e.getErrorCode());
+//            System.out.println("SqlState: " + e.getSQLState());
+//            System.out.println("Error Message: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "upload icare data error", JOptionPane.ERROR_MESSAGE);
+            e = e.getNextException();
+            count++;
+          }
+        } catch (SQLException e1) {
+          e1.printStackTrace();
+        }
+      } finally {
+        try {
+          con.setAutoCommit(true);
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+	    return false;
 	  }
 }

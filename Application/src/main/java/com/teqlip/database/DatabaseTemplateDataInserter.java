@@ -55,21 +55,28 @@ public class DatabaseTemplateDataInserter {
         "VALUES " + 
         "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     PreparedStatement ps = con.prepareStatement(sql);
-    SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
     java.util.Date date;
     java.sql.Date sqlDate;
     List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
     List<Object> list = new ArrayList<Object>();
+    int[] madatorylist = {2,3,4,5,6,13,16};
+    List<Integer> madatory = convertArrayToList(madatorylist);
     boolean allblank = true;
+    boolean blanked = false;
     ExcelRow excelrow = null;
     excelrowlist = a.getRows();
     for (int i=3 ; i<excelrowlist.size();i++) {
       excelrow = excelrowlist.get(i);
       list = excelrow.getCells();
+      blanked = false;
+      allblank = true;
       for (int j = 0; j<excelrow.getCells().size();j++) {
-        allblank = true;
         if (list.get(j).equals("NULL")) {
           ps.setNull(j+1, java.sql.Types.NULL);
+          if (madatory.contains(j)) {
+            blanked = true;
+          }
           continue;
         }
         if (j==4 || j==7) {
@@ -82,11 +89,13 @@ public class DatabaseTemplateDataInserter {
           allblank = false;
         }
       }
-      if (!allblank) {
-        ps.executeUpdate();
-      } else {
+      if (allblank) {
         break;
-      }
+      } else if (blanked) {
+        throw new SQLException("Mandatory fields cannot be blanked");
+       } else {
+         ps.executeUpdate();
+       }
    }     
     
   }
@@ -113,23 +122,30 @@ public class DatabaseTemplateDataInserter {
           "VALUES " + 
           "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
       PreparedStatement ps = con.prepareStatement(sql);
-      SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+      SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
       java.util.Date date;
       java.sql.Date sqlDate;
       List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
       List<Object> list = new ArrayList<Object>();
       ExcelRow excelrow = null;
       Object cellData;
+      int[] madatorylist = {1,2,4,14,15,16};
+      List<Integer> madatory = convertArrayToList(madatorylist);
       boolean allblank = true;
+      boolean blanked = false;
         excelrowlist = a.getRows();
         for (int i=3 ; i<excelrowlist.size();i++) {
           excelrow = excelrowlist.get(i);
           list = excelrow.getCells();
+          blanked = false;
+          allblank = true;
           for (int j = 0; j<excelrow.getCells().size();j++) {
-            allblank = true;
             cellData = list.get(j);
             if (cellData.equals("NULL")) {
               ps.setNull(j+1, java.sql.Types.NULL);
+              if (madatory.contains(j)) {
+                blanked = true;
+              }
               continue;
             }
             if (j==3) {
@@ -142,10 +158,12 @@ public class DatabaseTemplateDataInserter {
               allblank = false;
             }
           }
-           if (!allblank) {
-             ps.executeUpdate();
+          if (allblank) {
+            break;
+          } else if (blanked) {
+            throw new SQLException("Mandatory fields cannot be blanked");
            } else {
-             break;
+             ps.executeUpdate();
            }
         }       
       
@@ -249,23 +267,30 @@ public class DatabaseTemplateDataInserter {
          "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
          + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
      PreparedStatement ps = con.prepareStatement(sql);
-     SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
      java.util.Date date;
      java.sql.Date sqlDate;
      List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
      List<Object> list = new ArrayList<Object>();
+     int[] madatorylist = {2,3,4,5,6,7,8,9,10,39,41,47,89,90};
+     List<Integer> madatory = convertArrayToList(madatorylist);
      boolean allblank = true;
+     boolean blanked = false;
      Object cellData;
      ExcelRow excelrow = null;
        excelrowlist = a.getRows();
        for (int i=3 ; i<excelrowlist.size()-1;i++) {
          allblank = true;
+         blanked = false;
          excelrow = excelrowlist.get(i);
          list = excelrow.getCells();
          for (int j = 0; j<excelrow.getCells().size();j++) {
            cellData = list.get(j);
            if (cellData.equals("NULL")) {
              ps.setNull(j+1, java.sql.Types.NULL);
+             if(madatory.contains(j)) {
+               blanked = true;
+             }
              continue;
            }
            if (j==4 || j==6 || j==90) {
@@ -278,16 +303,18 @@ public class DatabaseTemplateDataInserter {
              allblank = false;
            }
          }
-         if (!allblank) {
-           ps.executeUpdate();
-         } else {
+         if (allblank) {
            break;
-         }
+         } else if (blanked) {
+           throw new SQLException("Mandatory fields cannot be blanked");
+          } else {
+            ps.executeUpdate();
+          }
        }
    }
    
    public static void insertCommunityConnections(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-     String sql = "INSERT INTO `assignmentdb`.`community connections` " + 
+     String sql = "INSERT ignore INTO `assignmentdb`.`community connections` " + 
          "(`Processing Details`, " + 
          "`Update Record ID`, " + 
          "`Unique Identifier`, " + 
@@ -360,23 +387,30 @@ public class DatabaseTemplateDataInserter {
          "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
          + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
      PreparedStatement ps = con.prepareStatement(sql);
-     SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
      java.util.Date date;
      java.sql.Date sqlDate;
      List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
      List<Object> list = new ArrayList<Object>();
+     int[] madatorylist = {2,3,4,5,6,7,8,9,10,13,14,32,34,37,44};
+     List<Integer> madatory = convertArrayToList(madatorylist);
      boolean allblank = true;
+     boolean blanked = false;
      Object cellData;
      ExcelRow excelrow = null;
        excelrowlist = a.getRows();
        for (int i=3 ; i<excelrowlist.size();i++) {
          allblank = true;
+         blanked = false;
          excelrow = excelrowlist.get(i);
          list = excelrow.getCells();
          for (int j = 0; j<excelrow.getCells().size();j++) {
            cellData = list.get(j);
            if (cellData.equals("NULL")) {
              ps.setNull(j+1, java.sql.Types.NULL);
+             if(madatory.contains(j)) {
+               blanked = true;
+             }
              continue;
            }
            if (j==4 || j == 34 || j ==35 || j== 36) {
@@ -391,16 +425,18 @@ public class DatabaseTemplateDataInserter {
              allblank = false;
            }
          }
-         if (!allblank) {
-           ps.executeUpdate();
-         } else {
+         if (allblank) {
            break;
-         }
+         } else if (blanked) {
+           throw new SQLException("Mandatory fields cannot be blanked");
+          } else {
+            ps.executeUpdate();
+          }
        }       
    }
    
    public static void insertInfoAndOrien(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-     String sql = "INSERT INTO `assignmentdb`.`info&orien` " + 
+     String sql = "INSERT ignore INTO `assignmentdb`.`info&orien` " + 
          "(`Processing Details`, " + 
          "`Update Record ID`, " + 
          "`Unique Identifier`, " + 
@@ -500,23 +536,30 @@ public class DatabaseTemplateDataInserter {
          "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
          + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
      PreparedStatement ps = con.prepareStatement(sql);
-     SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
      java.util.Date date;
      java.sql.Date sqlDate;
      List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
      List<Object> list = new ArrayList<Object>();
+     int[] madatorylist = {2,3,4,5,6,7,8,9,10,11,63,69,72,93};
+     List<Integer> madatory = convertArrayToList(madatorylist);
      boolean allblank = true;
+     boolean blanked = false;
      Object cellData;
      ExcelRow excelrow = null;
        excelrowlist = a.getRows();
        for (int i=3 ; i<excelrowlist.size();i++) {
          allblank = true;
+         blanked = false;
          excelrow = excelrowlist.get(i);
          list = excelrow.getCells();
          for (int j = 0; j<excelrow.getCells().size();j++) {
            cellData = list.get(j);
            if (cellData.equals("NULL")) {
              ps.setNull(j+1, java.sql.Types.NULL);
+             if (madatory.contains(j)) {
+               blanked = true;
+             }
              continue;
            }
            if (j==4 || j == 6 || j == 93) {
@@ -531,11 +574,13 @@ public class DatabaseTemplateDataInserter {
              allblank = false;
            }
          }
-         if (!allblank) {
-           ps.executeUpdate();
-         } else {
+         if (allblank) {
            break;
-         }
+         } else if (blanked) {
+           throw new SQLException("Mandatory fields cannot be blanked");
+          } else {
+            ps.executeUpdate();
+          }
        }       
    }
    
@@ -614,22 +659,29 @@ public class DatabaseTemplateDataInserter {
          "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
          + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
      PreparedStatement ps = con.prepareStatement(sql);
-     SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
      java.util.Date date;
      java.sql.Date sqlDate;
      List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
      List<Object> list = new ArrayList<Object>();
+     int[] madatorylist = {2,3,4,5,6,8,9,10,11};
+     List<Integer> madatory = convertArrayToList(madatorylist);
      boolean allblank = true;
+     boolean blanked = false;
      ExcelRow excelrow = null;
        excelrowlist = a.getRows();
        for (int i=3 ; i<excelrowlist.size();i++) {
          allblank = true;
+         blanked = false;
          excelrow = excelrowlist.get(i);
          list = excelrow.getCells();
          for (int j = 0; j<excelrow.getCells().size();j++) {
            Object cellData = list.get(j);
            if (cellData.equals("NULL")) {
              ps.setNull(j+1, java.sql.Types.NULL);
+             if (madatory.contains(j)) {
+               blanked = true;
+             }
              continue;
            }
            if (j==4 || j == 12 || j == 21 || j == 22 || j == 36 || j== 38 || j == 40 || j == 42 || j == 44) {
@@ -644,16 +696,18 @@ public class DatabaseTemplateDataInserter {
              allblank = false;
            }
          }
-         if (!allblank) {
-           ps.executeUpdate();
-         } else {
+         if (allblank) {
            break;
-         }
+         } else if (blanked) {
+           throw new SQLException("Mandatory fields cannot be blanked");
+          } else {
+            ps.executeUpdate();
+          }
        }       
    }
    
    public static void insertLTClientEnroll(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-     String sql = "INSERT INTO `assignmentdb`.`lt client enrol` " + 
+     String sql = "INSERT ignore INTO `assignmentdb`.`lt client enrol` " + 
          "(`Processing Details`, " + 
          "`Update record ID`, " + 
          "`Unique Identifier Type`, " + 
@@ -688,22 +742,29 @@ public class DatabaseTemplateDataInserter {
          "VALUES " + 
          "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
      PreparedStatement ps = con.prepareStatement(sql);
-     SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
      java.util.Date date;
      java.sql.Date sqlDate;
      List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
      List<Object> list = new ArrayList<Object>();
+     int[] madatorylist = {2,3,4,5,6,7,8,9};
+     List<Integer> madatory = convertArrayToList(madatorylist);
      boolean allblank = true;
+     boolean blanked = false;
      ExcelRow excelrow = null;
        excelrowlist = a.getRows();
        for (int i=3 ; i<excelrowlist.size();i++) {
          allblank = true;
+         blanked = false;
          excelrow = excelrowlist.get(i);
          list = excelrow.getCells();
          for (int j = 0; j<excelrow.getCells().size();j++) {
            Object cellData = list.get(j);
            if (cellData.equals("NULL")) {
              ps.setNull(j+1, java.sql.Types.NULL);
+             if (madatory.contains(j)) {
+               blanked = true;
+             }
              continue;
            }
            if (j==4 || j == 7) {
@@ -716,16 +777,18 @@ public class DatabaseTemplateDataInserter {
              allblank = false;
            }
          }
-         if (!allblank) {
-           ps.executeUpdate();
-         } else {
+         if (allblank) {
            break;
-         }
+         } else if (blanked) {
+           throw new SQLException("Mandatory fields cannot be blanked");
+          } else {
+            ps.executeUpdate();
+          }
        }       
    }
    
    public static void insertLTCourseSetup(String filename, ExcelSheet a, Connection con) throws SQLException, ParseException  {
-     String sql = "INSERT INTO `assignmentdb`.`lt course setup` " + 
+     String sql = "INSERT ignore INTO `assignmentdb`.`lt course setup` " + 
          "(`Processing Details`, " + 
          "`Update record ID`, " + 
          "`Course Code`, " + 
@@ -849,12 +912,15 @@ public class DatabaseTemplateDataInserter {
          + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
          + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
      PreparedStatement ps = con.prepareStatement(sql);
-     SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
      java.util.Date date;
      java.sql.Date sqlDate;
      List<ExcelRow> excelrowlist = new ArrayList<ExcelRow>();
      List<Object> list = new ArrayList<Object>();
+     int[] madatorylist = {2,4,5,6,10,11,12,13,17,18,25,26,27,45,49,50,51,54,55,56,57,59};
+     List<Integer> madatory = convertArrayToList(madatorylist);
      boolean allblank = true;
+     boolean blanked = false;
      ExcelRow excelrow = null;
        excelrowlist = a.getRows();
        int[] int_ = {10,11,26,27,28,49,53};
@@ -867,11 +933,15 @@ public class DatabaseTemplateDataInserter {
        List<Integer> datelist = convertArrayToList(date_);
        for (int i=3 ; i<excelrowlist.size();i++) {
          allblank = true;
+         blanked = false;
          excelrow = excelrowlist.get(i);
          list = excelrow.getCells();
          for (int j = 0; j<excelrow.getCells().size();j++) {
            if (list.get(j).equals("NULL")) {
              ps.setNull(j+1, java.sql.Types.NULL);
+             if (madatory.contains(j)) {
+               blanked = true;
+             }
              continue;
            }
            if (datelist.contains(j)) {
@@ -896,26 +966,16 @@ public class DatabaseTemplateDataInserter {
              allblank = false;
            }
          }
-         if (!allblank) {
-           ps.executeUpdate();
-         } else {
+         if (allblank) {
            break;
-         }
+         } else if (blanked) {
+           throw new SQLException("Mandatory fields cannot be blanked");
+          } else {
+            ps.executeUpdate();
+          }
        }       
    }
 
-  
-//  public static void main(String args[]) throws IOException, SQLException, ParseException {
-//    Connection con = DatabaseDriverHelper.connectOrCreateDataBase();
-//    insertClientProfile(con);
-//    insertLTClientExit(con);
-//    insertNeedsAssessmentReferrals(con);
-//    insertCommunityConnections(con);
-//    insertInfoAndOrien(con);
-//    insertEmploymentTemplateData(con);
-//    insertLTClientEnroll(con);
-//    insertLTCourseSetup(con);
-//  }
   
   private static List<Integer> convertArrayToList(int[] array) {
     List<Integer> arrayList = new ArrayList<Integer>();

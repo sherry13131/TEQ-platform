@@ -85,14 +85,14 @@ public class OrgUploadDataPanel extends BodyPanel {
           if (!pathField.getText().equals("")) {
 //              tryAddFileData(pathField.getText());
               try {
-                DatabaseInsertHelper.insertTemplateDataHelper(pathField.getText());
-                JOptionPane.showMessageDialog(null, "Data uploaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+                boolean success = DatabaseInsertHelper.insertTemplateDataHelper(pathField.getText());
+                if (success) {
+                  JOptionPane.showMessageDialog(null, "Data uploaded succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                  super.goToMenu(MenuOptions.ORG_MAIN_MENU);
+                }
               } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
               } catch (ParseException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
               }
                
