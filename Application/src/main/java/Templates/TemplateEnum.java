@@ -11,7 +11,7 @@ import com.teqlip.excel.ExcelSheet;
 public enum TemplateEnum {
 	Client_Profile{
 		public String getString() {
-	        return "Client Profile";
+	        return "ClientProfile";
 	    }
 
     @Override
@@ -88,7 +88,7 @@ public enum TemplateEnum {
 	},
 	Needs_Assessment_And_Referrals{
 		public String getString() {
-	        return "Needs Assessment&Referrals";
+	        return "NeedsAssessmentAndReferrals";
 	    }
 
     @Override
