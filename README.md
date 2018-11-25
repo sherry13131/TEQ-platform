@@ -1,9 +1,9 @@
 # Team 7 - Macrohard Rainforest Inc.
 
 ## Running
-You must use the latest **MySQL Server** to set up a local database with **username being root**, and **no passoword**. Then in this database, run the **dumpInitialDB3-modified.sql** script which can be found in the **Application/database_dump** directory.
+You must use the latest **MySQL Server** to set up a local database with **username "root"**, and **password ""**. Then in this database, run the **dumpInitialDB3-modified.sql** script which can be found in the **Application/database_dump** directory.
 
-From the Team7 directory, change into the Application directory, then use Maven to build and run the code.
+From the **Team7** directory, change into the **Application** directory, then use **Maven** to build and run the code.
 ```
 .../Team7$ cd Application
 .../Team7/Application$ mvn compile
