@@ -11,7 +11,7 @@ import com.teqlip.excel.ExcelSheet;
 public enum TemplateEnum {
 	Client_Profile{
 		public String getString() {
-	        return "Client Profile";
+	        return "client profile";
 	    }
 
     @Override
@@ -22,7 +22,7 @@ public enum TemplateEnum {
 	},
 	Community_Connections{
 		public String getString() {
-	        return "Community Connections";
+	        return "community connections";
 	    }
 
     @Override
@@ -33,7 +33,7 @@ public enum TemplateEnum {
 	},
 	Employment{
 		public String getString() {
-	        return "Employment";
+	        return "employment";
 	    }
 
     @Override
@@ -44,7 +44,7 @@ public enum TemplateEnum {
 	},
 	Info_And_Orien{
 		public String getString() {
-	        return "Info&Orien";
+	        return "info&orien`";
 	    }
 
     @Override
@@ -55,7 +55,7 @@ public enum TemplateEnum {
 	},
 	LT_Client_Enrol{
 		public String getString() {
-	        return "LT Client Enrol";
+	        return "lt client enrol";
 	    }
 
     @Override
@@ -66,7 +66,7 @@ public enum TemplateEnum {
 	},
 	LT_Client_Exit{
 		public String getString() {
-	        return "LT Client Exit";
+	        return "lt client exit";
 	    }
 
     @Override
@@ -77,7 +77,7 @@ public enum TemplateEnum {
 	},
 	LT_Course_Setup{
 		public String getString() {
-	        return "LT Course Setup";
+	        return "lt course setup";
 	    }
 
     @Override
@@ -88,7 +88,7 @@ public enum TemplateEnum {
 	},
 	Needs_Assessment_And_Referrals{
 		public String getString() {
-	        return "Needs Assessment&Referrals";
+	        return "needs assessment&referrals";
 	    }
 
     @Override
