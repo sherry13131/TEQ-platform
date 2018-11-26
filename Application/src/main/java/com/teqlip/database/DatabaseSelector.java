@@ -237,7 +237,7 @@ public class DatabaseSelector {
 		Statement stmt = con.createStatement();
 		ResultSet results = null;
 		String sql = "";
-		if (tableName.equals("employment")) {
+		if (tableName.equalsIgnoreCase("employment")) {
 			sql = "SELECT `Processing Details`, " + 
 			         "`Date of Birth (YYYY-MM-DD)`, " + 
 			         "`Postal Code where the service was received`, " + 
@@ -303,9 +303,9 @@ public class DatabaseSelector {
 			         "`Crisis Counselling`, " + 
 			         "`Time Spent With Client's Employment Needs: Hours`, " + 
 			         "`Time Spent With Client's Employment Needs: Minutes`, " + 
-			         "`Reason for update` FROM `" + tableName +"`;";
+			         "`Reason for update` FROM `employment`;";
 		}
-		else if (tableName.equals("lt client enrol")) {
+		else if (tableName.equalsIgnoreCase("lt client enrol")) {
 			sql = "SELECT `Processing Details`, " + 
 			         "`Client Date of Birth (YYYY-MM-DD)`, " + 
 			         "`Postal Code where the service was received`, " + 
@@ -333,9 +333,9 @@ public class DatabaseSelector {
 			         "`Interpretation language Between`, " + 
 			         "`Interpretation language And`, " + 
 			         "`Crisis Counselling`, " +
-			         "`Reason for update` FROM `" + tableName +"`;";
+			         "`Reason for update` FROM `lt client enrol`;";
 		}
-		else if (tableName.equals("lt course setup")) {
+		else if (tableName.equalsIgnoreCase("lt course setup")) {
 			sql = "SELECT `Processing Details`, " + 
 			         "`Course Code`, " + 
 			         "`Notes`, " + 
@@ -453,9 +453,9 @@ public class DatabaseSelector {
 			         "`Writing Skill Level 15`, " + 
 			         "`Writing Skill Level 16`, " + 
 			         "`Writing Skill Level 17` " +
-			         "FROM `" + tableName +"`;";
+			         "FROM `lt course setup`;";
 		}
-		else if (tableName.equals("info&orien")) {
+		else if (tableName.equalsIgnoreCase("info&orien")) {
 			sql = "SELECT `Processing Details`, " + 
 			         "`Date of Birth (YYYY-MM-DD)`, " + 
 			         "`Postal Code where the service was received`, " + 
@@ -547,9 +547,9 @@ public class DatabaseSelector {
 			         "`Interpretation language And`, " + 
 			         "`Crisis Counselling`, " + 
 			         "`End Date of Service (YYYY-MM-DD)`, " + 
-			         "`Reason for update` FROM `" + tableName +"`;";
+			         "`Reason for update` FROM `info&orien`;";
 		}
-		else if (tableName.equals("community connections")) {
+		else if (tableName.equalsIgnoreCase("community connections")) {
 			sql = "SELECT `Processing Details`, " + 
 			         "`Date of Birth (YYYY-MM-DD)`, " + 
 			         "`Postal Code where the service was received`, " + 
@@ -614,9 +614,9 @@ public class DatabaseSelector {
 			         "`Crisis Counselling`, " + 
 			         "`Total Length of Service: Hours`, " + 
 			         "`Total Length of Service: Minutes`, " + 
-			         "`Reason for update` FROM `" + tableName +"`;";
+			         "`Reason for update` FROM `community connections`;";
 		}
-		else if (tableName.equals("needs assessment&referrals")) {
+		else if (tableName.equalsIgnoreCase("needs assessment&referrals")) {
 			sql = "SELECT `Processing Details`, " + 
 			         "`Date of Birth (YYYY-MM-DD)`, " + 
 			         "`Postal Code where the service was recieved`, " + 
@@ -705,9 +705,9 @@ public class DatabaseSelector {
 			         "`Crisis Counselling`, " + 
 			         "`Settlement Plan completed and shared with client`, " + 
 			         "`End Date of Assessment (YYYY-MM-DD)`, " + 
-			         "`Reason for update` FROM `" + tableName +"`;";
+			         "`Reason for update` FROM `needs assessment&referrals`;";
 		}
-		else if (tableName.equals("client profile")) {
+		else if (tableName.equalsIgnoreCase("client profile")) {
 			sql = "SELECT `Processing Details`, " + 
 			          "`Date of Birth (YYYY-MM-DD)`, " + 
 			          "`Telephone Number (###-###-####)`, " + 
@@ -723,9 +723,9 @@ public class DatabaseSelector {
 			          "`Postal Code`, " + 
 			          "`Official Language of Preference`, " + 
 			          "`Consent for Future Research/Consultation` " + 
-			         " FROM `" + tableName +"`;";
+			         " FROM `client profile`;";
 		}
-		else if (tableName.equals("lt client exit")) {
+		else if (tableName.equalsIgnoreCase("lt client exit")) {
 			sql = "SELECT `Processing Details`, " + 
 			        "`Client Date of Birth (YYYY-MM-DD)`, " + 
 			        "`Course Code`, " + 
@@ -761,7 +761,7 @@ public class DatabaseSelector {
 			        "`Interpretation language And`, " + 
 			        "`Crisis Counselling`, " + 
 			        "`Reason for update` " + 
-			         " FROM `" + tableName +"`;";
+			         " FROM `lt client exit`;";
 		}
 		else {
 			throw new SQLException();
