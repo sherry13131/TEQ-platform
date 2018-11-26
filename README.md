@@ -1,5 +1,8 @@
 # Team 7 - Macrohard Rainforest Inc.
 
+## Application Showcase Video
+- click [here](https://youtu.be/B5Mpp5Q-DhA)
+
 ## Running
 You must use the latest **MySQL Server** to set up a local database with **username "root"**, and **password ""**. Then in this database, run the **dumpInitialDB3-modified.sql** script which can be found in the **Application/database_dump** directory.
 
