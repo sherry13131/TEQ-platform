@@ -19,8 +19,8 @@ From the **Team7** directory, change into the **Application** directory, then us
 - [Deliverable 5 Report.pdf](https://github.com/sherry13131/TEQ-platform/blob/master/deliverable_5/Deliverable%205%20Verification%20and%20Code%20Review%20Report.pdf)
 
 ## Sprint Backlogs
-- [sprint] (https://github.com/sherry13131/TEQ-platform/tree/master/sprint_backlog)
+- [sprint](https://github.com/sherry13131/TEQ-platform/tree/master/sprint_backlog)
 
 ## Final user stories and personas
-- [user stories v4] (https://github.com/sherry13131/TEQ-platform/blob/master/product_backlog/user_stories_v4.pdf)
-- [personas v1] (https://github.com/sherry13131/TEQ-platform/blob/master/product_backlog/personas_v1.pdf)
+- [user stories v4](https://github.com/sherry13131/TEQ-platform/blob/master/product_backlog/user_stories_v4.pdf)
+- [personas v1](https://github.com/sherry13131/TEQ-platform/blob/master/product_backlog/personas_v1.pdf)
